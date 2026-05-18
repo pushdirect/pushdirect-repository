@@ -1,0 +1,15 @@
+# PushDirect Promotion Network — pushdirect.network
+# Cloudflare Pages Headers Configuration (drop-in Netlify replacement)
+
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: notifications=*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.onesignal.com https://onesignal.com https://fonts.googleapis.com https://fonts.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://a.monetag.com https://cdn.monetag.com https://nap5k.com https://3nbf4.com https://api.web3forms.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://cdn.onesignal.com https://onesignal.com https://api.onesignal.com https://www.google-analytics.com https://a.monetag.com https://nap5k.com https://3nbf4.com https://api.web3forms.com https://region1.google-analytics.com; worker-src 'self' https://cdn.onesignal.com https://3nbf4.com; child-src 'self' blob: https://cdn.onesignal.com; frame-src 'self' https://cdn.onesignal.com; manifest-src 'self';
+
+/sw.js
+  Content-Type: application/javascript
+  Service-Worker-Allowed: /
+  Cache-Control: no-cache, no-store, must-revalidate
