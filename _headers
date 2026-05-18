@@ -1,0 +1,15 @@
+# PushDirect Promotion Network — pushdirect.network
+# Netlify Headers Configuration
+
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: notifications=*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://trk-syntrex.com https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://trk-syntrex.com; worker-src 'self'; manifest-src 'self';
+
+/sw.js
+  Content-Type: application/javascript
+  Service-Worker-Allowed: /
+  Cache-Control: no-cache, no-store, must-revalidate
