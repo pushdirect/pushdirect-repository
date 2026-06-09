@@ -28,18 +28,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;0,900&family=Barlow+Condensed:wght@700;800;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0c0b09;--bg-3:#1a1814;
-  --surface:rgba(232,213,176,0.05);--surface-2:rgba(232,213,176,0.08);
-  --border:rgba(232,213,176,0.09);--border-str:rgba(232,213,176,0.16);
-  --text-1:#f5f0e8;--text-2:#9a8f7e;--text-3:#5a5248;
-  --cream:#e8d5b0;--cream-light:#f2e6cb;--cream-dark:#c9aa82;
-  --taupe:#9a8f7e;--success:#7ecb9a;--danger:#e07b6a;
+  /* Core brand — matches index.html */
+  --brand:#1a1916;--brand-mid:#2d2b27;--brand-soft:#5a5248;
+  --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --taupe:#9a8f7e;--taupe-l:#b8a88a;--taupe-d:#6e6358;
+  /* CTA */
   --cta:#f97316;--cta-d:#ea6f0e;
+  /* Backgrounds — light by default */
+  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;--bg-2:#faf9f7;--bg-3:#f4f2ef;--bg-4:#ede8e0;
+  /* Text */
+  --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
+  /* Hyphenated aliases (used in landing page CSS rules) */
+  --text-1:#1a1916;--text-2:#5a5248;--text-3:#9a8f7e;
+  --cream-light:#f2e6cb;--cream-dark:#c9aa82;
+  /* Borders */
+  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);--border-str:rgba(26,25,22,.2);
+  /* Surfaces */
+  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);--surface-2:rgba(26,25,22,.08);
+  /* Status */
+  --success:#9a8f7e;--danger:#e07b6a;
+  /* Elevation */
+  --sh-xs:0 1px 4px rgba(0,0,0,.05);
+  --sh-sm:0 2px 12px rgba(0,0,0,.07);
+  --sh:0 6px 28px rgba(0,0,0,.1);
+  --sh-lg:0 16px 56px rgba(0,0,0,.16);
+  /* Fonts */
   --font-display:'Barlow Condensed',sans-serif;
   --font-body:'Barlow',sans-serif;
   --font-mono:'DM Mono',monospace;
   --radius:12px;--ease:cubic-bezier(0.16,1,0.3,1);
 }
+[data-theme="dark"]{
+  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;--bg-2:#121009;--bg-3:#1a1814;--bg-4:#221f1a;
+  --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
+  --text-1:#f5f0e8;--text-2:#9a8f7e;--text-3:#5a5248;
+  --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --cream-light:#f2e6cb;--cream-dark:#c9aa82;
+  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);--border-str:rgba(232,213,176,.16);
+  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);--surface-2:rgba(232,213,176,.08);
+  --sh-xs:0 1px 4px rgba(0,0,0,.5);
+  --sh-sm:0 2px 16px rgba(0,0,0,.55);
+  --sh:0 6px 28px rgba(0,0,0,.65);
+  --sh-lg:0 16px 56px rgba(0,0,0,.75);
+}
+[data-theme="dark"] nav.scrolled{background:rgba(12,11,9,.92)}
+[data-theme="dark"] .preperm-card,[data-theme="dark"] .overlay-card,[data-theme="dark"] .exit-card{background:#1a1814;border-color:rgba(232,213,176,.15)}
+[data-theme="dark"] .preperm-benefits,[data-theme="dark"] .ov-preview,[data-theme="dark"] .denied-steps{background:rgba(232,213,176,.04);border-color:rgba(232,213,176,.09)}
+[data-theme="dark"] .sticky-bar{background:linear-gradient(to top,rgba(12,11,9,1) 65%,transparent)}
+[data-theme="dark"] .coin-card,[data-theme="dark"] .deal-card,[data-theme="dark"] .signal,[data-theme="dark"] .faq-item{background:rgba(232,213,176,.05);border-color:rgba(232,213,176,.09)}
+[data-theme="dark"] .faq-item.open{border-color:rgba(232,213,176,.2)}
+[data-theme="dark"] .btn-ov-sec{border-color:rgba(232,213,176,.16);color:#9a8f7e}
+[data-theme="dark"] .cta-banner{background:linear-gradient(135deg,rgba(232,213,176,.07),rgba(154,143,126,.04));border-color:rgba(232,213,176,.16)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{background:var(--bg);color:var(--text-1);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden}
@@ -195,13 +234,7 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
 @media(max-width:600px){.coins-grid{grid-template-columns:1fr 1fr}.cta-banner{padding:36px 20px}}
 @media(max-width:480px){nav{padding:12px 18px}.nav-link.deals{display:none}}
 
-[data-theme="light"]{
-  --bg:#ffffff;--bg-2:#faf9f7;--bg-3:#f4f2ef;--bg-4:#ede8e0;
-  --surface:rgba(26,25,22,.04);--surface-2:rgba(26,25,22,.08);
-  --border:rgba(26,25,22,.1);--border-str:rgba(26,25,22,.2);
-  --text-1:#1a1916;--text-2:#5a5248;--text-3:#9a8f7e;
-  --cream:#c9aa82;--cream-light:#b8956e;--cream-dark:#8a6f4e;
-}
+
 [data-theme="light"] nav.scrolled{background:rgba(255,255,255,.96)}
 [data-theme="light"] .preperm-card,[data-theme="light"] .overlay-card,[data-theme="light"] .exit-card{background:#fff;border-color:rgba(26,25,22,.12)}
 [data-theme="light"] .preperm-benefits,[data-theme="light"] .ov-preview,[data-theme="light"] .denied-steps{background:rgba(26,25,22,.03);border-color:rgba(26,25,22,.08)}
