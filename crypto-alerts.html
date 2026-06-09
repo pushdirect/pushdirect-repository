@@ -86,7 +86,8 @@ body{background:var(--bg);color:var(--text-1);font-family:var(--font-body);font-
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
 nav.scrolled{background:rgba(12,11,9,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-logo-text{font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:.06em;color:var(--text-1)}
+.nav-logo-text{font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:.06em;color:var(--text-1);line-height:1}
+.logo-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;color:var(--taupe);text-transform:uppercase;display:block;margin-top:2px;font-weight:500}
 .nav-links{display:flex;align-items:center;gap:6px}
 .nav-link{font-family:var(--font-mono);font-size:11px;color:var(--text-2);padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:20px;text-decoration:none;transition:all .2s}
 .nav-link:hover{color:var(--text-1);border-color:var(--border-str)}
@@ -165,7 +166,7 @@ nav.scrolled{background:rgba(12,11,9,.92);backdrop-filter:blur(20px);border-bott
 .cta-banner h2{font-family:var(--font-display);font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:-.02em;margin-bottom:16px}
 .cta-banner p{color:var(--text-2);font-size:17px;margin-bottom:36px}
 
-footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
+footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:center}
 .foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:16px}
 .foot-links a{font-family:var(--font-mono);font-size:11px;color:var(--text-3);text-decoration:none;transition:color .2s}
 .foot-links a:hover{color:var(--text-2)}
@@ -310,7 +311,10 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
 <nav id="nav">
   <a href="/" class="nav-logo">
     <svg width="36" height="25" viewBox="0 0 80 56" fill="none"><polygon points="2,28 52,4 42,30" fill="#e8d5b0" opacity=".95"/><polygon points="22,28 52,4 42,30" fill="#9a8f7e" opacity=".8"/><polygon points="22,28 42,30 30,46" fill="#b8a88a" opacity=".75"/></svg>
-    <div class="nav-logo-text">PUSHDIRECT</div>
+    <div>
+      <div class="nav-logo-text">PUSHDIRECT</div>
+      <span class="logo-sub">Promotion Network</span>
+    </div>
   </a>
   <div class="nav-links">
     <a href="/deal-alerts" class="nav-link deals">Deal Alerts</a>
