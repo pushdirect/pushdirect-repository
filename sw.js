@@ -1,8 +1,12 @@
 // PushDirect Promotion Network — pushdirect.network
-// Service Worker | PWA + OneSignal + Monetag
+// Service Worker | PWA + RollerAds + Monetag
 
-// ── OneSignal FIRST — must register handlers on initial evaluation ──
-importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js');
+// ── RollerAds ──
+self.opts = {
+    zoneID: 2822452,
+    swDomain: "push-sdk.com",
+}
+importScripts("https://push-sdk.com/f/sw.js")
 
 // ── Monetag (In-Page Push + verification) ──
 self.options = {
@@ -31,7 +35,7 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
-  // Only intercept same-origin GET — leave OneSignal/Monetag traffic alone
+  // Only intercept same-origin GET — leave RollerAds/Monetag traffic alone
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
