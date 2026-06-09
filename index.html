@@ -38,17 +38,7 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'PushDirect — Promotion Network',page_location:'https://pushdirect.network/',send_page_view:true});
 </script>
 
-<!-- OneSignal -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-window.OneSignalDeferred=window.OneSignalDeferred||[];
-OneSignalDeferred.push(async function(OneSignal){
-  await OneSignal.init({
-    appId:"2b1cad39-3bf2-48a4-bb74-145fb830444b",
-    autoResubscribe:true,
-  });
-});
-</script>
+<!-- RollerAds SDK — loaded on demand inside requestPermission() -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -442,7 +432,6 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .mid-cta-h{font-family:var(--fd);font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:-.03em;margin-bottom:16px;color:#fff;line-height:1}
 .mid-cta-sub{font-size:17px;color:rgba(232,213,176,.75);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.65}
 .mid-cta-glow{position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(232,213,176,.07),transparent);pointer-events:none}
-/* btn-cta in dark section inherits orange gradient — looks great */
 
 /* ═══ FAQ ═══ */
 .faq-sec{padding:80px 0 88px;position:relative;z-index:1}
@@ -622,6 +611,60 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 .rev{opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .rev.in{opacity:1;transform:none}
 
+/* ═══ PRE-PERMISSION MODAL ═══ */
+.preperm-bg{
+  position:fixed;inset:0;z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(12,11,9,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  opacity:0;pointer-events:none;transition:opacity .35s;padding:24px;
+}
+.preperm-bg.open{opacity:1;pointer-events:all}
+.preperm-card{
+  background:#fff;border-radius:28px;
+  padding:40px 32px 32px;max-width:400px;width:100%;text-align:center;
+  box-shadow:0 32px 80px rgba(0,0,0,.28);
+  border:1px solid rgba(201,170,130,.25);
+  transform:scale(.93) translateY(12px);transition:transform .45s var(--ease);
+}
+[data-theme="dark"] .preperm-card{background:#1a1814;border-color:rgba(232,213,176,.15)}
+.preperm-bg.open .preperm-card{transform:scale(1) translateY(0)}
+.preperm-icon{font-size:48px;margin-bottom:16px;display:block;line-height:1}
+.preperm-title{
+  font-family:var(--fd);font-weight:800;font-size:22px;
+  letter-spacing:-.03em;color:var(--text1);margin-bottom:8px;
+}
+.preperm-sub{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+.preperm-benefits{
+  display:flex;flex-direction:column;gap:8px;
+  margin-bottom:24px;text-align:left;
+  background:var(--bg2);border-radius:14px;padding:14px 16px;
+  border:1px solid var(--border);
+}
+.preperm-benefit{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--text2);
+}
+.preperm-benefit-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--cta);flex-shrink:0;
+}
+.preperm-yes{
+  width:100%;
+  background:linear-gradient(135deg,var(--cta),var(--cta-d));
+  color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;
+  padding:15px;border-radius:50px;border:none;cursor:pointer;
+  transition:opacity .2s,transform .2s;
+  box-shadow:0 4px 16px rgba(249,115,22,.28);
+  margin-bottom:10px;
+}
+.preperm-yes:hover{opacity:.92;transform:translateY(-1px)}
+.preperm-no{
+  width:100%;background:none;border:none;
+  color:var(--text3);font-size:13px;cursor:pointer;
+  padding:8px;transition:color .2s;font-family:var(--fb);
+}
+.preperm-no:hover{color:var(--text2)}
+
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;padding:110px 0 60px;text-align:center}
@@ -656,7 +699,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
   <a href="https://pushdirect.network/faq" class="subnav-link">FAQ</a>
 </nav>
 
-<!-- NAV — logo SVG uses brand cream/taupe palette from paper plane logo -->
+<!-- NAV -->
 <nav id="mainNav">
   <a href="https://pushdirect.network" class="nav-logo">
     <svg width="36" height="25" viewBox="0 0 80 56" fill="none">
@@ -948,6 +991,24 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
   <p class="foot-copy">© 2026 PushDirect Promotion Network. All rights reserved.</p>
 </footer>
 
+<!-- ═══ PRE-PERMISSION MODAL ═══ -->
+<div class="preperm-bg" id="prepermBg" onclick="handlePrepermBg(event)">
+  <div class="preperm-card">
+    <span class="preperm-icon">🔔</span>
+    <div class="preperm-title">Get alerts before the crowd?</div>
+    <p class="preperm-sub">PushDirect notifies you the instant a deal, drop, or offer goes live — before it sells out.</p>
+    <div class="preperm-benefits">
+      <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>Flash sales up to 9 min before public</div>
+      <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>Free spins, gift cards &amp; cashback windows</div>
+      <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>One tap to unsubscribe, always free</div>
+    </div>
+    <button class="preperm-yes" onclick="confirmPermission()">
+      Yes — enable my alerts
+    </button>
+    <button class="preperm-no" onclick="closePreperm()">No thanks, I'll miss out</button>
+  </div>
+</div>
+
 <!-- ═══ SUCCESS SCREEN ═══ -->
 <div class="overlay-bg" id="successBg">
   <div class="overlay-card success">
@@ -1090,14 +1151,77 @@ document.addEventListener('mouseleave',e=>{
 function closeExit(){document.getElementById('exitBg').classList.remove('open')}
 function handleExitBg(e){if(e.target===document.getElementById('exitBg'))closeExit()}
 
+/* ═══ ROLLERADS SDK LOADER ═══ */
+// Injects the RollerAds SDK within a user gesture (required for permission prompt).
+// Callbacks wired to existing UI overlay states.
+let _raLoaded=false;
+function loadRollerAds(){
+  if(_raLoaded)return;
+  _raLoaded=true;
+  (function(){
+    const url=new URL(window.location.href);
+    const clickID=url.searchParams.get('click_id');
+    const sourceID=url.searchParams.get('source_id');
+    const s=document.createElement('script');
+    s.dataset.cfasync='false';
+    s.src='https://push-sdk.com/f/sdk.js?z=2822452';
+    s.onload=function(opts){
+      opts.zoneID=2822452;
+      opts.extClickID=clickID;
+      opts.subID1=sourceID;
+      opts.actions.onPermissionGranted=function(){
+        track('subscribed_rollerads',{ms:Date.now()-S.t0});
+        showSuccess();
+      };
+      opts.actions.onPermissionDenied=function(){
+        track('denied_rollerads');
+        showDeniedHelp();
+      };
+      opts.actions.onAlreadySubscribed=function(){
+        track('already_subscribed_rollerads');
+        showAlready();
+      };
+      opts.actions.onError=function(){
+        track('error_rollerads');
+        if('Notification' in window && Notification.permission==='granted'){
+          showAlready();
+        } else if('Notification' in window && Notification.permission!=='denied'){
+          Notification.requestPermission().then(p=>{
+            if(p==='granted')showSuccess(); else showDeniedHelp();
+          });
+        } else {
+          showDeniedHelp();
+        }
+      };
+    };
+    document.head.appendChild(s);
+  })();
+}
+
+/* ═══ PRE-PERMISSION MODAL ═══ */
+// Shows a soft custom modal first. Only calls loadRollerAds() if user says Yes,
+// preserving the single native prompt attempt for engaged users.
+function showPreperm(){
+  document.getElementById('prepermBg').classList.add('open');
+  track('preperm_shown');
+}
+function closePreperm(){
+  document.getElementById('prepermBg').classList.remove('open');
+  track('preperm_declined');
+}
+function handlePrepermBg(e){
+  if(e.target===document.getElementById('prepermBg'))closePreperm();
+}
+function confirmPermission(){
+  // User clicked Yes inside the pre-permission modal — close it, then run the real flow
+  document.getElementById('prepermBg').classList.remove('open');
+  track('preperm_confirmed');
+  _doSubscribe();
+}
+
 /* ═══ PERMISSION FLOW ═══ */
 function requestPushDirect(){
   closeExit();
-  requestPermission();
-}
-
-function requestPermission(){
-  track('allow_click');
 
   // iOS Safari: no Web Push — activate Monetag IPP then show success
   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
@@ -1106,37 +1230,44 @@ function requestPermission(){
   // No Notification API
   if(!('Notification' in window)){track('no_notif_api');showSuccess();return;}
 
-  // Already granted
-  if(Notification.permission==='granted'){
-    track('already_granted');
-    if(window.OneSignalDeferred){
-      OneSignalDeferred.push(async function(OneSignal){
-        try{await OneSignal.Notifications.requestPermission();}catch(e){}
-      });
-    }
-    showAlready();return;
-  }
-
-  // Hard blocked
+  // Hard blocked — skip everything, go straight to help screen
   if(Notification.permission==='denied'){showDeniedHelp();return;}
 
-  // Default — call native prompt synchronously within user gesture
-  track('prompt_shown');
-  Notification.requestPermission().then(function(permission){
-    if(permission==='granted'){
-      track('subscribed_native',{ms:Date.now()-S.t0});
-      if(window.OneSignalDeferred){
-        OneSignalDeferred.push(async function(OneSignal){
-          try{await OneSignal.Notifications.requestPermission();}catch(e){}
-        });
-      }
-      showSuccess();
-    } else {
-      track('denied_native');
-      showDeniedHelp();
-    }
-  });
+  // Already granted — skip pre-permission, re-register silently via SDK
+  if(Notification.permission==='granted'){
+    track('allow_click_already_granted');
+    loadRollerAds();
+    setTimeout(()=>{if(!S.subscribed)showAlready();},1500);
+    return;
+  }
+
+  // Default (never asked) — show pre-permission modal first
+  track('allow_click');
+  showPreperm();
 }
+
+// Called only after user confirms in the pre-permission modal
+function _doSubscribe(){
+  loadRollerAds();
+}
+
+/* ═══ TIP 2: SCROLL + TIME TRIGGER ═══ */
+// Fires the pre-permission modal proactively once the user has:
+//   • scrolled to 80% of the page, AND
+//   • spent at least 60 seconds on the page
+// Only triggers once per session and only if not already subscribed/denied.
+let _proactiveFired=false;
+let _timeOnPage=0;
+const _timeInterval=setInterval(()=>{
+  _timeOnPage+=5;
+  if(_timeOnPage>=60&&S._s80&&!_proactiveFired&&!S.subscribed
+    &&'Notification' in window&&Notification.permission==='default'){
+    _proactiveFired=true;
+    clearInterval(_timeInterval);
+    track('proactive_trigger',{seconds:_timeOnPage});
+    showPreperm();
+  }
+},5000);
 
 function showSuccess(){
   S.subscribed=true;
@@ -1248,14 +1379,40 @@ setInterval(()=>{
   setTimeout(()=>{wi=(wi+1)%words.length;wEl.textContent=words[wi];wEl.style.opacity='1';wEl.style.transform='none'},320);
 },3800);
 
-/* ═══ RETURNING VISITOR ═══ */
+/* ═══ TIP 3: RETURNING VISITOR CTA PERSONALISATION ═══ */
+// Simulates "missed alerts" count based on visits (avg 2–3 alerts/day baseline).
+// On visit 2+, if permission is still default, swap all CTA button text to show
+// a concrete missed-opportunity number rather than the generic label.
 const vc=parseInt(localStorage.getItem('pd_v')||'0')+1;
 localStorage.setItem('pd_v',vc);
-if(vc>=2&&!S.subscribed){
+(function(){
+  const isReturning=vc>=2&&!S.subscribed;
   const badge=document.querySelector('.hero-badge');
-  if(badge)badge.innerHTML='<div class="live-dot"></div><span>Welcome back — your alerts are waiting</span>';
-  track('returning',{visits:vc});
-}
+  if(isReturning&&badge){
+    badge.innerHTML='<div class="live-dot"></div><span>Welcome back — your alerts are waiting</span>';
+    track('returning',{visits:vc});
+  }
+  // Personalise CTA copy for default-permission returning visitors
+  if(isReturning&&'Notification' in window&&Notification.permission==='default'){
+    // Estimate missed alerts: avg 2 per day, cap display at 12
+    const missedBase=Math.min((vc-1)*2,12);
+    // Add a small random delta so it doesn't look computed
+    const missed=missedBase+Math.floor(Math.random()*3);
+    const label=`You've missed ${missed} alerts — catch up`;
+    document.querySelectorAll('.btn-cta').forEach(btn=>{
+      // Only update buttons that have the default "Enable Direct Alerts" text
+      if(btn.textContent.trim().includes('Enable Direct Alerts')){
+        // Preserve the SVG icon, replace the text node
+        const textNode=[...btn.childNodes].find(n=>n.nodeType===3&&n.textContent.trim().length>0);
+        if(textNode)textNode.textContent='\n      '+label+'\n    ';
+      }
+    });
+    // Also update sticky bar tag line
+    const stickyTag=document.querySelector('.sticky-tag');
+    if(stickyTag)stickyTag.textContent=`${missed} alerts since your last visit · Free`;
+    track('returning_cta_personalised',{visits:vc,missed});
+  }
+})();
 
 /* ═══ ENGAGEMENT ═══ */
 window.addEventListener('scroll',()=>{S.score=Math.max(S.score,8)},{once:true,passive:true});
