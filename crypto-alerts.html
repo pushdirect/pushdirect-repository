@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,6 +52,8 @@ nav.scrolled{background:rgba(12,11,9,.92);backdrop-filter:blur(20px);border-bott
 .nav-link{font-family:var(--font-mono);font-size:11px;color:var(--text-2);padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:20px;text-decoration:none;transition:all .2s}
 .nav-link:hover{color:var(--text-1);border-color:var(--border-str)}
 .nav-link.active{color:var(--cream-dark);border-color:var(--border-str)}
+.btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text-2);transition:all .2s;flex-shrink:0}
+.btn-theme:hover{background:var(--surface-2);border-color:var(--border-str)}
 
 .orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;animation:orbFloat 22s ease-in-out infinite}
 .orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(232,213,176,.055),transparent 70%);top:-250px;left:-150px}
@@ -192,6 +194,21 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
 
 @media(max-width:600px){.coins-grid{grid-template-columns:1fr 1fr}.cta-banner{padding:36px 20px}}
 @media(max-width:480px){nav{padding:12px 18px}.nav-link.deals{display:none}}
+
+[data-theme="light"]{
+  --bg:#ffffff;--bg-2:#faf9f7;--bg-3:#f4f2ef;--bg-4:#ede8e0;
+  --surface:rgba(26,25,22,.04);--surface-2:rgba(26,25,22,.08);
+  --border:rgba(26,25,22,.1);--border-str:rgba(26,25,22,.2);
+  --text-1:#1a1916;--text-2:#5a5248;--text-3:#9a8f7e;
+  --cream:#c9aa82;--cream-light:#b8956e;--cream-dark:#8a6f4e;
+}
+[data-theme="light"] nav.scrolled{background:rgba(255,255,255,.96)}
+[data-theme="light"] .preperm-card,[data-theme="light"] .overlay-card,[data-theme="light"] .exit-card{background:#fff;border-color:rgba(26,25,22,.12)}
+[data-theme="light"] .preperm-benefits,[data-theme="light"] .ov-preview,[data-theme="light"] .denied-steps{background:rgba(26,25,22,.03);border-color:rgba(26,25,22,.08)}
+[data-theme="light"] .sticky-bar{background:linear-gradient(to top,rgba(255,255,255,1) 65%,transparent)}
+[data-theme="light"] .coin-card,[data-theme="light"] .deal-card,[data-theme="light"] .signal,[data-theme="light"] .faq-item,[data-theme="light"] .step{background:rgba(26,25,22,.03);border-color:rgba(26,25,22,.08)}
+[data-theme="light"] .faq-item.open{border-color:rgba(201,170,130,.5)}
+[data-theme="light"] .btn-ov-sec{border-color:rgba(26,25,22,.15);color:#5a5248}
 </style>
 </head>
 <body>
@@ -208,6 +225,7 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
     <a href="/deal-alerts" class="nav-link deals">Deal Alerts</a>
     <a href="/" class="nav-link">← Home</a>
   </div>
+  <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
 </nav>
 
 <section class="hero">
@@ -506,6 +524,23 @@ function toggleFaq(el){const item=el.closest('.faq-item');const open=item.classL
 
 window.addEventListener('scroll',()=>{S.score=Math.max(S.score,8)},{once:true,passive:true});
 document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:true});
+
+/* THEME TOGGLE */
+(function(){
+  const saved = localStorage.getItem('pd_theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  const btn = document.getElementById('themeBtn');
+  function syncIcon(){
+    btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+  }
+  syncIcon();
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('pd_theme', next);
+    syncIcon();
+  });
+})();
 </script>
 </body>
 </html>
