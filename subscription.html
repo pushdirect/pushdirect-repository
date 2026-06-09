@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subscribe to PushDirect — Deal &amp; Crypto Alerts</title>
+<meta name="description" content="Subscribe to PushDirect for free push notifications and email alerts on flash sales, crypto signals, gift cards and more. No spam, cancel any time.">
+<link rel="canonical" href="https://pushdirect.network/subscription">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1a1916">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#1a1916;--brand-mid:#2d2b27;
+  --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --taupe:#9a8f7e;--cta:#f97316;--cta-d:#ea6f0e;
+  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;
+  --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
+  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);
+  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);
+  --success:#9a8f7e;--danger:#e07b6a;
+  --fd:'Poppins',sans-serif;--fb:'Inter',sans-serif;--fm:'Inter',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sh-xs:0 1px 4px rgba(0,0,0,.05);
+  --sh-sm:0 2px 12px rgba(0,0,0,.07);
+  --sh:0 6px 28px rgba(0,0,0,.1);
+  --sh-lg:0 16px 56px rgba(0,0,0,.16);
+}
+[data-theme="dark"]{
+  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;
+  --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
+  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);
+  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);
+  --sh-xs:0 1px 4px rgba(0,0,0,.5);--sh-sm:0 2px 16px rgba(0,0,0,.55);
+  --sh:0 6px 28px rgba(0,0,0,.65);--sh-lg:0 16px 56px rgba(0,0,0,.75);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text1);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden;min-height:100svh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;transition:box-shadow .4s var(--ease)}
+nav.scrolled{box-shadow:var(--sh-sm)}
+[data-theme="dark"] nav{background:rgba(12,11,9,.96);border-color:var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-text{font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--text1);line-height:1}
+.logo-sub{font-family:var(--fm);font-size:9px;letter-spacing:.16em;color:var(--taupe);text-transform:uppercase;display:block;margin-top:2px;font-weight:500}
+.nav-r{display:flex;align-items:center;gap:10px}
+.nav-link{font-family:var(--fm);font-size:11px;color:var(--text2);padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:20px;text-decoration:none;transition:all .2s}
+.nav-link:hover{color:var(--text1);border-color:var(--border-s)}
+.btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text2);transition:all .2s}
+.btn-theme:hover{background:var(--surface2)}
+
+/* ORBS */
+.orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(232,213,176,.18),transparent 70%);top:-200px;right:-150px}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,rgba(249,115,22,.08),transparent 70%);bottom:-150px;left:-150px}
+
+/* PAGE */
+.page-wrap{position:relative;z-index:1;padding:120px 24px 80px;max-width:640px;margin:0 auto}
+.page-kicker{font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--taupe);margin-bottom:12px;font-weight:600}
+.page-h1{font-family:var(--fd);font-size:clamp(38px,5vw,60px);font-weight:900;letter-spacing:-.03em;color:var(--text1);margin-bottom:10px;line-height:1}
+.page-h1 .gold{background:linear-gradient(135deg,var(--cta),var(--cream-d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-sub{font-size:16px;color:var(--text2);margin-bottom:48px;line-height:1.65}
+
+/* STEP CARDS */
+.steps-wrap{display:flex;flex-direction:column;gap:16px;margin-bottom:48px}
+.step-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:20px;
+  padding:28px 28px 28px 24px;display:flex;align-items:flex-start;gap:20px;
+  box-shadow:var(--sh-xs);transition:border-color .2s,box-shadow .2s;
+  position:relative;
+}
+.step-card:hover{border-color:rgba(201,170,130,.4);box-shadow:var(--sh-sm)}
+[data-theme="dark"] .step-card{background:rgba(232,213,176,.04);border-color:var(--border)}
+.step-num{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cta),var(--cta-d));
+  color:#fff;font-family:var(--fd);font-weight:800;font-size:15px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(249,115,22,.25);
+}
+.step-body{flex:1}
+.step-title{font-family:var(--fd);font-weight:700;font-size:17px;color:var(--text1);margin-bottom:4px}
+.step-desc{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:16px}
+
+/* PUSH CTA inside step card */
+.btn-push{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--cta),var(--cta-d));
+  color:#fff;font-family:var(--fd);font-weight:700;font-size:15px;
+  padding:13px 28px;border-radius:50px;border:none;cursor:pointer;
+  transition:transform .2s var(--ease),box-shadow .2s;
+  box-shadow:0 6px 24px rgba(249,115,22,.25);
+  position:relative;overflow:hidden;
+}
+.btn-push::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);opacity:0;transition:opacity .2s}
+.btn-push:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(249,115,22,.35)}
+.btn-push:hover::before{opacity:1}
+.btn-push:active{transform:scale(.98)}
+.push-status{display:flex;align-items:center;gap:8px;font-family:var(--fm);font-size:12px;color:var(--text3);margin-top:10px}
+.push-dot{width:7px;height:7px;border-radius:50%;background:var(--taupe);flex-shrink:0;animation:blink 2s ease-in-out infinite}
+.push-dot.active{background:#7ecb9a;box-shadow:0 0 8px rgba(126,203,154,.5)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* EMAIL FORM inside step card */
+.form-row{margin-bottom:14px}
+.form-label{display:block;font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:7px}
+.form-input{
+  width:100%;padding:13px 16px;background:var(--bg2);
+  border:1px solid var(--border-s);border-radius:12px;
+  color:var(--text1);font-family:var(--fb);font-size:15px;
+  transition:border-color .2s,box-shadow .2s;outline:none;-webkit-appearance:none;
+}
+.form-input::placeholder{color:var(--text3)}
+.form-input:focus{border-color:var(--cream-d);box-shadow:0 0 0 3px rgba(201,170,130,.15)}
+[data-theme="dark"] .form-input{background:rgba(232,213,176,.05)}
+.btn-email{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--brand);color:var(--cream-l);
+  font-family:var(--fd);font-weight:700;font-size:16px;
+  padding:15px;border-radius:50px;border:none;cursor:pointer;
+  transition:opacity .2s,transform .2s;margin-top:4px;
+}
+.btn-email:hover{opacity:.88;transform:translateY(-1px)}
+.btn-email:active{transform:scale(.98)}
+.btn-email:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.hp-field{display:none;visibility:hidden;position:absolute;left:-9999px}
+
+/* SUCCESS state */
+.step-success{
+  display:none;align-items:center;gap:12px;
+  padding:14px 18px;background:rgba(126,203,154,.08);
+  border:1px solid rgba(126,203,154,.25);border-radius:14px;margin-top:4px;
+}
+.step-success.show{display:flex}
+.step-success-icon{font-size:20px;flex-shrink:0}
+.step-success-text{font-size:13px;color:var(--text2);line-height:1.5}
+.step-success-text strong{color:var(--text1);display:block;font-family:var(--fd);margin-bottom:2px}
+
+/* DIVIDER */
+.or-divider{text-align:center;margin:8px 0;font-family:var(--fm);font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;position:relative}
+.or-divider::before,.or-divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--border)}
+.or-divider::before{left:0}.or-divider::after{right:0}
+
+/* BENEFITS STRIP */
+.benefits{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;justify-content:center}
+.benefit{display:flex;align-items:center;gap:7px;font-family:var(--fm);font-size:12px;color:var(--text3);font-weight:500}
+.benefit-dot{width:5px;height:5px;border-radius:50%;background:var(--cream-d);flex-shrink:0}
+
+/* DENIED HELP */
+.denied-help{
+  display:none;padding:16px 18px;background:rgba(224,123,106,.06);
+  border:1px solid rgba(224,123,106,.2);border-radius:14px;margin-top:10px;
+  font-size:13px;color:var(--text2);line-height:1.7;
+}
+.denied-help.show{display:block}
+.denied-help strong{color:var(--text1)}
+
+/* OVERLAYS */
+.overlay-bg{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;background:rgba(12,11,9,.88);backdrop-filter:blur(20px);opacity:0;pointer-events:none;transition:opacity .4s;padding:24px}
+.overlay-bg.open{opacity:1;pointer-events:all}
+.overlay-card{background:#fff;border-radius:28px;padding:44px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.25);transform:scale(.92);transition:transform .5s var(--ease)}
+[data-theme="dark"] .overlay-card{background:#1a1814}
+.overlay-bg.open .overlay-card{transform:scale(1)}
+.overlay-card.success{border:2px solid rgba(201,170,130,.3)}
+.ring{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 20px;animation:popIn .6s var(--ease) .1s both}
+.ring.success-ring{background:linear-gradient(135deg,var(--cream-d),var(--taupe));box-shadow:0 0 40px rgba(201,170,130,.25)}
+.ring.denied-ring{background:linear-gradient(135deg,var(--danger),#c05a4a);box-shadow:0 0 36px rgba(224,123,106,.2)}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.ov-title{font-family:var(--fd);font-weight:800;font-size:24px;margin-bottom:10px;letter-spacing:-.02em;color:var(--text1)}
+.ov-sub{font-size:14px;color:var(--text2);margin-bottom:22px;line-height:1.65}
+.denied-steps{background:var(--bg2);border-radius:14px;padding:16px;margin-bottom:20px;display:flex;flex-direction:column;gap:10px;text-align:left;border:1px solid var(--border)}
+.d-step{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text2)}
+.d-num{width:22px;height:22px;border-radius:50%;background:rgba(224,123,106,.12);border:1px solid rgba(224,123,106,.28);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--danger);margin-top:1px;font-weight:700}
+.btn-ov{width:100%;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:14px;border-radius:50px;border:none;cursor:pointer;transition:opacity .2s;box-shadow:0 4px 16px rgba(249,115,22,.25)}
+.btn-ov:hover{opacity:.9}
+.btn-ov-sec{width:100%;background:none;border:1px solid var(--border-s);color:var(--text2);font-size:14px;padding:11px;border-radius:50px;cursor:pointer;transition:all .2s;font-family:var(--fb);margin-top:8px}
+.btn-ov-sec:hover{color:var(--text1)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--border);background:var(--bg2);text-align:center;margin-top:64px}
+.foot-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
+.foot-logo-text{font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--text1)}
+.foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:16px}
+.foot-links a{font-family:var(--fm);font-size:12px;color:var(--text3);text-decoration:none;transition:color .2s;font-weight:500}
+.foot-links a:hover{color:var(--text1)}
+.foot-copy{font-family:var(--fm);font-size:12px;color:var(--text3)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fadeUp .7s var(--ease) both}
+.fade-1{animation-delay:.06s}.fade-2{animation-delay:.12s}.fade-3{animation-delay:.18s}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<nav id="mainNav">
+  <a href="/" class="nav-logo">
+    <svg width="36" height="25" viewBox="0 0 80 56" fill="none"><polygon points="2,28 52,4 42,30" fill="#e8d5b0" opacity=".95"/><polygon points="22,28 52,4 42,30" fill="#9a8f7e" opacity=".8"/><polygon points="22,28 42,30 30,46" fill="#b8a88a" opacity=".75"/></svg>
+    <div><div class="logo-text">PUSHDIRECT</div><span class="logo-sub">Promotion Network</span></div>
+  </a>
+  <div class="nav-r">
+    <a href="/" class="nav-link">← Home</a>
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-kicker fade">Join the network</div>
+  <h1 class="page-h1 fade">Get alerts <span class="gold">before</span><br>the crowd does.</h1>
+  <p class="page-sub fade">Two ways to stay ahead — instant push notifications direct to your screen, or deal alerts to your inbox. Pick one or both. Always free.</p>
+
+  <div class="steps-wrap">
+
+    <!-- STEP 1: Push notifications -->
+    <div class="step-card fade fade-1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Instant push notifications</div>
+        <div class="step-desc">Alerts fire directly to your screen the moment a deal, crypto signal, or exclusive offer goes live — even when your browser is closed. No email, no account.</div>
+        <button class="btn-push" id="pushBtn" onclick="requestPush()">
+          <svg width="16" height="11" viewBox="0 0 40 28" fill="none"><polygon points="1,14 30,2 24,15" fill="currentColor" opacity=".9"/><polygon points="12,14 30,2 24,15" fill="currentColor" opacity=".5"/></svg>
+          Enable Free Alerts
+        </button>
+        <div class="push-status" id="pushStatus">
+          <span class="push-dot" id="pushDot"></span>
+          <span id="pushStatusText">Not yet enabled on this device</span>
+        </div>
+        <div class="denied-help" id="deniedHelp">
+          <strong>Notifications are blocked</strong>
+          Click the lock icon in your address bar → <strong>Notifications</strong> → <strong>Allow</strong>, then refresh and try again.
+        </div>
+      </div>
+    </div>
+
+    <div class="or-divider">and / or</div>
+
+    <!-- STEP 2: Email -->
+    <div class="step-card fade fade-2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Deal alerts by email</div>
+        <div class="step-desc">Flash sales, exclusive promos, and time-sensitive offers delivered straight to your inbox before they sell out.</div>
+
+        <form id="emailForm" autocomplete="on">
+          <input type="hidden" name="access_key" value="a4b6220e-4b69-41bd-966b-59d0f1014186">
+          <input type="hidden" name="subject" value="New PushDirect Subscription">
+          <input type="hidden" name="from_name" value="PushDirect Network">
+          <p class="hp-field"><label>Leave blank: <input name="botcheck" tabindex="-1" autocomplete="off"></label></p>
+          <div class="form-row">
+            <label class="form-label" for="subName">Your name <span style="color:var(--text3);font-size:10px">(optional)</span></label>
+            <input class="form-input" type="text" id="subName" name="name" placeholder="e.g. Alex" autocomplete="given-name">
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="subEmail">Email address <span style="color:var(--cta)">*</span></label>
+            <input class="form-input" type="email" id="subEmail" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+          <button type="submit" class="btn-email" id="emailBtn">
+            <svg width="15" height="11" viewBox="0 0 40 28" fill="none"><polygon points="1,14 30,2 24,15" fill="currentColor" opacity=".9"/></svg>
+            Subscribe to Deal Alerts
+          </button>
+        </form>
+
+        <div class="step-success" id="emailSuccess">
+          <span class="step-success-icon">✓</span>
+          <div class="step-success-text">
+            <strong>You're on the list!</strong>
+            Watch for exclusive deals and promos heading your way.
+          </div>
+        </div>
+
+        <p style="font-family:var(--fm);font-size:10px;color:var(--text3);margin-top:14px;letter-spacing:.03em">No spam · Unsubscribe any time · Data never sold</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="benefits fade fade-3">
+    <div class="benefit"><span class="benefit-dot"></span>2.3M+ subscribers</div>
+    <div class="benefit"><span class="benefit-dot"></span>Zero spam</div>
+    <div class="benefit"><span class="benefit-dot"></span>1-tap unsubscribe</div>
+    <div class="benefit"><span class="benefit-dot"></span>Free forever</div>
+    <div class="benefit"><span class="benefit-dot"></span>180+ countries</div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">
+    <svg width="30" height="21" viewBox="0 0 80 56" fill="none"><polygon points="2,28 52,4 42,30" fill="#e8d5b0" opacity=".85"/><polygon points="22,28 52,4 42,30" fill="#9a8f7e" opacity=".7"/><polygon points="22,28 42,30 30,46" fill="#b8a88a" opacity=".65"/></svg>
+    <span class="foot-logo-text">PUSHDIRECT</span>
+  </div>
+  <div class="foot-links">
+    <a href="/">Home</a>
+    <a href="/deal-alerts">Deal Alerts</a>
+    <a href="/crypto-alerts">Crypto Alerts</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms</a>
+  </div>
+  <p class="foot-copy">© 2026 PushDirect Promotion Network. All rights reserved.</p>
+</footer>
+
+<!-- SUCCESS OVERLAY (push) -->
+<div class="overlay-bg" id="successBg">
+  <div class="overlay-card success">
+    <div class="ring success-ring">✓</div>
+    <h2 class="ov-title">You're in the network. 🎉</h2>
+    <p class="ov-sub">Push alerts are live on this device. You'll never miss a deal or signal again.</p>
+    <button class="btn-ov" onclick="closeOverlay('successBg')">Got it — let's go</button>
+  </div>
+</div>
+
+<!-- ALREADY OVERLAY -->
+<div class="overlay-bg" id="alreadyBg">
+  <div class="overlay-card success">
+    <div class="ring success-ring">⚡</div>
+    <h2 class="ov-title">Already subscribed.</h2>
+    <p class="ov-sub">This device is already receiving PushDirect alerts. You're always first.</p>
+    <button class="btn-ov" onclick="closeOverlay('alreadyBg')">Continue</button>
+  </div>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',scrollY>50),{passive:true});
+
+/* ═══ PUSH SUBSCRIPTION ═══ */
+function updatePushStatus() {
+  const dot = document.getElementById('pushDot');
+  const text = document.getElementById('pushStatusText');
+  const btn = document.getElementById('pushBtn');
+  if (!('Notification' in window)) {
+    text.textContent = 'Push notifications not supported in this browser';
+    btn.disabled = true; return;
+  }
+  if (Notification.permission === 'granted') {
+    dot.classList.add('active');
+    text.textContent = 'Push alerts are active on this device ✓';
+    btn.textContent = 'Already enabled ✓';
+    btn.style.background = 'var(--surface2)';
+    btn.style.color = 'var(--text2)';
+    btn.style.boxShadow = 'none';
+    btn.disabled = true;
+  } else if (Notification.permission === 'denied') {
+    text.textContent = 'Notifications blocked — see instructions below';
+    document.getElementById('deniedHelp').classList.add('show');
+    btn.disabled = true;
+  } else {
+    text.textContent = 'Not yet enabled on this device';
+  }
+}
+updatePushStatus();
+
+let _raLoaded = false;
+function loadRollerAds() {
+  if (_raLoaded) return; _raLoaded = true;
+  const url = new URL(window.location.href);
+  const s = document.createElement('script');
+  s.dataset.cfasync = 'false';
+  s.src = 'https://push-sdk.com/f/sdk.js?z=2822452';
+  s.onload = function(opts) {
+    opts.zoneID = 2822452;
+    opts.extClickID = url.searchParams.get('click_id');
+    opts.subID1 = url.searchParams.get('source_id');
+    opts.actions.onPermissionGranted = function() {
+      gtag && gtag('event', 'push_subscribed', { page: 'subscription' });
+      updatePushStatus();
+      document.getElementById('successBg').classList.add('open');
+    };
+    opts.actions.onPermissionDenied = function() {
+      document.getElementById('deniedHelp').classList.add('show');
+      updatePushStatus();
+    };
+    opts.actions.onAlreadySubscribed = function() {
+      updatePushStatus();
+      document.getElementById('alreadyBg').classList.add('open');
+    };
+    opts.actions.onError = function() {
+      if ('Notification' in window && Notification.permission !== 'denied') {
+        Notification.requestPermission().then(p => {
+          if (p === 'granted') { updatePushStatus(); document.getElementById('successBg').classList.add('open'); }
+          else { updatePushStatus(); }
+        });
+      }
+    };
+  };
+  document.head.appendChild(s);
+}
+
+function requestPush() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (isIOS) { activateMonetag(); document.getElementById('successBg').classList.add('open'); return; }
+  if (!('Notification' in window)) { document.getElementById('successBg').classList.add('open'); return; }
+  if (Notification.permission === 'denied') { document.getElementById('deniedHelp').classList.add('show'); return; }
+  if (Notification.permission === 'granted') { loadRollerAds(); setTimeout(() => { if (!document.getElementById('alreadyBg').classList.contains('open')) document.getElementById('alreadyBg').classList.add('open'); }, 1200); return; }
+  loadRollerAds();
+}
+
+function activateMonetag() {
+  if (window._monetagLoaded) return; window._monetagLoaded = true;
+  const s = document.createElement('script'); s.src = 'https://nap5k.com/tag.min.js'; s.dataset.zone = '11024677'; document.body.appendChild(s);
+}
+
+function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
+
+/* ═══ EMAIL FORM ═══ */
+document.getElementById('emailForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (e.target.querySelector('[name="botcheck"]').value) return;
+  const btn = document.getElementById('emailBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    const data = Object.fromEntries(new FormData(e.target));
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    if (result.success) {
+      e.target.style.display = 'none';
+      document.getElementById('emailSuccess').classList.add('show');
+      gtag && gtag('event', 'email_subscribed', { page: 'subscription' });
+    } else throw new Error(result.message);
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Subscribe to Deal Alerts';
+    alert('Something went wrong — please try again.');
+  }
+});
+
+/* ═══ THEME ═══ */
+(function(){
+  const saved = localStorage.getItem('pd_theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  const btn = document.getElementById('themeBtn');
+  function sync() { btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'; }
+  sync();
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('pd_theme', next);
+    sync();
+  });
+})();
+</script>
+</body>
+</html>
