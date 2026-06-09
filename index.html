@@ -1116,7 +1116,8 @@ function onScroll(){
   document.getElementById('mainNav').classList.toggle('scrolled',sy>50);
   if(!subnavHovered)document.querySelector('.subnav').classList.toggle('subnav--hidden',sy>10);
   const sb=document.getElementById('stickyBar');
-  if(p>30&&!S.subscribed)sb.classList.add('visible');
+  const _granted='Notification' in window&&Notification.permission==='granted';
+  if(p>30&&!S.subscribed&&!_granted)sb.classList.add('visible');
   else if(p<=30)sb.classList.remove('visible');
   if(p>=50&&!S._s50){S._s50=true;S.score+=20;track('scroll_50')}
   if(p>=80&&!S._s80){S._s80=true;S.score+=20;track('scroll_80')}
@@ -1142,7 +1143,8 @@ subnav.addEventListener('mouseleave',hideSubnav);
 
 /* ═══ EXIT INTENT ═══ */
 document.addEventListener('mouseleave',e=>{
-  if(e.clientY<=0&&!S.exitShown&&!S.subscribed&&S.score>6){
+  const alreadyGranted='Notification' in window&&Notification.permission==='granted';
+  if(e.clientY<=0&&!S.exitShown&&!S.subscribed&&!alreadyGranted&&S.score>6){
     S.exitShown=true;
     document.getElementById('exitBg').classList.add('open');
     track('exit_intent');
