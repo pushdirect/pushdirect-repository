@@ -134,7 +134,16 @@ nav.scrolled{background:rgba(12,11,9,.92);backdrop-filter:blur(20px);border-bott
 .signal-t{font-family:var(--font-display);font-weight:800;font-size:17px;margin-bottom:4px}
 .signal-d{font-size:14px;color:var(--text-2);line-height:1.6}
 
-.article{max-width:700px}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px}
+.guide-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;transition:border-color .2s,background .2s}
+.guide-card:hover{border-color:var(--border-str);background:var(--surface-2)}
+.guide-icon{font-size:28px;margin-bottom:14px;display:block}
+.guide-title{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;margin-bottom:8px;color:var(--text-1)}
+.guide-desc{font-size:14px;color:var(--text-2);line-height:1.65}
+.guide-desc a{color:var(--cream-dark);text-decoration:none;border-bottom:1px solid rgba(201,170,130,.3)}
+.guide-desc a:hover{border-color:var(--cream-dark)}
+
+
 .article h2{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);font-weight:900;letter-spacing:-.02em;margin:48px 0 16px;line-height:1.1}
 .article h2:first-child{margin-top:0}
 .article p{font-size:16px;color:var(--text-2);line-height:1.8;margin-bottom:18px}
@@ -417,29 +426,46 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
     </div>
   </div>
 </section>
-      <div class="sec-tag">The complete guide</div>
-      <h2>Why free crypto price alerts matter in 2026</h2>
-      <p>The crypto market moves 24/7. Most traders miss key moves because they're asleep, in a meeting, or simply not watching their charts. <strong>Free push notification crypto alerts solve this</strong> — your device notifies you the instant something worth acting on happens, no matter what you're doing.</p>
-      <p>PushDirect's crypto alert system monitors price action across 200+ assets continuously, applying a signal quality filter before anything reaches subscribers. Low-quality noise — minor fluctuations, rumour-driven moves — never triggers an alert. Only verified, threshold-crossing events ship.</p>
-
-      <h2>Push notifications vs app alerts for crypto</h2>
-      <p>Most crypto apps require you to set individual price alerts for each asset, at specific price points you have to predict in advance. PushDirect works differently: our signal engine monitors for <strong>pattern-based triggers</strong> — breakouts, volume anomalies, whale activity — that indicate something significant is happening, regardless of what the price is.</p>
-      <p>The result: you get alerted to moves you wouldn't have predicted, not just the levels you already set. That's the difference between a price alert and an intelligence alert.</p>
-
-      <h2>How to get Bitcoin price alerts for free</h2>
-      <ul>
-        <li><strong>Click "Enable Free Crypto Alerts"</strong> above — takes 15 seconds</li>
-        <li>Select Crypto Signals from your category preferences</li>
-        <li>Your browser sends a push notification the next time BTC hits a signal threshold</li>
-        <li>No email, no account, no app — works in your existing browser</li>
-      </ul>
-      <p>PushDirect's crypto alerts are permanently free for subscribers. Also looking for retail deals and flash sales? Check out our <a href="/deal-alerts">free deal alerts</a> service on the same platform. The service is funded by the promotion network — brands and retailers, not your data.</p>
+<section class="section">
+  <div class="wrap">
+    <div class="sec-tag rev">Why PushDirect</div>
+    <h2 class="sec-h rev">Intelligence alerts,<br>not just price alerts.</h2>
+    <p class="sec-sub rev">Most crypto apps make you guess price levels in advance. PushDirect watches for pattern-based signals — so you get alerted to moves you never would have predicted.</p>
+    <div class="guide-grid rev">
+      <div class="guide-card">
+        <div class="guide-icon">⚡</div>
+        <div class="guide-title">0.4s delivery</div>
+        <div class="guide-desc">From signal verification to your screen in under half a second — faster than any trading app or social feed.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🧠</div>
+        <div class="guide-title">Pattern-based triggers</div>
+        <div class="guide-desc">Volume anomalies, volatility spikes, breakout confirmations — not just simple price levels you set manually.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">📱</div>
+        <div class="guide-title">No app, no email</div>
+        <div class="guide-desc">Works in your existing browser. One tap to enable, one tap to stop. No account, no signup, free forever.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🔕</div>
+        <div class="guide-title">Zero noise policy</div>
+        <div class="guide-desc">Every signal passes a quality filter before it ships. Minor fluctuations and rumour-driven moves never reach you.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🌍</div>
+        <div class="guide-title">24/7 market coverage</div>
+        <div class="guide-desc">Crypto never sleeps. PushDirect monitors 200+ assets continuously — alerts fire whether you're awake or not.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🔗</div>
+        <div class="guide-title">Also need deal alerts?</div>
+        <div class="guide-desc">Same platform, same one-tap subscribe. <a href="/deal-alerts">Free deal alerts</a> for flash sales, gift cards and cashback.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
 <section class="section">
   <div class="wrap" style="max-width:700px">
     <div class="sec-tag rev">Questions</div>
