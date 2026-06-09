@@ -231,6 +231,55 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
 .rev{opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .rev.in{opacity:1;transform:none}
 
+/* ═══ LIVE ALERT FEED ═══ */
+.feed-section{padding:100px 0;border-top:1px solid var(--border)}
+.feed-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:gap}
+.feed-status{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+.feed-dot{width:7px;height:7px;border-radius:50%;background:var(--text-3);flex-shrink:0;animation:blink 2s ease-in-out infinite}
+.feed-dot.live{background:#7ecb9a;box-shadow:0 0 8px rgba(126,203,154,.5)}
+.feed-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.feed-filter{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text-3);cursor:pointer;transition:all .2s}
+.feed-filter:hover{border-color:var(--border-str);color:var(--text-2)}
+.feed-filter.active{background:var(--cream-dark);border-color:var(--cream-dark);color:#0c0b09}
+.feed-list{display:flex;flex-direction:column;gap:10px;min-height:200px;position:relative}
+.feed-empty{text-align:center;padding:60px 24px;font-family:var(--font-mono);font-size:12px;color:var(--text-3)}
+.feed-connecting{text-align:center;padding:40px 24px;font-family:var(--font-mono);font-size:12px;color:var(--text-3)}
+
+.alert-row{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  transition:border-color .2s,transform .15s;
+  animation:alertSlideIn .35s var(--ease) both;
+}
+.alert-row:hover{border-color:var(--border-str);transform:translateX(2px)}
+@keyframes alertSlideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.alert-sev{width:3px;border-radius:4px;flex-shrink:0;align-self:stretch;min-height:40px}
+.alert-icon{font-size:20px;flex-shrink:0;width:36px;text-align:center}
+.alert-content{flex:1;min-width:0}
+.alert-title{font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--text-1);margin-bottom:3px;line-height:1.3}
+.alert-body{font-size:13px;color:var(--text-2);line-height:1.5}
+.alert-meta{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.alert-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;border:1px solid var(--border);color:var(--text-3)}
+.alert-time{font-family:var(--font-mono);font-size:10px;color:var(--text-3);margin-left:auto}
+
+/* Price ticker strip */
+.price-strip{
+  background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:10px 0;overflow:hidden;margin-bottom:0;
+  position:sticky;top:57px;z-index:50;backdrop-filter:blur(12px);
+}
+.price-scroll{display:flex;gap:32px;animation:scrollLeft 40s linear infinite;width:max-content}
+.price-item{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;white-space:nowrap}
+.price-sym{font-weight:600;color:var(--text-1)}
+.price-val{color:var(--text-2)}
+.price-chg{font-size:10px;padding:1px 5px;border-radius:4px}
+.price-chg.up{color:#7ecb9a;background:rgba(126,203,154,.1)}
+.price-chg.down{color:#e07b6a;background:rgba(224,123,106,.1)}
+.price-chg.flat{color:var(--text-3)}
+
 @media(max-width:600px){.coins-grid{grid-template-columns:1fr 1fr}.cta-banner{padding:36px 20px}}
 @media(max-width:480px){nav{padding:12px 18px}.nav-link.deals{display:none}}
 
@@ -303,9 +352,71 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
   </div>
 </section>
 
-<section class="section">
+<!-- PRICE TICKER STRIP -->
+<div class="price-strip" id="priceStrip">
+  <div class="price-scroll" id="priceScroll">
+    <div class="price-item"><span class="price-sym">BTC</span><span class="price-val" id="tick-BTC">—</span><span class="price-chg flat" id="chg-BTC">—</span></div>
+    <div class="price-item"><span class="price-sym">ETH</span><span class="price-val" id="tick-ETH">—</span><span class="price-chg flat" id="chg-ETH">—</span></div>
+    <div class="price-item"><span class="price-sym">SOL</span><span class="price-val" id="tick-SOL">—</span><span class="price-chg flat" id="chg-SOL">—</span></div>
+    <div class="price-item"><span class="price-sym">BNB</span><span class="price-val" id="tick-BNB">—</span><span class="price-chg flat" id="chg-BNB">—</span></div>
+    <div class="price-item"><span class="price-sym">XRP</span><span class="price-val" id="tick-XRP">—</span><span class="price-chg flat" id="chg-XRP">—</span></div>
+    <div class="price-item"><span class="price-sym">ADA</span><span class="price-val" id="tick-ADA">—</span><span class="price-chg flat" id="chg-ADA">—</span></div>
+    <div class="price-item"><span class="price-sym">AVAX</span><span class="price-val" id="tick-AVAX">—</span><span class="price-chg flat" id="chg-AVAX">—</span></div>
+    <div class="price-item"><span class="price-sym">DOGE</span><span class="price-val" id="tick-DOGE">—</span><span class="price-chg flat" id="chg-DOGE">—</span></div>
+    <div class="price-item"><span class="price-sym">LINK</span><span class="price-val" id="tick-LINK">—</span><span class="price-chg flat" id="chg-LINK">—</span></div>
+    <div class="price-item"><span class="price-sym">DOT</span><span class="price-val" id="tick-DOT">—</span><span class="price-chg flat" id="chg-DOT">—</span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="price-item"><span class="price-sym">BTC</span><span class="price-val" id="tick-BTC2">—</span><span class="price-chg flat" id="chg-BTC2">—</span></div>
+    <div class="price-item"><span class="price-sym">ETH</span><span class="price-val" id="tick-ETH2">—</span><span class="price-chg flat" id="chg-ETH2">—</span></div>
+    <div class="price-item"><span class="price-sym">SOL</span><span class="price-val" id="tick-SOL2">—</span><span class="price-chg flat" id="chg-SOL2">—</span></div>
+    <div class="price-item"><span class="price-sym">BNB</span><span class="price-val" id="tick-BNB2">—</span><span class="price-chg flat" id="chg-BNB2">—</span></div>
+    <div class="price-item"><span class="price-sym">XRP</span><span class="price-val" id="tick-XRP2">—</span><span class="price-chg flat" id="chg-XRP2">—</span></div>
+    <div class="price-item"><span class="price-sym">ADA</span><span class="price-val" id="tick-ADA2">—</span><span class="price-chg flat" id="chg-ADA2">—</span></div>
+    <div class="price-item"><span class="price-sym">AVAX</span><span class="price-val" id="tick-AVAX2">—</span><span class="price-chg flat" id="chg-AVAX2">—</span></div>
+    <div class="price-item"><span class="price-sym">DOGE</span><span class="price-val" id="tick-DOGE2">—</span><span class="price-chg flat" id="chg-DOGE2">—</span></div>
+    <div class="price-item"><span class="price-sym">LINK</span><span class="price-val" id="tick-LINK2">—</span><span class="price-chg flat" id="chg-LINK2">—</span></div>
+    <div class="price-item"><span class="price-sym">DOT</span><span class="price-val" id="tick-DOT2">—</span><span class="price-chg flat" id="chg-DOT2">—</span></div>
+  </div>
+</div>
+
+<!-- LIVE ALERT FEED -->
+<section class="feed-section">
   <div class="wrap">
-    <div class="article rev">
+    <div class="rev">
+      <div class="sec-tag">Live intelligence</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:12px">
+        <h2 class="sec-h" style="margin-bottom:0">Real-time alert feed</h2>
+        <div class="feed-status">
+          <span class="feed-dot" id="feedDot"></span>
+          <span id="feedStatusText">Connecting...</span>
+        </div>
+      </div>
+      <p class="sec-sub">Every alert is generated from live market data — price breakouts, volume spikes, volatility events and trending assets as they happen.</p>
+    </div>
+
+    <div class="feed-filters rev">
+      <button class="feed-filter active" data-filter="all" onclick="setFilter('all',this)">All</button>
+      <button class="feed-filter" data-filter="price_breakout" onclick="setFilter('price_breakout',this)">Price</button>
+      <button class="feed-filter" data-filter="volume_spike" onclick="setFilter('volume_spike',this)">Volume</button>
+      <button class="feed-filter" data-filter="volatility_spike" onclick="setFilter('volatility_spike',this)">Volatility</button>
+      <button class="feed-filter" data-filter="trending" onclick="setFilter('trending',this)">Trending</button>
+    </div>
+
+    <div class="feed-list rev" id="alertFeed">
+      <div class="feed-connecting" id="feedPlaceholder">
+        <div class="live-dot" style="margin:0 auto 12px"></div>
+        Connecting to live feed...
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:24px">
+      <button class="btn-cta" onclick="requestPushDirect()" style="animation:none;margin:0 auto;font-size:15px;padding:14px 36px">
+        <svg class="ico" width="16" height="11" viewBox="0 0 40 28" fill="none"><polygon points="1,14 30,2 24,15" fill="currentColor" opacity=".9"/></svg>
+        Get push notifications for every alert
+      </button>
+    </div>
+  </div>
+</section>
       <div class="sec-tag">The complete guide</div>
       <h2>Why free crypto price alerts matter in 2026</h2>
       <p>The crypto market moves 24/7. Most traders miss key moves because they're asleep, in a meeting, or simply not watching their charts. <strong>Free push notification crypto alerts solve this</strong> — your device notifies you the instant something worth acting on happens, no matter what you're doing.</p>
@@ -327,6 +438,8 @@ footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
   </div>
 </section>
 
+<section class="section">
+  <div class="wrap">
 <section class="section">
   <div class="wrap" style="max-width:700px">
     <div class="sec-tag rev">Questions</div>
@@ -556,6 +669,148 @@ function toggleFaq(el){const item=el.closest('.faq-item');const open=item.classL
 
 window.addEventListener('scroll',()=>{S.score=Math.max(S.score,8)},{once:true,passive:true});
 document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:true});
+
+/* ═══ LIVE ALERT FEED ═══ */
+const ALERT_API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:3001'
+  : 'https://YOUR-RAILWAY-URL.railway.app'; // ← update after deployment
+
+const SEVERITY_CONFIG = {
+  low:      { color: '#9a8f7e', emoji: '📊', label: 'Signal' },
+  medium:   { color: '#c9aa82', emoji: '⚡', label: 'Alert' },
+  high:     { color: '#f97316', emoji: '🔥', label: 'Strong' },
+  critical: { color: '#e07b6a', emoji: '🚨', label: 'Critical' },
+};
+const TYPE_LABELS = { price_breakout:'Price', volume_spike:'Volume', volatility_spike:'Volatility', trending:'Trending' };
+
+let currentFilter = 'all';
+let allAlerts = [];
+let feedConnected = false;
+let esObj = null;
+let reconnectDelay = 2000;
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.feed-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFeed();
+}
+
+function timeAgo(ts) {
+  const diff = Date.now() - new Date(ts).getTime();
+  if (diff < 60000) return Math.floor(diff/1000)+'s ago';
+  if (diff < 3600000) return Math.floor(diff/60000)+'m ago';
+  if (diff < 86400000) return Math.floor(diff/3600000)+'h ago';
+  return Math.floor(diff/86400000)+'d ago';
+}
+
+function formatPrice(p) {
+  if (!p) return '—';
+  if (p >= 1000) return '$'+p.toLocaleString('en-US',{maximumFractionDigits:0});
+  if (p >= 1)    return '$'+p.toLocaleString('en-US',{maximumFractionDigits:2});
+  return '$'+p.toLocaleString('en-US',{maximumFractionDigits:6});
+}
+
+function renderAlert(alert) {
+  const sev = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.medium;
+  const typeLabel = TYPE_LABELS[alert.type] || alert.type;
+  return `<div class="alert-row" data-type="${alert.type}">
+    <div class="alert-sev" style="background:${sev.color}"></div>
+    <div class="alert-icon">${sev.emoji}</div>
+    <div class="alert-content">
+      <div class="alert-title">${alert.title}</div>
+      <div class="alert-body">${alert.body}</div>
+      <div class="alert-meta">
+        <span class="alert-tag" style="border-color:${sev.color}33;color:${sev.color}">${sev.label}</span>
+        <span class="alert-tag">${typeLabel}</span>
+        <span class="alert-tag">${alert.asset}</span>
+        <span class="alert-time">${timeAgo(alert.ts)}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderFeed() {
+  const feed = document.getElementById('alertFeed');
+  const filtered = currentFilter === 'all' ? allAlerts : allAlerts.filter(a => a.type === currentFilter);
+  if (filtered.length === 0) {
+    feed.innerHTML = `<div class="feed-empty">${feedConnected ? 'No alerts yet — watching markets...' : '<div class="live-dot" style="margin:0 auto 12px"></div>Connecting to live feed...'}</div>`;
+    return;
+  }
+  feed.innerHTML = filtered.slice(0,30).map(renderAlert).join('');
+}
+
+function updateTicker(state) {
+  for (const [asset, data] of Object.entries(state)) {
+    const price = formatPrice(data.price);
+    ['','2'].forEach(s => {
+      const p = document.getElementById(`tick-${asset}${s}`);
+      if (p) p.textContent = price;
+    });
+  }
+}
+
+function updateTickerFromAlert(alert) {
+  if (!alert.data?.price) return;
+  const price = formatPrice(alert.data.price);
+  ['','2'].forEach(s => {
+    const p = document.getElementById(`tick-${alert.asset}${s}`);
+    if (p) p.textContent = price;
+    const c = document.getElementById(`chg-${alert.asset}${s}`);
+    if (c && alert.data.pctChange !== undefined) {
+      const pct = alert.data.pctChange;
+      c.textContent = (pct > 0 ? '+' : '') + pct.toFixed(2) + '%';
+      c.className = `price-chg ${pct > 0.1 ? 'up' : pct < -0.1 ? 'down' : 'flat'}`;
+    }
+  });
+}
+
+function setFeedStatus(connected, text) {
+  feedConnected = connected;
+  const dot = document.getElementById('feedDot');
+  const st = document.getElementById('feedStatusText');
+  dot.className = 'feed-dot' + (connected ? ' live' : '');
+  st.textContent = text;
+}
+
+function connectFeed() {
+  if (esObj) { esObj.close(); esObj = null; }
+  if (ALERT_API.includes('YOUR-RAILWAY-URL')) {
+    setFeedStatus(false, 'Backend not yet deployed');
+    document.getElementById('alertFeed').innerHTML = '<div class="feed-empty">Live feed coming soon.</div>';
+    return;
+  }
+  esObj = new EventSource(`${ALERT_API}/stream`);
+  esObj.addEventListener('history', e => {
+    allAlerts = JSON.parse(e.data);
+    setFeedStatus(true, `Live · ${allAlerts.length} alerts loaded`);
+    renderFeed();
+  });
+  esObj.addEventListener('state', e => updateTicker(JSON.parse(e.data)));
+  esObj.addEventListener('alert', e => {
+    const alert = JSON.parse(e.data);
+    allAlerts.unshift(alert);
+    if (allAlerts.length > 100) allAlerts.pop();
+    setFeedStatus(true, `Live · last alert ${timeAgo(alert.ts)}`);
+    updateTickerFromAlert(alert);
+    renderFeed();
+    if (['high','critical'].includes(alert.severity)
+      && 'Notification' in window && Notification.permission === 'default'
+      && !document.getElementById('prepermBg').classList.contains('open')) {
+      setTimeout(() => showPreperm(), 1500);
+    }
+  });
+  esObj.onopen = () => { reconnectDelay = 2000; setFeedStatus(true, 'Connected — watching markets'); };
+  esObj.onerror = () => {
+    setFeedStatus(false, 'Reconnecting...');
+    esObj.close();
+    setTimeout(() => connectFeed(), reconnectDelay);
+    reconnectDelay = Math.min(reconnectDelay * 2, 30000);
+  };
+}
+
+connectFeed();
+setInterval(() => { if (allAlerts.length > 0) renderFeed(); }, 30000);
 
 /* THEME TOGGLE */
 (function(){
