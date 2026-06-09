@@ -673,7 +673,7 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 /* ═══ LIVE ALERT FEED ═══ */
 const ALERT_API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? 'http://localhost:3001'
-  : 'https://YOUR-RAILWAY-URL.railway.app'; // ← update after deployment
+  : 'https://insightful-enthusiasm-production-ecd5.up.railway.app';
 
 const SEVERITY_CONFIG = {
   low:      { color: '#9a8f7e', emoji: '📊', label: 'Signal' },
