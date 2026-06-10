@@ -397,6 +397,18 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
   <p class="foot-copy">© 2026 PushDirect Promotion Network. All rights reserved.</p>
 </footer>
 
+
+<!-- PRE-PERMISSION MODAL -->
+<div class="overlay-bg" id="prepermBg" onclick="if(event.target===this)closePreperm()">
+  <div class="overlay-card success">
+    <div class="success-ring">🔔</div>
+    <h2 class="ov-title">Get alerts before the crowd?</h2>
+    <p class="ov-sub">PushDirect notifies you the instant a deal, drop, or offer goes live — before it sells out.</p>
+    <button class="btn-ov" onclick="confirmPermission()">Yes — enable my alerts</button>
+    <button class="btn-ov-sec" onclick="closePreperm()">No thanks</button>
+  </div>
+</div>
+
 <!-- SUCCESS OVERLAY (push) -->
 <div class="overlay-bg" id="successBg">
   <div class="overlay-card success">
@@ -526,8 +538,8 @@ function loadRollerAds() {
 
 function requestPush() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  if (isIOS) { activateMonetag(); document.getElementById('iosBg').classList.add('open'); return; }
-  if (!('Notification' in window)) { document.getElementById('noApiBg').classList.add('open'); return; }
+  if (isIOS) { activateMonetag(); showIOS(); return; }
+  if (!('Notification' in window)) { showNoAPI(); return; }
   if (Notification.permission === 'denied') { document.getElementById('deniedHelp').classList.add('show'); return; }
   if (Notification.permission === 'granted') { loadRollerAds(); return; } // SDK fires onAlreadySubscribed callback
   loadRollerAds();
@@ -576,6 +588,17 @@ document.getElementById('emailForm').addEventListener('submit', async (e) => {
   }
 });
 
+
+function showIOS(){S.subscribed=true;document.getElementById('iosBg').classList.add('open')}
+function closeIOS(){document.getElementById('iosBg').classList.remove('open')}
+function showNoAPI(){document.getElementById('noApiBg').classList.add('open')}
+function closeNoAPI(){document.getElementById('noApiBg').classList.remove('open')}
+
+
+function showPreperm(){document.getElementById('prepermBg').classList.add('open')}
+function closePreperm(){document.getElementById('prepermBg').classList.remove('open')}
+function confirmPermission(){closePreperm();loadRollerAds();}
+
 /* ═══ THEME ═══ */
 // Persist click_id for BeMob postback
 (function(){const u=new URL(window.location.href);const c=u.searchParams.get('click_id');if(c)sessionStorage.setItem('pd_click_id',c);})();
@@ -593,6 +616,31 @@ document.getElementById('emailForm').addEventListener('submit', async (e) => {
     sync();
   });
 })();
+
+/* ═══ GDPR CONSENT LOGIC ═══ */
+(function(){
+  var key='pd_consent';
+  var stored=localStorage.getItem(key);
+  if(stored==='1'){return;}
+  if(stored==='0'){window['ga-disable-G-08QR9KY980']=true;return;}
+  window['ga-disable-G-08QR9KY980']=true;
+  setTimeout(function(){
+    var bar=document.getElementById('consentBar');
+    if(bar)bar.classList.add('visible');
+  },1500);
+})();
+function handleConsent(accepted){
+  localStorage.setItem('pd_consent',accepted?'1':'0');
+  var bar=document.getElementById('consentBar');
+  if(bar)bar.classList.remove('visible');
+  if(accepted){
+    window['ga-disable-G-08QR9KY980']=false;
+    if(typeof gtag!=='undefined'){
+      gtag('consent','update',{analytics_storage:'granted'});
+      gtag('event','page_view');
+    }
+  }
+}
 </script>
 
 <!-- ═══ GDPR CONSENT BANNER ═══ -->
