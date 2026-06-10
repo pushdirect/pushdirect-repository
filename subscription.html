@@ -193,11 +193,70 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .fade{animation:fadeUp .7s var(--ease) both}
 .fade-1{animation-delay:.06s}.fade-2{animation-delay:.12s}.fade-3{animation-delay:.18s}
+
+/* ═══ SUBNAV ═══ */
+.subnav{
+  position:fixed;top:57px;left:0;right:0;z-index:99;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;gap:0;
+  padding:0;height:36px;
+  overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  transform:translateY(0);transition:transform .35s var(--ease);
+}
+.subnav::-webkit-scrollbar{display:none}
+.subnav--hidden{transform:translateY(-100%)}
+[data-theme="dark"] .subnav{background:rgba(12,11,9,.96);border-color:var(--border)}
+.subnav-link{
+  font-family:var(--fm);font-size:12px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text2);text-decoration:none;
+  padding:8px 16px;border-radius:20px;
+  transition:background .18s,color .18s;
+  white-space:nowrap;flex-shrink:0;
+}
+.subnav-link:hover{background:var(--surface2);color:var(--text1)}
+.subnav-link.active{color:var(--text1);background:var(--surface)}
+.subnav-sep{color:var(--border-s);font-size:14px;user-select:none;flex-shrink:0;padding:0 2px}
+.nav-back{
+  font-family:var(--fm);font-size:12px;font-weight:600;letter-spacing:.06em;
+  color:var(--text2);padding:6px 14px;
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  text-decoration:none;transition:all .2s;
+}
+.nav-back:hover{background:var(--surface2);color:var(--text1)}
+@media(max-width:600px){
+  .subnav{justify-content:flex-start;padding:0 12px}
+  .subnav-link{padding:8px 12px;font-size:11px;letter-spacing:.04em}
+}
+@media(max-width:480px){
+  nav{padding:12px 18px}
+  .nav-back{display:none}
+  .subnav-sep{display:none}
+  .subnav-link{padding:8px 10px}
+}
 </style>
 </head>
 <body>
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
+
+<!-- SUBNAV -->
+<nav class="subnav" aria-label="Site navigation" id="subnav">
+  <a href="https://pushdirect.network" class="subnav-link">Home</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/offers" class="subnav-link">Offers</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/deal-alerts" class="subnav-link">Deal Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/crypto-alerts" class="subnav-link">Crypto Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/subscription" class="subnav-link active">Subscribe</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/faq" class="subnav-link">FAQ</a>
+</nav>
 
 <nav id="mainNav">
   <a href="/" class="nav-logo">
@@ -205,7 +264,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
     <div><div class="logo-text">PUSHDIRECT</div><span class="logo-sub">Promotion Network</span></div>
   </a>
   <div class="nav-r">
-    <a href="/" class="nav-link">← Home</a>
+    <a href="/" class="nav-back">← Home</a>
     <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
   </div>
 </nav>
@@ -326,7 +385,24 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 </div>
 
 <script>
-window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',scrollY>50),{passive:true});
+let raf=false;
+window.addEventListener('scroll',()=>{if(!raf){requestAnimationFrame(()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',scrollY>50);
+  raf=false;
+});raf=true;}},{passive:true});
+/* ═══ SUBNAV HOVER REVEAL ═══ */
+let subnavHovered=false;
+const subnavEl=document.getElementById('subnav');
+const mainNavEl=document.getElementById('mainNav');
+function showSubnav(){subnavHovered=true;subnavEl.classList.remove('subnav--hidden')}
+function hideSubnav(){subnavHovered=false;if(window.scrollY>10)subnavEl.classList.add('subnav--hidden')}
+mainNavEl.addEventListener('mouseenter',showSubnav);
+mainNavEl.addEventListener('mouseleave',hideSubnav);
+subnavEl.addEventListener('mouseenter',showSubnav);
+subnavEl.addEventListener('mouseleave',hideSubnav);
+window.addEventListener('scroll',()=>{
+  if(!subnavHovered)subnavEl.classList.toggle('subnav--hidden',window.scrollY>10);
+},{passive:true});
 
 /* ═══ PUSH SUBSCRIPTION ═══ */
 function updatePushStatus() {
