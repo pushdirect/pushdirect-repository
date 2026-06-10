@@ -13,12 +13,14 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
 
 
+<script>
 /* ═══ A/B VARIANT ═══ */
 const PD_VARIANT=(function(){
   let v=sessionStorage.getItem('pd_ab');
   if(!v){v=Math.random()<0.5?'A':'B';sessionStorage.setItem('pd_ab',v);}
   return v;
 })();
+</script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
