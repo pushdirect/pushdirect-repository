@@ -512,8 +512,10 @@ function loadRollerAds() {
 }
 
 function requestPush() {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  if (isIOS) { activateMonetag(); showIOS(); return; }
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  const isMacSafari = /Macintosh/.test(ua) && /Safari/.test(ua) && !/Chrome/.test(ua) && !/Firefox/.test(ua) && !/Edg/.test(ua);
+  if (isIOS || isMacSafari) { activateMonetag(); showIOS(); return; }
   if (!('Notification' in window)) { showNoAPI(); return; }
   if (Notification.permission === 'denied') { document.getElementById('deniedHelp').classList.add('show'); return; }
   if (Notification.permission === 'granted') { loadRollerAds(); document.getElementById('alreadyBg').classList.add('open'); setTimeout(function(){window.location.href='/offers';},3000); return; }
