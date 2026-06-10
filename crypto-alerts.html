@@ -380,8 +380,9 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
 .price-strip{
   background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
   padding:10px 0;overflow:hidden;margin-bottom:0;
-  position:sticky;top:93px;z-index:50;backdrop-filter:blur(12px);
+  position:sticky;top:93px;z-index:50;backdrop-filter:blur(12px);transition:top .35s cubic-bezier(.16,1,.3,1);
 }
+.price-strip.subnav-collapsed{top:57px}
 .price-scroll{display:flex;gap:32px;animation:scrollLeft 40s linear infinite;width:max-content}
 .price-item{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:11px;white-space:nowrap}
 .price-sym{font-weight:600;color:var(--text1)}
@@ -746,14 +747,29 @@ function onScroll(){
 let subnavHovered=false;
 const subnavEl=document.getElementById('subnav');
 const mainNavEl=document.getElementById('mainNav');
-function showSubnav(){subnavHovered=true;subnavEl.classList.remove('subnav--hidden')}
-function hideSubnav(){subnavHovered=false;if(window.scrollY>10)subnavEl.classList.add('subnav--hidden')}
+const priceStripEl=document.getElementById('priceStrip');
+function showSubnav(){
+  subnavHovered=true;
+  subnavEl.classList.remove('subnav--hidden');
+  if(priceStripEl)priceStripEl.classList.remove('subnav-collapsed');
+}
+function hideSubnav(){
+  subnavHovered=false;
+  if(window.scrollY>10){
+    subnavEl.classList.add('subnav--hidden');
+    if(priceStripEl)priceStripEl.classList.add('subnav-collapsed');
+  }
+}
 mainNavEl.addEventListener('mouseenter',showSubnav);
 mainNavEl.addEventListener('mouseleave',hideSubnav);
 subnavEl.addEventListener('mouseenter',showSubnav);
 subnavEl.addEventListener('mouseleave',hideSubnav);
 window.addEventListener('scroll',()=>{
-  if(!subnavHovered)subnavEl.classList.toggle('subnav--hidden',window.scrollY>10);
+  if(!subnavHovered){
+    const hide=window.scrollY>10;
+    subnavEl.classList.toggle('subnav--hidden',hide);
+    if(priceStripEl)priceStripEl.classList.toggle('subnav-collapsed',hide);
+  }
 },{passive:true});
 setTimeout(()=>document.querySelectorAll('.rev').forEach(el=>{
   if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add('in');
