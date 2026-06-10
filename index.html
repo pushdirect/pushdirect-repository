@@ -1486,6 +1486,31 @@ localStorage.setItem('pd_v',vc);
 /* ═══ ENGAGEMENT ═══ */
 window.addEventListener('scroll',()=>{S.score=Math.max(S.score,8)},{once:true,passive:true});
 document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:true});
+
+/* ═══ GDPR CONSENT LOGIC ═══ */
+(function(){
+  var key='pd_consent';
+  var stored=localStorage.getItem(key);
+  if(stored==='1'){return;}
+  if(stored==='0'){window['ga-disable-G-08QR9KY980']=true;return;}
+  window['ga-disable-G-08QR9KY980']=true;
+  setTimeout(function(){
+    var bar=document.getElementById('consentBar');
+    if(bar)bar.classList.add('visible');
+  },1500);
+})();
+function handleConsent(accepted){
+  localStorage.setItem('pd_consent',accepted?'1':'0');
+  var bar=document.getElementById('consentBar');
+  if(bar)bar.classList.remove('visible');
+  if(accepted){
+    window['ga-disable-G-08QR9KY980']=false;
+    if(typeof gtag!=='undefined'){
+      gtag('consent','update',{analytics_storage:'granted'});
+      gtag('event','page_view');
+    }
+  }
+}
 </script>
 
 <!-- Monetag IPP: injected on-demand for iOS via activateMonetag() -->
