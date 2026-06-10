@@ -8,13 +8,10 @@ self.opts = {
 }
 importScripts("https://push-sdk.com/f/sw.js")
 
-// ── Monetag (In-Page Push + verification) ──
-self.options = {
-    "domain": "3nbf4.com",
-    "zoneId": 11024677
-}
-self.lary = ""
-importScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw')
+// ── Monetag (In-Page Push) ──
+// IPP renders entirely client-side via the page tag (see activateMonetag()).
+// It needs NO service worker. A second push SW here conflicts with RollerAds and,
+// if its remote import 404s, aborts SW installation — so it is intentionally omitted.
 
 // ── PWA: Cache (same-origin only, does not interfere with push/ads) ──
 const CACHE = 'pd-v1';
