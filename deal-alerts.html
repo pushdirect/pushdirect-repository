@@ -715,10 +715,11 @@ function requestPushDirect(){
   showPreperm();
 }
 
-function showSuccess(){S.subscribed=true;document.getElementById('successBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible')}
-function closeSuccess(){document.getElementById('successBg').classList.remove('open')}
-function showAlready(){document.getElementById('alreadyBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible')}
-function closeAlready(){document.getElementById('alreadyBg').classList.remove('open')}
+function showSuccess(){S.subscribed=true;document.getElementById('successBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible');setTimeout(redirectToOffers,4000);}
+function closeSuccess(){document.getElementById('successBg').classList.remove('open');redirectToOffers();}
+function showAlready(){document.getElementById('alreadyBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible');setTimeout(redirectToOffers,3000);}
+function closeAlready(){document.getElementById('alreadyBg').classList.remove('open');redirectToOffers();}
+function redirectToOffers(){window.location.href='/offers';}
 function showDeniedHelp(){document.getElementById('deniedBg').classList.add('open')}
 function closeDenied(){document.getElementById('deniedBg').classList.remove('open')}
 
