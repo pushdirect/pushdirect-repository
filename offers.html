@@ -850,8 +850,6 @@ const html=document.documentElement;
 })();
 
 /* ═══ GDPR ═══ */
-(function(){var k='pd_consent',s=localStorage.getItem(k);if(s==='1')return;if(s==='0'){window['ga-disable-G-08QR9KY980']=true;return;}window['ga-disable-G-08QR9KY980']=true;setTimeout(function(){var b=document.getElementById('consentBar');if(b)b.classList.add('visible');},1500);})();
-function handleConsent(a){localStorage.setItem('pd_consent',a?'1':'0');var b=document.getElementById('consentBar');if(b)b.classList.remove('visible');if(a){window['ga-disable-G-08QR9KY980']=false;if(typeof gtag!=='undefined'){gtag('consent','update',{analytics_storage:'granted'});gtag('event','page_view');}}}
 </script>
 
 
