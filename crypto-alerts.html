@@ -662,6 +662,7 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
     <a href="/subscription">Subscribe</a>
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms">Terms</a>
+    <a href="/contact">Contact</a>
   </div>
   <p class="foot-copy">© 2026 PushDirect Promotion Network · pushdirect.network · Free crypto alerts, always.</p>
 </footer>
@@ -1132,7 +1133,52 @@ setInterval(() => { if (allAlerts.length > 0) renderFeed(); }, 30000);
     syncIcon();
   });
 })();
+
+/* ═══ GDPR CONSENT LOGIC ═══ */
+(function(){
+  var key='pd_consent';
+  var stored=localStorage.getItem(key);
+  if(stored==='1'){return;}
+  if(stored==='0'){window['ga-disable-G-08QR9KY980']=true;return;}
+  window['ga-disable-G-08QR9KY980']=true;
+  setTimeout(function(){
+    var bar=document.getElementById('consentBar');
+    if(bar)bar.classList.add('visible');
+  },1500);
+})();
+function handleConsent(accepted){
+  localStorage.setItem('pd_consent',accepted?'1':'0');
+  var bar=document.getElementById('consentBar');
+  if(bar)bar.classList.remove('visible');
+  if(accepted){
+    window['ga-disable-G-08QR9KY980']=false;
+    if(typeof gtag!=='undefined'){
+      gtag('consent','update',{analytics_storage:'granted'});
+      gtag('event','page_view');
+    }
+  }
+}
 </script>
+
+
+<!-- iOS OVERLAY -->
+<div class="overlay-bg" id="iosBg">
+  <div class="overlay-card already">
+    <div class="already-ring">📱</div>
+    <h2 class="ov-title">One more step for iPhone</h2>
+    <p class="ov-sub">Tap <strong>Share</strong> → <strong>Add to Home Screen</strong>, then open PushDirect from your home screen and tap Enable Alerts.</p>
+    <button class="btn-ov-primary" onclick="closeIOS()">Got it</button>
+  </div>
+</div>
+<!-- NO-API OVERLAY -->
+<div class="overlay-bg" id="noApiBg">
+  <div class="overlay-card denied">
+    <div class="denied-ring">🔔</div>
+    <h2 class="ov-title">Browser not supported</h2>
+    <p class="ov-sub">Use Chrome, Firefox, or Edge — or <a href="/subscription" style="color:var(--cream-d,#c9aa82)">subscribe by email</a>.</p>
+    <button class="btn-ov-sec" onclick="closeNoAPI()">Dismiss</button>
+  </div>
+</div>
 
 <!-- ═══ GDPR CONSENT BANNER ═══ -->
 <div class="consent-bar" id="consentBar" role="dialog" aria-label="Cookie consent" aria-live="polite">
