@@ -1299,7 +1299,22 @@ function requestPushDirect(){
   const ua=navigator.userAgent;
   const isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
   const isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
-  if(isIOS||isMacSafari){track(isIOS?'ios_ipp':'mac_safari_ipp');activateMonetag();showIOS();return;}
+  if(isIOS){
+    // Detect if running as installed PWA (navigator.standalone = true on iOS)
+    const isPWA=!!navigator.standalone;
+    // Extract iOS version
+    const iosVer=(function(){const m=ua.match(/OS (\d+)_(\d+)/);return m?parseFloat(m[1]+'.'+m[2]):0;})();
+    if(isPWA&&iosVer>=16.4){
+      // iOS 16.4+ PWA supports real Web Push — fall through to normal flow below
+    } else if(isPWA&&iosVer>0&&iosVer<16.4){
+      // PWA but iOS too old for Web Push
+      track('ios_pwa_old_ver',{ver:iosVer});showIOSOld();return;
+    } else {
+      // iOS browser (not PWA) — prompt to add to Home Screen for real push
+      track('ios_browser_ipp');activateMonetag();showIOSBrowser();return;
+    }
+  }
+  if(isMacSafari){track('mac_safari_ipp');activateMonetag();showIOS();return;}
 
   // No Notification API (old browser)
   if(!('Notification' in window)){track('no_notif_api');showNoAPI();return;}
@@ -1423,6 +1438,16 @@ function showIOS(){
   document.getElementById('iosBg').classList.add('open');
   document.getElementById('stickyBar').classList.remove('visible');
 }
+function showIOSBrowser(){
+  S.subscribed=true;
+  document.getElementById('iosBrowserBg').classList.add('open');
+  document.getElementById('stickyBar')&&document.getElementById('stickyBar').classList.remove('visible');
+}
+function closeIOSBrowser(){document.getElementById('iosBrowserBg').classList.remove('open');}
+function showIOSOld(){
+  document.getElementById('iosOldBg').classList.add('open');
+}
+function closeIOSOld(){document.getElementById('iosOldBg').classList.remove('open');}
 function closeIOS(){document.getElementById('iosBg').classList.remove('open')}
 function showNoAPI(){
   document.getElementById('noApiBg').classList.add('open');
@@ -1633,6 +1658,34 @@ if('serviceWorker' in navigator){
   });
   mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
 })();
+
+<!-- ═══ iOS BROWSER OVERLAY — Add to Home Screen ═══ -->
+<div class="overlay-bg" role="dialog" aria-modal="true" id="iosBrowserBg">
+  <div class="overlay-card already">
+    <div class="already-ring">📲</div>
+    <h2 class="ov-title">One step to unlock alerts</h2>
+    <p class="ov-sub">iOS only allows push notifications from installed apps. Add PushDirect to your Home Screen to enable instant deal alerts — it takes 5 seconds.</p>
+    <div class="ov-preview" style="border:1px solid rgba(232,213,176,.3);text-align:left;padding:12px 14px;border-radius:10px;margin:12px 0">
+      <div class="ov-preview-text" style="font-size:13px;line-height:1.6">
+        <strong>How to add:</strong><br>
+        1. Tap the <strong>Share</strong> button (□↑) at the bottom of Safari<br>
+        2. Scroll down and tap <strong>Add to Home Screen</strong><br>
+        3. Tap <strong>Add</strong> — then open the app and tap Enable
+      </div>
+    </div>
+    <button class="btn-ov-primary" onclick="closeIOSBrowser()">Got it</button>
+  </div>
+</div>
+
+<!-- ═══ iOS OLD VERSION OVERLAY ═══ -->
+<div class="overlay-bg" role="dialog" aria-modal="true" id="iosOldBg">
+  <div class="overlay-card already">
+    <div class="already-ring">⚙️</div>
+    <h2 class="ov-title">Update iOS to enable push</h2>
+    <p class="ov-sub">Push notifications for web apps require iOS 16.4 or later. Go to Settings → General → Software Update to upgrade, then return here to subscribe.</p>
+    <button class="btn-ov-primary" onclick="closeIOSOld()">Got it</button>
+  </div>
+</div>
 </body>
 </html>
 
