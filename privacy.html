@@ -11,6 +11,14 @@
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1a1916">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
+
+
+/* ═══ A/B VARIANT ═══ */
+const PD_VARIANT=(function(){
+  let v=sessionStorage.getItem('pd_ab');
+  if(!v){v=Math.random()<0.5?'A':'B';sessionStorage.setItem('pd_ab',v);}
+  return v;
+})();
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -86,9 +94,61 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 .foot-links a:hover{color:var(--text1)}
 .foot-copy{font-family:var(--fm);font-size:12px;color:var(--text3);line-height:1.7}
 
+
+.sr-skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.sr-skip:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;padding:8px 16px;background:var(--brand,#1a1916);color:#fff;font-family:var(--fm,sans-serif);font-size:13px;font-weight:600;border-radius:6px;z-index:10000;text-decoration:none;outline:2px solid #fff}
+
+/* ═══ STICKY SUBSCRIBE BAR ═══ */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:90;padding:16px 20px 28px;background:linear-gradient(to top,rgba(255,255,255,1) 65%,transparent);display:flex;flex-direction:column;align-items:center;gap:6px;transform:translateY(100%);transition:transform .5s cubic-bezier(.16,1,.3,1);pointer-events:none;}
+[data-theme="dark"] .sticky-bar{background:linear-gradient(to top,rgba(12,11,9,1) 65%,transparent)}
+.sticky-bar.visible{transform:translateY(0);pointer-events:all}
+.sticky-bar .btn-sub{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#f97316,#ea6f0e);color:#fff;font-family:var(--fd,'Poppins',sans-serif);font-weight:700;font-size:16px;padding:16px 36px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 8px 32px rgba(249,115,22,.28);width:100%;max-width:420px;justify-content:center;}
+.sticky-tag{font-family:var(--fm,'Inter',sans-serif);font-size:11px;color:var(--text3,#9a8f7e);font-weight:500}
+/* ═══ MINIMAL OVERLAYS ═══ */
+.ovbg{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;background:rgba(12,11,9,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);opacity:0;pointer-events:none;transition:opacity .4s;padding:24px;}
+.ovbg.open{opacity:1;pointer-events:all}
+.ovc{background:#fff;border-radius:28px;padding:40px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.25);transform:scale(.93);transition:transform .45s cubic-bezier(.16,1,.3,1);}
+[data-theme="dark"] .ovc{background:#1a1814}
+.ovbg.open .ovc{transform:scale(1)}
+.ovring{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 18px;}
+.ovring.already{background:linear-gradient(135deg,#f2e6cb,#c9aa82);box-shadow:0 0 32px rgba(232,213,176,.3);}
+.ovring.denied{background:linear-gradient(135deg,#e07b6a,#c05a4a);box-shadow:0 0 28px rgba(224,123,106,.2);}
+.ovring.ios{background:linear-gradient(135deg,#f2e6cb,#c9aa82);}
+.ov-h{font-family:var(--fd,'Poppins',sans-serif);font-weight:800;font-size:22px;margin-bottom:8px;letter-spacing:-.03em;color:var(--text1,#1a1916)}
+.ov-p{font-size:14px;color:var(--text2,#5a5248);line-height:1.6;margin-bottom:20px}
+.ov-steps{background:var(--bg2,#faf9f7);border-radius:12px;padding:14px;margin-bottom:16px;display:flex;flex-direction:column;gap:8px;text-align:left;border:1px solid var(--border,rgba(26,25,22,.1))}
+.ov-step{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text2,#5a5248)}
+.ov-num{width:20px;height:20px;border-radius:50%;background:rgba(224,123,106,.12);border:1px solid rgba(224,123,106,.28);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#e07b6a;font-weight:700;}
+.btn-ovp{width:100%;background:linear-gradient(135deg,#f97316,#ea6f0e);color:#fff;font-family:var(--fd,'Poppins',sans-serif);font-weight:700;font-size:15px;padding:14px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(249,115,22,.25);transition:opacity .2s}
+.btn-ovp:hover{opacity:.9}
+.btn-ovs{width:100%;background:none;border:1px solid var(--border-s,rgba(26,25,22,.2));color:var(--text2,#5a5248);font-size:14px;padding:12px;border-radius:50px;cursor:pointer;transition:all .2s;font-family:var(--fm,'Inter',sans-serif);margin-top:8px}
+.email-row{display:flex;gap:8px;margin-top:10px}
+.email-row input{flex:1;padding:10px 14px;border:1px solid var(--border-s,rgba(26,25,22,.2));border-radius:50px;font-size:13px;font-family:var(--fm,'Inter',sans-serif);background:var(--bg2,#faf9f7);color:var(--text1,#1a1916);outline:none;min-width:0}
+.email-row button{padding:10px 16px;border-radius:50px;background:var(--brand,#1a1916);color:#fff;border:none;cursor:pointer;font-family:var(--fd,'Poppins',sans-serif);font-weight:700;font-size:13px;white-space:nowrap}
 </style>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PushDirect Promotion Network">
+<meta property="og:title" content="Privacy Policy — PushDirect Promotion Network">
+<meta property="og:description" content="PushDirect privacy policy — how we handle push notification tokens, analytics, and subscriber data.">
+<meta property="og:url" content="https://pushdirect.network/privacy">
+<meta property="og:image" content="https://pushdirect.network/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@pushdirect">
+<meta name="twitter:title" content="Privacy Policy — PushDirect Promotion Network">
+<meta name="twitter:description" content="PushDirect privacy policy — how we handle push notification tokens, analytics, and subscriber data.">
+<meta name="twitter:image" content="https://pushdirect.network/og-image.png">
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://pushdirect.network/#organization", "name": "PushDirect Promotion Network", "url": "https://pushdirect.network"}, {"@type": "WebSite", "@id": "https://pushdirect.network/#website", "url": "https://pushdirect.network", "name": "PushDirect Promotion Network", "publisher": {"@id": "https://pushdirect.network/#organization"}}, {"@type": "WebPage", "@id": "https://pushdirect.network/privacy#webpage", "url": "https://pushdirect.network/privacy", "name": "Privacy Policy — PushDirect Promotion Network", "description": "PushDirect privacy policy — how we handle push notification tokens, analytics, and subscriber data.", "isPartOf": {"@id": "https://pushdirect.network/#website"}}]}
+</script>
+
 </head>
 <body>
+<div id="main-content" style="position:absolute;top:0"></div>
+<a href="#main-content" class="sr-skip">Skip to content</a>
 <nav id="mainNav">
   <a href="/" class="nav-logo">
     <img src="/icons/logo.png" width="36" height="25" alt="PushDirect" style="display:block;object-fit:contain">
@@ -266,5 +326,147 @@ window.addEventListener('scroll',()=>document.getElementById('mainNav').classLis
 
 </div>
 
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
+</script>
+
+/* ═══ MODAL ACCESSIBILITY: aria-modal, focus trap, Escape ═══ */
+(function(){
+  const FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])';
+  function trapFocus(modal){
+    const els=[...modal.querySelectorAll(FOCUSABLE)];
+    if(!els.length)return;
+    els[0].focus();
+    modal.addEventListener('keydown',function ft(e){
+      if(e.key==='Tab'){
+        const fi=els[0],la=els[els.length-1];
+        if(e.shiftKey&&document.activeElement===fi){e.preventDefault();la.focus();}
+        else if(!e.shiftKey&&document.activeElement===la){e.preventDefault();fi.focus();}
+      }
+      if(e.key==='Escape'){
+        modal.classList.remove('open');
+        modal.removeEventListener('keydown',ft);
+      }
+    });
+  }
+  const mo=new MutationObserver(muts=>{
+    muts.forEach(m=>{
+      m.target.querySelectorAll('.overlay-bg.open,.preperm-bg.open,.exit-bg.open').forEach(modal=>{
+        if(!modal.dataset.a11yInit){
+          modal.dataset.a11yInit='1';
+          modal.setAttribute('role','dialog');
+          modal.setAttribute('aria-modal','true');
+          const h=modal.querySelector('.ov-title,.preperm-title,.exit-h');
+          if(h){if(!h.id)h.id='modal-title-'+Math.random().toString(36).slice(2,7);modal.setAttribute('aria-labelledby',h.id);}
+          trapFocus(modal);
+        }
+      });
+    });
+  });
+  mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+})();
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="pdStickyBar">
+  <button class="btn-sub" onclick="pdRequestPush()" aria-label="Enable deal alerts from PushDirect">
+    <img src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;filter:brightness(0) invert(1)">
+    Enable Direct Alerts
+  </button>
+  <div class="sticky-tag">Join 2.3M+ · Cancel anytime</div>
+</div>
+
+<!-- ALREADY OVERLAY -->
+<div class="ovbg" id="pdAlreadyBg" role="dialog" aria-modal="true" aria-labelledby="pdAlreadyTitle">
+  <div class="ovc">
+    <div class="ovring already">⚡</div>
+    <h2 class="ov-h" id="pdAlreadyTitle">You're already in.</h2>
+    <p class="ov-p">This device is already receiving PushDirect alerts.</p>
+    <button class="btn-ovp" onclick="document.getElementById('pdAlreadyBg').classList.remove('open')">Got it</button>
+  </div>
+</div>
+
+<!-- DENIED OVERLAY -->
+<div class="ovbg" id="pdDeniedBg" role="dialog" aria-modal="true" aria-labelledby="pdDeniedTitle">
+  <div class="ovc">
+    <div class="ovring denied">🔔</div>
+    <h2 class="ov-h" id="pdDeniedTitle">Notifications blocked</h2>
+    <p class="ov-p">Re-enable in your browser settings, or get alerts by email:</p>
+    <div class="ov-steps">
+      <div class="ov-step"><div class="ov-num">1</div><span>Click the <strong>site settings icon</strong> in your address bar</span></div>
+      <div class="ov-step"><div class="ov-num">2</div><span>Find <strong>Notifications</strong> → set to <strong>Allow</strong></span></div>
+      <div class="ov-step"><div class="ov-num">3</div><span><strong>Refresh</strong> and tap the button again</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--text3,#9a8f7e);margin-bottom:6px">Or subscribe by email:</p>
+    <form id="pdDeniedForm" onsubmit="pdSubmitEmail(event)" class="email-row">
+      <input type="email" placeholder="your@email.com" required id="pdDeniedEmail">
+      <button type="submit">Subscribe</button>
+    </form>
+    <div id="pdDeniedThanks" style="display:none;font-size:13px;color:var(--taupe,#9a8f7e);margin-top:8px">✓ Done — check your inbox.</div>
+    <button class="btn-ovs" onclick="document.getElementById('pdDeniedBg').classList.remove('open')">Dismiss</button>
+  </div>
+</div>
+
+<!-- iOS OVERLAY -->
+<div class="ovbg" id="pdIosBg" role="dialog" aria-modal="true" aria-labelledby="pdIosTitle">
+  <div class="ovc">
+    <div class="ovring ios">📱</div>
+    <h2 class="ov-h" id="pdIosTitle">We'll alert you differently.</h2>
+    <p class="ov-p">iOS doesn't support standard web push from browsers. PushDirect will use an alternative method — no app needed.</p>
+    <button class="btn-ovp" onclick="document.getElementById('pdIosBg').classList.remove('open')">Got it</button>
+  </div>
+</div>
+<script>
+/* ═══ PUSH STACK ═══ */
+(function(){
+  const granted='Notification' in window&&Notification.permission==='granted';
+  if(!granted){
+    window.addEventListener('scroll',function(){
+      const sb=document.getElementById('pdStickyBar');
+      if(!sb)return;
+      const p=Math.round((window.scrollY/(document.body.scrollHeight-window.innerHeight||1))*100);
+      sb.classList.toggle('visible',p>20);
+    },{passive:true});
+  }
+})();
+let _pdRaLoaded=false;
+function pdLoadRA(){
+  if(_pdRaLoaded)return;_pdRaLoaded=true;
+  const url=new URL(window.location.href);
+  const s=document.createElement('script');s.dataset.cfasync='false';
+  window.raOptions={zoneID:2822452,extClickID:url.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'',subID1:url.searchParams.get('source_id')||'',
+    actions:{
+      onPermissionGranted:function(){if(typeof gtag!=='undefined')gtag('event','subscribed_rollerads',{page:location.pathname,pd_variant:typeof PD_VARIANT!=='undefined'?PD_VARIANT:'?'});document.getElementById('pdStickyBar')&&document.getElementById('pdStickyBar').classList.remove('visible');document.getElementById('pdAlreadyBg').classList.add('open');},
+      onPermissionDenied:function(){document.getElementById('pdDeniedBg').classList.add('open');},
+      onAlreadySubscribed:function(){document.getElementById('pdAlreadyBg').classList.add('open');},
+      onError:function(){if('Notification' in window&&Notification.permission==='granted')document.getElementById('pdAlreadyBg').classList.add('open');else document.getElementById('pdDeniedBg').classList.add('open');}
+    }};
+  s.src='https://push-sdk.com/f/sdk.js?z=2822452';document.head.appendChild(s);
+}
+function pdActivateMonetag(){
+  if(window._pdMtLoaded)return;window._pdMtLoaded=true;
+  const s=document.createElement('script');s.src='https://nap5k.com/tag.min.js';s.dataset.zone='11024677';document.body.appendChild(s);
+}
+function pdRequestPush(){
+  const ua=navigator.userAgent;
+  const isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  const isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome|Firefox|Edg/.test(ua);
+  if(isIOS||isMacSafari){pdActivateMonetag();document.getElementById('pdIosBg').classList.add('open');return;}
+  if(!('Notification' in window))return;
+  if(Notification.permission==='denied'){document.getElementById('pdDeniedBg').classList.add('open');return;}
+  if(Notification.permission==='granted'){document.getElementById('pdAlreadyBg').classList.add('open');pdLoadRA();return;}
+  pdLoadRA();
+}
+function pdSubmitEmail(e){
+  e.preventDefault();
+  const em=document.getElementById('pdDeniedEmail').value.trim();
+  if(!em)return;
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'a4b6220e-4b69-41bd-966b-59d0f1014186',email:em,subject:'PushDirect email signup ('+location.pathname+')',message:'Email: '+em})}).then(r=>r.json()).then(d=>{if(d.success){document.getElementById('pdDeniedForm').style.display='none';document.getElementById('pdDeniedThanks').style.display='block';}}).catch(()=>{});
+}
+</script>
 </body>
 </html>
