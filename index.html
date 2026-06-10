@@ -1345,11 +1345,10 @@ function activateMonetag(){
 // The click_id captured from the landing URL is passed as the conversion token.
 function fireBeMob(){
   try{
-    const url=new URL(window.location.href);
-    const clickID=url.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'';
-    if(!clickID)return; // No tracked click — organic, skip postback
+    const clickID=sessionStorage.getItem('pd_click_id')||new URL(window.location.href).searchParams.get('click_id')||'';
+    if(!clickID)return;
     const px=new Image();
-    px.src='https://in.track.bemob.com/click/goal?clickid='+encodeURIComponent(clickID)+'&goal=1';
+    px.src='https://udlch.bemobtrcks.com/postback?cid='+encodeURIComponent(clickID);
   }catch(e){}
 }
 
