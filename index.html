@@ -1251,9 +1251,10 @@ function requestPushDirect(){
   // Hard blocked — skip everything, go straight to help screen
   if(Notification.permission==='denied'){showDeniedHelp();return;}
 
-  // Already granted — re-register silently via SDK (callback fires onAlreadySubscribed)
+  // Already granted — show confirmation immediately, re-register in background
   if(Notification.permission==='granted'){
     track('allow_click_already_granted');
+    showAlready();
     loadRollerAds();
     return;
   }
