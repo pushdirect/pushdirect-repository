@@ -710,7 +710,7 @@ function requestPushDirect(){
   if(isIOS){activateMonetag();showIOS();return}
   if(!('Notification' in window)){showNoAPI();return}
   if(Notification.permission==='denied'){showDeniedHelp();return}
-  if(Notification.permission==='granted'){loadRollerAds();return}
+  if(Notification.permission==='granted'){showAlready();loadRollerAds();return}
   track('allow_click_deals');
   showPreperm();
 }
