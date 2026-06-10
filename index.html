@@ -1351,7 +1351,11 @@ let _timeOnPage=0;
 const _timeInterval=setInterval(()=>{
   _timeOnPage+=5;
   const scrollMet=_isMobile?S._s60:S._s80;
+  // iOS browser (not PWA) can't do Web Push — skip proactive trigger
+  const _proUA=navigator.userAgent;
+  const _proIsIOSBrowser=/iPad|iPhone|iPod/.test(_proUA)&&!window.MSStream&&!navigator.standalone;
   if(_timeOnPage>=_timeThresh&&scrollMet&&!_proactiveFired&&!S.subscribed
+    &&!_proIsIOSBrowser
     &&'Notification' in window&&Notification.permission==='default'){
     _proactiveFired=true;
     clearInterval(_timeInterval);
