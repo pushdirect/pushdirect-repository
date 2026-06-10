@@ -325,6 +325,37 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
   .subnav-sep{display:none}
   .subnav-link{padding:8px 10px}
 }
+
+/* ═══ CROSSLINK BOX ═══ */
+.crosslink-box{
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px 36px;
+  margin-bottom:56px;
+  flex-wrap:wrap;
+}
+[data-theme="dark"] .crosslink-box{background:var(--surface);border-color:var(--border)}
+.crosslink-left{flex:1;min-width:220px}
+.crosslink-h{
+  font-family:var(--fd);font-weight:800;font-size:clamp(18px,2.5vw,24px);
+  letter-spacing:-.02em;color:var(--text1);margin-bottom:8px;line-height:1.2;
+}
+.crosslink-sub{font-size:15px;color:var(--text2);line-height:1.6;max-width:460px}
+.crosslink-btn{
+  display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
+  background:var(--text1);color:var(--bg);
+  font-family:var(--fd);font-weight:700;font-size:15px;letter-spacing:.02em;
+  padding:13px 28px;border-radius:50px;text-decoration:none;
+  transition:opacity .2s,transform .2s;
+}
+.crosslink-btn:hover{opacity:.85;transform:translateX(3px)}
+[data-theme="dark"] .crosslink-btn{background:var(--cream);color:#0c0b09}
+@media(max-width:600px){
+  .crosslink-box{flex-direction:column;align-items:flex-start;padding:24px}
+  .crosslink-btn{width:100%;justify-content:center}
+}
 </style>
 </head>
 <body>
@@ -454,6 +485,21 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
 </section>
 
 <!-- CTA BANNER -->
+<!-- CROSS-LINK → OFFERS -->
+<div class="wrap">
+  <div class="crosslink-box rev">
+    <div class="crosslink-left">
+      <div class="sec-tag" style="margin-bottom:10px">Current offers</div>
+      <h3 class="crosslink-h">Ready to claim something now?</h3>
+      <p class="crosslink-sub">Browse the live offers directory — sweepstakes, gaming, finance, travel and more. Curated and updated weekly.</p>
+    </div>
+    <a href="/offers" class="crosslink-btn">
+      Browse offers
+      <svg width="14" height="10" viewBox="0 0 28 20" fill="none"><polygon points="1,10 22,2 18,11" fill="currentColor" opacity=".9"/><polygon points="9,10 22,2 18,11" fill="currentColor" opacity=".5"/></svg>
+    </a>
+  </div>
+</div>
+
 <div class="wrap">
   <div class="cta-banner rev">
     <h2>The next flash sale<br>starts in hours.</h2>
