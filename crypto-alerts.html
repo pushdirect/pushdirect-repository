@@ -369,6 +369,12 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
   font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
   padding:2px 8px;border-radius:10px;border:1px solid;font-weight:600;margin-left:auto;
 }
+.alert-subtitle{font-size:12px;color:var(--text3);margin-bottom:6px;font-style:italic}
+.alert-src{
+  font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text3);background:var(--surface);padding:2px 7px;
+  border-radius:8px;border:1px solid var(--border);
+}
 
 /* Price ticker strip */
 .price-strip{
@@ -898,54 +904,73 @@ function formatPct(n) {
 function renderAlert(alert) {
   const sev  = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.medium;
   const type = TYPE_CONFIG[alert.type] || { icon:'◈', label: alert.type, accent:'#9a8f7e' };
-  const assetIcon = ASSET_ICONS[alert.asset] || ASSET_ICONS.default;
-  const d = alert.data || {};
+  const d    = alert.data || {};
 
-  /* ── Direction badge for price moves ── */
+  /* ── For trending: asset is a comma-joined string of coin names, not a single asset ── */
+  const isTrending = alert.type === 'trending';
+  const trendCoins = isTrending
+    ? (d.coins || alert.asset.split(',').map(s => s.trim()))
+    : null;
+
+  /* ── Asset display: single coin icon or trending fire ── */
+  const primaryAsset = isTrending ? (trendCoins[0] || 'TREND') : alert.asset;
+  const assetIcon    = isTrending ? '🔥' : (ASSET_ICONS[alert.asset] || ASSET_ICONS.default);
+  const assetLabel   = isTrending ? 'Trending Now' : alert.asset;
+
+  /* ── Direction badge for price breakouts ── */
   let dirBadge = '';
   if (alert.type === 'price_breakout' && d.pctChange !== undefined) {
     const up = d.pctChange >= 0;
-    dirBadge = `<span class="alert-dir ${up ? 'up' : 'down'}">${up ? '▲' : '▼'} ${Math.abs(d.pctChange).toFixed(2)}%</span>`;
+    const window = d.window ? ` ${d.window}` : '';
+    dirBadge = `<span class="alert-dir ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(d.pctChange).toFixed(2)}%${window}</span>`;
   }
 
   /* ── Price chip ── */
-  let priceChip = '';
-  if (d.price) {
-    priceChip = `<span class="alert-price">${formatPrice(d.price)}</span>`;
-  }
+  const priceChip = d.price
+    ? `<span class="alert-price">${formatPrice(d.price)}</span>`
+    : '';
 
-  /* ── Volume multiplier chip ── */
-  let volChip = '';
-  if (alert.type === 'volume_spike' && d.multiplier) {
-    volChip = `<span class="alert-vol">${d.multiplier.toFixed(1)}× avg vol</span>`;
-  }
+  /* ── Volume chip ── */
+  const volChip = (alert.type === 'volume_spike' && d.multiplier)
+    ? `<span class="alert-vol">${d.multiplier.toFixed(1)}× avg vol</span>`
+    : '';
 
   /* ── Volatility chip ── */
-  let rangeChip = '';
-  if (alert.type === 'volatility_spike' && d.rangePct) {
-    rangeChip = `<span class="alert-vol">${d.rangePct.toFixed(1)}% range</span>`;
-  }
+  const rangeChip = (alert.type === 'volatility_spike' && d.rangePct)
+    ? `<span class="alert-vol">${d.rangePct.toFixed(1)}% candle range</span>`
+    : '';
 
-  /* ── Trending coins ── */
-  let trendChips = '';
-  if (alert.type === 'trending' && d.coins) {
-    trendChips = d.coins.slice(0,5).map(coin =>
-      `<span class="alert-coin">${coin}</span>`
-    ).join('');
-  }
+  /* ── Source chip ── */
+  const srcChip = alert.source
+    ? `<span class="alert-src">${alert.source}</span>`
+    : '';
+
+  /* ── Trending: show each coin as its own pill ── */
+  const trendChips = isTrending && trendCoins
+    ? trendCoins.slice(0,6).map(coin => {
+        const icon = ASSET_ICONS[coin] || '';
+        return `<span class="alert-coin">${icon ? icon+' ' : ''}${coin}</span>`;
+      }).join('')
+    : '';
+
+  /* ── Trending subtitle: explain what it means ── */
+  const trendSubtitle = isTrending
+    ? `<div class="alert-subtitle">CoinGecko trending — social volume spiking on these assets</div>`
+    : '';
 
   return `<div class="alert-row" data-type="${alert.type}" style="border-color:${sev.border};background:${sev.bg}">
     <div class="alert-sev" style="background:${sev.color}"></div>
-    <div class="alert-asset-icon" style="color:${sev.color}">${assetIcon}</div>
+    <div class="alert-asset-icon" style="color:${sev.color};font-size:${isTrending?'18px':'16px'}">${assetIcon}</div>
     <div class="alert-content">
       <div class="alert-header">
-        <span class="alert-asset-name">${alert.asset}</span>
+        <span class="alert-asset-name">${assetLabel}</span>
         <span class="alert-type-badge" style="background:${type.accent}22;color:${type.accent};border-color:${type.accent}44">${type.icon} ${type.label}</span>
         <span class="alert-time">${timeAgo(alert.ts)}</span>
       </div>
       <div class="alert-title">${alert.title}</div>
+      ${trendSubtitle}
       <div class="alert-chips">
-        ${dirBadge}${priceChip}${volChip}${rangeChip}${trendChips}
+        ${dirBadge}${priceChip}${volChip}${rangeChip}${trendChips}${srcChip}
         <span class="alert-sev-badge" style="background:${sev.bg};color:${sev.color};border-color:${sev.border}">${sev.label}</span>
       </div>
     </div>
