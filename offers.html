@@ -1036,7 +1036,7 @@ function activateMonetag(){
   window._monetagLoaded=true;
   var s=document.createElement('script');
   s.src='https://nap5k.com/tag.min.js';
-  s.dataset.zone='11024677';
+  s.dataset.zone='11024677';s.dataset.cfasync='false';s.async=true;
   document.body.appendChild(s);
 }
 
@@ -1056,7 +1056,7 @@ function requestPushDirect(){
       track('ios_browser_ipp',{page:'offers'});activateMonetag();showIOSBrowser();return;
     }
   }
-  if(isMacSafari){track('mac_safari_ipp',{page:'offers'});activateMonetag();showIOS();return;});activateMonetag();document.getElementById('iosBg').classList.add('open');return;}
+  if(isMacSafari){track('mac_safari_ipp',{page:'offers'});activateMonetag();showIOS();return;}
   if(!('Notification' in window)){return;}
   if(Notification.permission==='denied'){document.getElementById('deniedBg').classList.add('open');return;}
   if(Notification.permission==='granted'){track('allow_click_already_granted',{page:'offers'});showAlready();loadRollerAds();return;}
