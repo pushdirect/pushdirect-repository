@@ -187,6 +187,31 @@ document.getElementById('contactForm').addEventListener('submit',async(e)=>{
     else throw new Error(result.message);
   }catch(err){btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong — please try again.');}
 });
+
+/* ═══ GDPR CONSENT LOGIC ═══ */
+(function(){
+  var key='pd_consent';
+  var stored=localStorage.getItem(key);
+  if(stored==='1'){return;}
+  if(stored==='0'){window['ga-disable-G-08QR9KY980']=true;return;}
+  window['ga-disable-G-08QR9KY980']=true;
+  setTimeout(function(){
+    var bar=document.getElementById('consentBar');
+    if(bar)bar.classList.add('visible');
+  },1500);
+})();
+function handleConsent(accepted){
+  localStorage.setItem('pd_consent',accepted?'1':'0');
+  var bar=document.getElementById('consentBar');
+  if(bar)bar.classList.remove('visible');
+  if(accepted){
+    window['ga-disable-G-08QR9KY980']=false;
+    if(typeof gtag!=='undefined'){
+      gtag('consent','update',{analytics_storage:'granted'});
+      gtag('event','page_view');
+    }
+  }
+}
 </script>
 
 <!-- ═══ GDPR CONSENT BANNER ═══ -->
