@@ -672,21 +672,23 @@ function loadRollerAds(){
     const url=new URL(window.location.href);
     const s=document.createElement('script');
     s.dataset.cfasync='false';
-    s.src='https://push-sdk.com/f/sdk.js?z=2822452';
-    s.onload=function(opts){
-      opts.zoneID=2822452;
-      opts.extClickID=url.searchParams.get('click_id');
-      opts.subID1=url.searchParams.get('source_id');
-      opts.actions.onPermissionGranted=function(){track('subscribed_deals');showSuccess()};
-      opts.actions.onPermissionDenied=function(){track('denied_deals');showDeniedHelp()};
-      opts.actions.onAlreadySubscribed=function(){track('already_deals');showAlready()};
-      opts.actions.onError=function(){
-        if('Notification' in window&&Notification.permission==='granted')showAlready();
-        else if('Notification' in window&&Notification.permission!=='denied')
-          Notification.requestPermission().then(p=>p==='granted'?showSuccess():showDeniedHelp());
-        else showDeniedHelp();
-      };
+    window.raOptions={
+      zoneID:2822452,
+      extClickID:url.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'',
+      subID1:url.searchParams.get('source_id')||'',
+      actions:{
+        onPermissionGranted:function(){track('subscribed_deals');fireBeMob();showSuccess()},
+        onPermissionDenied:function(){track('denied_deals');showDeniedHelp()},
+        onAlreadySubscribed:function(){track('already_deals');showAlready()},
+        onError:function(){
+          if('Notification' in window&&Notification.permission==='granted')showAlready();
+          else if('Notification' in window&&Notification.permission!=='denied')
+            Notification.requestPermission().then(p=>{if(p==='granted'){fireBeMob();showSuccess();}else showDeniedHelp();});
+          else showDeniedHelp();
+        }
+      }
     };
+    s.src='https://push-sdk.com/f/sdk.js?z=2822452';
     document.head.appendChild(s);
   })();
 }
@@ -701,10 +703,10 @@ function confirmPermission(){document.getElementById('prepermBg').classList.remo
 function requestPushDirect(){
   closeExit();
   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-  if(isIOS){activateMonetag();showSuccess();return}
-  if(!('Notification' in window)){showSuccess();return}
+  if(isIOS){activateMonetag();showIOS();return}
+  if(!('Notification' in window)){showNoAPI();return}
   if(Notification.permission==='denied'){showDeniedHelp();return}
-  if(Notification.permission==='granted'){loadRollerAds();setTimeout(()=>{if(!S.subscribed)showAlready()},1500);return}
+  if(Notification.permission==='granted'){loadRollerAds();return}
   track('allow_click_deals');
   showPreperm();
 }
@@ -720,6 +722,11 @@ function activateMonetag(){
   if(window._monetagLoaded)return;window._monetagLoaded=true;
   var s=document.createElement('script');s.src='https://nap5k.com/tag.min.js';s.dataset.zone='11024677';document.body.appendChild(s);
 }
+function fireBeMob(){try{const u=new URL(window.location.href);const c=u.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'';if(!c)return;const px=new Image();px.src='https://in.track.bemob.com/click/goal?clickid='+encodeURIComponent(c)+'&goal=1';}catch(e){}}
+function showIOS(){S.subscribed=true;document.getElementById('iosBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible')}
+function closeIOS(){document.getElementById('iosBg').classList.remove('open')}
+function showNoAPI(){document.getElementById('noApiBg').classList.add('open')}
+function closeNoAPI(){document.getElementById('noApiBg').classList.remove('open')}
 
 /* SCROLL + TIME PROACTIVE TRIGGER */
 let _proactiveFired=false,_timeOnPage=0;
@@ -738,6 +745,7 @@ function toggleFaq(el){const item=el.closest('.faq-item');const open=item.classL
 
 /* ENGAGEMENT SCORE */
 window.addEventListener('scroll',()=>{S.score=Math.max(S.score,8)},{once:true,passive:true});
+(function(){const u=new URL(window.location.href);const c=u.searchParams.get('click_id');if(c)sessionStorage.setItem('pd_click_id',c);})();
 document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:true});
 
 /* THEME TOGGLE */
