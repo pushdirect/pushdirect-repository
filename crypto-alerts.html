@@ -827,8 +827,10 @@ function confirmPermission(){document.getElementById('prepermBg').classList.remo
 
 function requestPushDirect(){
   closeExit();
-  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-  if(isIOS){activateMonetag();showIOS();return}
+  const ua=navigator.userAgent;
+  const isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  const isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){activateMonetag();showIOS();return}
   if(!('Notification' in window)){showNoAPI();return}
   if(Notification.permission==='denied'){showDeniedHelp();return}
   if(Notification.permission==='granted'){showAlready();loadRollerAds();return}
@@ -1115,8 +1117,8 @@ setInterval(() => { if (allAlerts.length > 0) renderFeed(); }, 30000);
 <div class="overlay-bg" id="iosBg">
   <div class="overlay-card already">
     <div class="already-ring">📱</div>
-    <h2 class="ov-title">One more step for iPhone</h2>
-    <p class="ov-sub">Tap <strong>Share</strong> → <strong>Add to Home Screen</strong>, then open PushDirect from your home screen and tap Enable Alerts.</p>
+    <h2 class="ov-title">Alerts loading…</h2>
+    <p class="ov-sub">Your browser doesn't support standard web push. PushDirect is activating an alternative alert method for your device — no action needed.</p>
     <button class="btn-ov-primary" onclick="closeIOS()">Got it</button>
   </div>
 </div>
