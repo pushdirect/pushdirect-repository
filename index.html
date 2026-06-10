@@ -705,6 +705,17 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 
 .btn-plane{filter:brightness(0) invert(1);flex-shrink:0}
 
+/* ═══ PREFERENCE BUTTONS ═══ */
+.pref-btn{
+  padding:11px 10px;border-radius:14px;border:1.5px solid var(--border-s);
+  background:var(--bg2);color:var(--text2);font-family:var(--fb);font-size:13px;
+  cursor:pointer;transition:all .18s;text-align:center;
+}
+.pref-btn:hover{border-color:rgba(201,170,130,.5);color:var(--text1);background:rgba(232,213,176,.15)}
+.pref-btn.selected{border-color:var(--cta);background:rgba(249,115,22,.08);color:var(--text1);font-weight:600}
+[data-theme="dark"] .pref-btn{background:var(--surface);border-color:var(--border)}
+[data-theme="dark"] .pref-btn.selected{border-color:var(--cta);background:rgba(249,115,22,.12)}
+
 </style>
 </head>
 <body>
@@ -1019,7 +1030,11 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
       <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>Free spins, gift cards &amp; cashback windows</div>
       <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>One tap to unsubscribe, always free</div>
     </div>
-    <button class="preperm-yes" onclick="confirmPermission()">
+    <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:18px;font-family:var(--fm);font-size:12px;color:var(--text3)">
+      <span class="live-dot"></span>
+      <span><strong id="prepermLive" style="color:var(--text1)">4,219</strong> people enabling alerts right now</span>
+    </div>
+    <button class="preperm-yes" id="prepermYesBtn" onclick="confirmPermission()">
       Yes — enable my alerts
     </button>
     <button class="preperm-no" onclick="closePreperm()">No thanks, I'll miss out</button>
@@ -1028,15 +1043,25 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 
 <!-- ═══ SUCCESS SCREEN ═══ -->
 <div class="overlay-bg" id="successBg">
-  <div class="overlay-card success">
-    <div class="success-ring">✓</div>
-    <h2 class="ov-title">You're in the network. 🎉</h2>
-    <p class="ov-sub">PushDirect is live on your device. Your first alert arrives the moment something worth knowing happens.</p>
-    <div class="ov-preview">
-      <img src="/icons/logo.png" width="26" height="18" alt="PushDirect" style="display:block;object-fit:contain">
-      <div class="ov-preview-text"><strong>PUSHDIRECT is active</strong>Welcome to 2.3M+ subscribers. You'll never be last to know.</div>
+  <div class="overlay-card success" id="successCard">
+
+    <!-- Step 1: Confirmation -->
+    <div id="successStep1">
+      <div class="success-ring">✓</div>
+      <h2 class="ov-title">You're in the network. 🎉</h2>
+      <p class="ov-sub">Before we take you to today's offers — which alerts matter most to you?</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px" id="prefGrid">
+        <button class="pref-btn" data-cat="deals" onclick="togglePref(this)">🛍️ Flash Deals</button>
+        <button class="pref-btn" data-cat="gift_cards" onclick="togglePref(this)">🎁 Gift Cards</button>
+        <button class="pref-btn" data-cat="casino" onclick="togglePref(this)">🎰 Free Spins</button>
+        <button class="pref-btn" data-cat="cashback" onclick="togglePref(this)">💰 Cashback</button>
+        <button class="pref-btn" data-cat="travel" onclick="togglePref(this)">✈️ Travel</button>
+        <button class="pref-btn" data-cat="insurance" onclick="togglePref(this)">🛡️ Insurance</button>
+      </div>
+      <button class="btn-ov-primary" onclick="savePrefsAndRedirect()">See my offers →</button>
+      <button class="btn-ov-sec" onclick="redirectToOffers()" style="margin-top:6px;font-size:13px">Skip</button>
     </div>
-    <button class="btn-ov-primary" onclick="closeSuccess()">See today's offers →</button>
+
   </div>
 </div>
 
@@ -1065,7 +1090,18 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
       <div class="d-step"><div class="d-num">2</div><span>Find <strong>Notifications</strong> and change it to <strong>Allow</strong></span></div>
       <div class="d-step"><div class="d-num">3</div><span><strong>Refresh the page</strong> and tap the button again</span></div>
     </div>
-    <button class="btn-ov-sec" onclick="closeDenied()">Got it</button>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+      <p style="font-size:13px;color:var(--text3);margin-bottom:10px;font-family:var(--fm)">Or get deal alerts by email instead:</p>
+      <form id="deniedEmailForm" onsubmit="submitDeniedEmail(event)" style="display:flex;gap:8px">
+        <input id="deniedEmailInput" type="email" placeholder="your@email.com" required
+          style="flex:1;padding:11px 14px;border:1px solid var(--border-s);border-radius:50px;font-size:13px;font-family:var(--fb);background:var(--bg2);color:var(--text1);outline:none;min-width:0">
+        <button type="submit"
+          style="padding:11px 18px;border-radius:50px;background:var(--brand);color:#fff;border:none;cursor:pointer;font-family:var(--fd);font-weight:700;font-size:13px;white-space:nowrap;transition:opacity .2s"
+          onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Subscribe</button>
+      </form>
+      <div id="deniedEmailThanks" style="display:none;font-size:13px;color:var(--taupe);font-family:var(--fm);margin-top:8px;text-align:center">✓ Done — check your inbox.</div>
+    </div>
+    <button class="btn-ov-sec" onclick="closeDenied()" style="margin-top:12px">Dismiss</button>
   </div>
 </div>
 
@@ -1096,6 +1132,13 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 /* ═══ STATE ═══ */
 const S={subscribed:false,exitShown:false,score:0,t0:Date.now()};
 
+/* ═══ A/B VARIANT ═══ */
+const PD_VARIANT=(function(){
+  let v=sessionStorage.getItem('pd_ab');
+  if(!v){v=Math.random()<0.5?'A':'B';sessionStorage.setItem('pd_ab',v);}
+  return v;
+})();
+
 /* ═══ ANALYTICS ═══ */
 function track(ev,p={}){
   const payload={...p,ms:Date.now()-S.t0,score:S.score};
@@ -1108,7 +1151,8 @@ function track(ev,p={}){
       pd_score:S.score,
       pd_subscribed:S.subscribed,
       pd_device:/Mobi/.test(navigator.userAgent)?'mobile':'desktop',
-      pd_visits:parseInt(localStorage.getItem('pd_v')||'1'),
+      pd_visits:typeof vc!=='undefined'?vc:parseInt(localStorage.getItem('pd_v')||'1'),
+      pd_variant:typeof PD_VARIANT!=='undefined'?PD_VARIANT:'unknown',
       ...p
     });
   }
@@ -1132,6 +1176,7 @@ function onScroll(){
   if(p>30&&!S.subscribed&&!_granted)sb.classList.add('visible');
   else if(p<=30)sb.classList.remove('visible');
   if(p>=50&&!S._s50){S._s50=true;S.score+=20;track('scroll_50')}
+  if(p>=60&&!S._s60){S._s60=true;S.score+=10;track('scroll_60')}
   if(p>=80&&!S._s80){S._s80=true;S.score+=20;track('scroll_80')}
   document.querySelectorAll('.rev').forEach(el=>{
     if(el.getBoundingClientRect().top<window.innerHeight*.9)el.classList.add('in');
@@ -1231,7 +1276,8 @@ function handlePrepermBg(e){
   if(e.target===document.getElementById('prepermBg'))closePreperm();
 }
 function confirmPermission(){
-  // User clicked Yes inside the pre-permission modal — close it, then run the real flow
+  const btn=document.getElementById('prepermYesBtn');
+  if(btn){btn.textContent='Activating…';btn.disabled=true;btn.style.opacity='.75';}
   document.getElementById('prepermBg').classList.remove('open');
   track('preperm_confirmed');
   _doSubscribe();
@@ -1272,41 +1318,73 @@ function _doSubscribe(){
 }
 
 /* ═══ TIP 2: SCROLL + TIME TRIGGER ═══ */
-// Fires the pre-permission modal proactively once the user has:
-//   • scrolled to 80% of the page, AND
-//   • spent at least 60 seconds on the page
+// Desktop: scroll 80% + 60s. Mobile: scroll 60% + 30s.
 // Only triggers once per session and only if not already subscribed/denied.
+const _isMobile=/Mobi|Android/i.test(navigator.userAgent);
+const _scrollThresh=_isMobile?60:80;
+const _timeThresh=_isMobile?30:60;
 let _proactiveFired=false;
 let _timeOnPage=0;
 const _timeInterval=setInterval(()=>{
   _timeOnPage+=5;
-  if(_timeOnPage>=60&&S._s80&&!_proactiveFired&&!S.subscribed
+  const scrollMet=_isMobile?S._s60:S._s80;
+  if(_timeOnPage>=_timeThresh&&scrollMet&&!_proactiveFired&&!S.subscribed
     &&'Notification' in window&&Notification.permission==='default'){
     _proactiveFired=true;
     clearInterval(_timeInterval);
-    track('proactive_trigger',{seconds:_timeOnPage});
+    track('proactive_trigger',{seconds:_timeOnPage,mobile:_isMobile});
     showPreperm();
   }
 },5000);
 
+let _successTimer,_alreadyTimer;
 function showSuccess(){
   S.subscribed=true;
   document.getElementById('successBg').classList.add('open');
-  setTimeout(redirectToOffers,4000);
+  // No auto-redirect — user completes preference selection first
   document.getElementById('stickyBar').classList.remove('visible');
 }
-function closeSuccess(){document.getElementById('successBg').classList.remove('open');redirectToOffers();}
+function closeSuccess(){clearTimeout(_successTimer);document.getElementById('successBg').classList.remove('open');redirectToOffers();}
+
+/* ═══ PREFERENCE CAPTURE ═══ */
+function togglePref(btn){btn.classList.toggle('selected');}
+function savePrefsAndRedirect(){
+  const selected=[...document.querySelectorAll('.pref-btn.selected')].map(b=>b.dataset.cat);
+  if(selected.length>0){
+    localStorage.setItem('pd_prefs',JSON.stringify(selected));
+    track('prefs_saved',{cats:selected.join(','),count:selected.length});
+  } else {
+    track('prefs_skipped');
+  }
+  redirectToOffers();
+}
 
 function showAlready(){
   document.getElementById('alreadyBg').classList.add('open');
-  setTimeout(redirectToOffers,3000);
+  _alreadyTimer=setTimeout(redirectToOffers,3000);
   document.getElementById('stickyBar').classList.remove('visible');
 }
-function closeAlready(){document.getElementById('alreadyBg').classList.remove('open');redirectToOffers();}
-function redirectToOffers(){window.location.href='/offers';}
+function closeAlready(){clearTimeout(_alreadyTimer);document.getElementById('alreadyBg').classList.remove('open');redirectToOffers();}
+function redirectToOffers(){const p=new URLSearchParams(window.location.search);const qs=p.toString()?'?'+p.toString():'';window.location.href='/offers'+qs;}
 
 function showDeniedHelp(){document.getElementById('deniedBg').classList.add('open')}
 function closeDenied(){document.getElementById('deniedBg').classList.remove('open')}
+function submitDeniedEmail(e){
+  e.preventDefault();
+  const email=document.getElementById('deniedEmailInput').value.trim();
+  if(!email)return;
+  track('denied_email_subscribe',{email_domain:email.split('@')[1]||''});
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({access_key:'a4b6220e-4b69-41bd-966b-59d0f1014186',email,subject:'PushDirect — Blocked user email signup',message:'Notifications blocked. Email: '+email})
+  }).then(r=>r.json()).then(d=>{
+    if(d.success){
+      document.getElementById('deniedEmailForm').style.display='none';
+      document.getElementById('deniedEmailThanks').style.display='block';
+    }
+  }).catch(()=>{});
+}
 
 /* ═══ MONETAG IPP — iOS on button click only ═══ */
 function activateMonetag(){
@@ -1352,12 +1430,19 @@ function toggleFaq(el){
 }
 
 /* ═══ THEME ═══ */
-document.getElementById('themeBtn').addEventListener('click',()=>{
+(function(){
   const h=document.documentElement;
-  const light=h.getAttribute('data-theme')==='dark';
-  h.setAttribute('data-theme',light?'light':'dark');
-  document.getElementById('themeBtn').textContent=light?'🌙':'☀️';
-});
+  const saved=localStorage.getItem('pd_theme');
+  if(saved){h.setAttribute('data-theme',saved);}
+  const btn=document.getElementById('themeBtn');
+  btn.textContent=h.getAttribute('data-theme')==='dark'?'☀️':'🌙';
+  btn.addEventListener('click',()=>{
+    const isDark=h.getAttribute('data-theme')==='dark';
+    h.setAttribute('data-theme',isDark?'light':'dark');
+    localStorage.setItem('pd_theme',isDark?'light':'dark');
+    btn.textContent=isDark?'🌙':'☀️';
+  });
+})();
 
 /* ═══ IPHONE CLOCK ═══ */
 (function(){
@@ -1385,7 +1470,7 @@ document.getElementById('themeBtn').addEventListener('click',()=>{
   },4200);
   const lv=document.getElementById('liveViewers');
   let lv2=4219;
-  setInterval(()=>{lv2=Math.max(3800,Math.min(5200,lv2+Math.round((Math.random()-.45)*40)));lv.textContent=lv2.toLocaleString();},2800);
+  setInterval(()=>{lv2=Math.max(3800,Math.min(5200,lv2+Math.round((Math.random()-.45)*40)));const t=lv2.toLocaleString();lv.textContent=t;const pl=document.getElementById('prepermLive');if(pl)pl.textContent=t;},2800);
   const lc=document.getElementById('liveCount');
   let lc2=12847;
   setInterval(()=>{lc2=Math.max(10000,Math.min(15000,lc2+Math.round((Math.random()-.5)*30)));lc.textContent=lc2.toLocaleString();},5100);
@@ -1474,10 +1559,10 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 <div class="overlay-bg" id="iosBg">
   <div class="overlay-card already">
     <div class="already-ring">📱</div>
-    <h2 class="ov-title">Alerts loading…</h2>
-    <p class="ov-sub">Your browser doesn't support standard web push. PushDirect is activating an alternative alert method for your device — no action needed.</p>
+    <h2 class="ov-title">We'll alert you differently.</h2>
+    <p class="ov-sub">iOS doesn't support standard web push from browsers. PushDirect will use an alternative method to deliver your alerts — no app download needed.</p>
     <div class="ov-preview" style="border:1px solid rgba(232,213,176,.3);text-align:left">
-      <div class="ov-preview-text"><strong>Why this step?</strong>iOS requires apps to be added to the home screen to enable web push notifications. Takes 15 seconds.</div>
+      <div class="ov-preview-text"><strong>Want web push on iOS?</strong>Add PushDirect to your Home Screen (Share → Add to Home Screen) to enable full push notifications in Safari.</div>
     </div>
     <button class="btn-ov-primary" onclick="closeIOS()">Got it</button>
   </div>
@@ -1498,3 +1583,4 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 
 </body>
 </html>
+
