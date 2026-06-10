@@ -575,7 +575,7 @@ function onScroll(){
   const max=document.body.scrollHeight-window.innerHeight||1;
   const p=Math.round((sy/max)*100);
   document.getElementById('scrollBar').style.width=p+'%';
-  document.getElementById('nav').classList.toggle('scrolled',sy>50);
+  document.getElementById('mainNav').classList.toggle('scrolled',sy>50);
   const sb=document.getElementById('stickyBar');
   const granted='Notification' in window&&Notification.permission==='granted';
   if(p>30&&!S.subscribed&&!granted)sb.classList.add('visible');
@@ -587,6 +587,19 @@ function onScroll(){
   });
   raf=false;
 }
+/* ═══ SUBNAV HOVER REVEAL ═══ */
+let subnavHovered=false;
+const subnavEl=document.getElementById('subnav');
+const mainNavEl=document.getElementById('mainNav');
+function showSubnav(){subnavHovered=true;subnavEl.classList.remove('subnav--hidden')}
+function hideSubnav(){subnavHovered=false;if(window.scrollY>10)subnavEl.classList.add('subnav--hidden')}
+mainNavEl.addEventListener('mouseenter',showSubnav);
+mainNavEl.addEventListener('mouseleave',hideSubnav);
+subnavEl.addEventListener('mouseenter',showSubnav);
+subnavEl.addEventListener('mouseleave',hideSubnav);
+window.addEventListener('scroll',()=>{
+  if(!subnavHovered)subnavEl.classList.toggle('subnav--hidden',window.scrollY>10);
+},{passive:true});
 setTimeout(()=>document.querySelectorAll('.rev').forEach(el=>{
   if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add('in');
 }),100);
