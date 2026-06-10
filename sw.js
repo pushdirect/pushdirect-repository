@@ -11,7 +11,7 @@ importScripts("https://push-sdk.com/f/sw.js")
 // ── Monetag (In-Page Push + verification) ──
 self.options = {
     "domain": "3nbf4.com",
-    "zoneId": 11024607
+    "zoneId": 11024677
 }
 self.lary = ""
 importScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw')
