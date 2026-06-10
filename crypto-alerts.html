@@ -314,24 +314,61 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
 .feed-connecting{text-align:center;padding:40px 24px;font-family:var(--fm);font-size:12px;color:var(--text3)}
 
 .alert-row{
-  display:flex;align-items:flex-start;gap:14px;
-  padding:16px 20px;
-  background:var(--surface);
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 16px;
   border:1px solid var(--border);
   border-radius:14px;
-  transition:border-color .2s,transform .15s;
+  transition:border-color .2s,transform .15s,box-shadow .2s;
   animation:alertSlideIn .35s var(--ease) both;
+  position:relative;overflow:hidden;
 }
-.alert-row:hover{border-color:var(--border-str);transform:translateX(2px)}
-@keyframes alertSlideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.alert-sev{width:3px;border-radius:4px;flex-shrink:0;align-self:stretch;min-height:40px}
-.alert-icon{font-size:20px;flex-shrink:0;width:36px;text-align:center}
+.alert-row:hover{transform:translateX(3px);box-shadow:var(--sh-sm)}
+@keyframes alertSlideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.alert-sev{width:3px;border-radius:4px;flex-shrink:0;align-self:stretch;min-height:36px}
+.alert-asset-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--surface2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;flex-shrink:0;
+  font-family:var(--fd);
+}
 .alert-content{flex:1;min-width:0}
-.alert-title{font-family:var(--fd);font-weight:800;font-size:15px;color:var(--text1);margin-bottom:3px;line-height:1.3}
-.alert-body{font-size:13px;color:var(--text2);line-height:1.5}
-.alert-meta{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
-.alert-tag{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;border:1px solid var(--border);color:var(--text3)}
+.alert-header{
+  display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;
+}
+.alert-asset-name{
+  font-family:var(--fd);font-weight:800;font-size:14px;color:var(--text1);
+}
+.alert-type-badge{
+  font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:10px;border:1px solid;font-weight:600;
+}
 .alert-time{font-family:var(--fm);font-size:10px;color:var(--text3);margin-left:auto}
+.alert-title{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--text1);margin-bottom:6px;line-height:1.35}
+.alert-chips{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.alert-dir{
+  font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:.02em;
+  padding:2px 8px;border-radius:6px;
+}
+.alert-dir.up{background:rgba(126,203,154,.15);color:#7ecb9a;border:1px solid rgba(126,203,154,.3)}
+.alert-dir.down{background:rgba(224,123,106,.12);color:#e07b6a;border:1px solid rgba(224,123,106,.25)}
+.alert-price{
+  font-family:var(--fd);font-size:12px;font-weight:700;color:var(--text2);
+  background:var(--surface2);padding:2px 8px;border-radius:6px;border:1px solid var(--border);
+}
+.alert-vol{
+  font-family:var(--fm);font-size:10px;color:var(--text3);
+  background:var(--surface);padding:2px 8px;border-radius:6px;border:1px solid var(--border);
+}
+.alert-coin{
+  font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.06em;
+  color:var(--cream-d);background:rgba(201,170,130,.1);
+  padding:2px 8px;border-radius:6px;border:1px solid rgba(201,170,130,.2);
+}
+.alert-sev-badge{
+  font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:10px;border:1px solid;font-weight:600;margin-left:auto;
+}
 
 /* Price ticker strip */
 .price-strip{
@@ -801,13 +838,28 @@ const ALERT_API = (window.location.hostname === 'localhost' || window.location.h
   ? 'http://localhost:3001'
   : 'https://insightful-enthusiasm-production-ecd5.up.railway.app';
 
-const SEVERITY_CONFIG = {
-  low:      { color: '#9a8f7e', emoji: '📊', label: 'Signal' },
-  medium:   { color: '#c9aa82', emoji: '⚡', label: 'Alert' },
-  high:     { color: '#f97316', emoji: '🔥', label: 'Strong' },
-  critical: { color: '#e07b6a', emoji: '🚨', label: 'Critical' },
+/* ═══ ASSET ICONS ═══ */
+const ASSET_ICONS = {
+  BTC:'₿', ETH:'Ξ', SOL:'◎', BNB:'⬡', XRP:'✕', ADA:'₳',
+  AVAX:'▲', DOGE:'Ð', LINK:'⬡', DOT:'●', MATIC:'⬟', LTC:'Ł',
+  UNI:'🦄', ATOM:'⚛', NEAR:'Ν', default:'◈'
 };
-const TYPE_LABELS = { price_breakout:'Price', volume_spike:'Volume', volatility_spike:'Volatility', trending:'Trending' };
+
+/* ═══ SEVERITY CONFIG ═══ */
+const SEVERITY_CONFIG = {
+  low:      { color:'#9a8f7e', bg:'rgba(154,143,126,.1)',  border:'rgba(154,143,126,.2)',  label:'Signal'   },
+  medium:   { color:'#c9aa82', bg:'rgba(201,170,130,.1)',  border:'rgba(201,170,130,.2)',  label:'Alert'    },
+  high:     { color:'#f97316', bg:'rgba(249,115,22,.1)',   border:'rgba(249,115,22,.22)',  label:'Strong'   },
+  critical: { color:'#e07b6a', bg:'rgba(224,123,106,.12)', border:'rgba(224,123,106,.3)',  label:'Critical' },
+};
+
+/* ═══ TYPE CONFIG — icon + accent per signal type ═══ */
+const TYPE_CONFIG = {
+  price_breakout:   { icon:'📈', label:'Price Move',  accent:'#c9aa82' },
+  volume_spike:     { icon:'📊', label:'Vol Spike',   accent:'#9a8f7e' },
+  volatility_spike: { icon:'⚡', label:'Volatility',  accent:'#c9aa82' },
+  trending:         { icon:'🔥', label:'Trending',    accent:'#f97316' },
+};
 
 let currentFilter = 'all';
 let allAlerts = [];
@@ -837,20 +889,64 @@ function formatPrice(p) {
   return '$'+p.toLocaleString('en-US',{maximumFractionDigits:6});
 }
 
+function formatPct(n) {
+  if (n === undefined || n === null) return null;
+  const sign = n >= 0 ? '+' : '';
+  return sign + n.toFixed(2) + '%';
+}
+
 function renderAlert(alert) {
-  const sev = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.medium;
-  const typeLabel = TYPE_LABELS[alert.type] || alert.type;
-  return `<div class="alert-row" data-type="${alert.type}">
+  const sev  = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.medium;
+  const type = TYPE_CONFIG[alert.type] || { icon:'◈', label: alert.type, accent:'#9a8f7e' };
+  const assetIcon = ASSET_ICONS[alert.asset] || ASSET_ICONS.default;
+  const d = alert.data || {};
+
+  /* ── Direction badge for price moves ── */
+  let dirBadge = '';
+  if (alert.type === 'price_breakout' && d.pctChange !== undefined) {
+    const up = d.pctChange >= 0;
+    dirBadge = `<span class="alert-dir ${up ? 'up' : 'down'}">${up ? '▲' : '▼'} ${Math.abs(d.pctChange).toFixed(2)}%</span>`;
+  }
+
+  /* ── Price chip ── */
+  let priceChip = '';
+  if (d.price) {
+    priceChip = `<span class="alert-price">${formatPrice(d.price)}</span>`;
+  }
+
+  /* ── Volume multiplier chip ── */
+  let volChip = '';
+  if (alert.type === 'volume_spike' && d.multiplier) {
+    volChip = `<span class="alert-vol">${d.multiplier.toFixed(1)}× avg vol</span>`;
+  }
+
+  /* ── Volatility chip ── */
+  let rangeChip = '';
+  if (alert.type === 'volatility_spike' && d.rangePct) {
+    rangeChip = `<span class="alert-vol">${d.rangePct.toFixed(1)}% range</span>`;
+  }
+
+  /* ── Trending coins ── */
+  let trendChips = '';
+  if (alert.type === 'trending' && d.coins) {
+    trendChips = d.coins.slice(0,5).map(coin =>
+      `<span class="alert-coin">${coin}</span>`
+    ).join('');
+  }
+
+  return `<div class="alert-row" data-type="${alert.type}" style="border-color:${sev.border};background:${sev.bg}">
     <div class="alert-sev" style="background:${sev.color}"></div>
-    <div class="alert-icon">${sev.emoji}</div>
+    <div class="alert-asset-icon" style="color:${sev.color}">${assetIcon}</div>
     <div class="alert-content">
-      <div class="alert-title">${alert.title}</div>
-      <div class="alert-body">${alert.body}</div>
-      <div class="alert-meta">
-        <span class="alert-tag" style="border-color:${sev.color}33;color:${sev.color}">${sev.label}</span>
-        <span class="alert-tag">${typeLabel}</span>
-        <span class="alert-tag">${alert.asset}</span>
+      <div class="alert-header">
+        <span class="alert-asset-name">${alert.asset}</span>
+        <span class="alert-type-badge" style="background:${type.accent}22;color:${type.accent};border-color:${type.accent}44">${type.icon} ${type.label}</span>
         <span class="alert-time">${timeAgo(alert.ts)}</span>
+      </div>
+      <div class="alert-title">${alert.title}</div>
+      <div class="alert-chips">
+        ${dirBadge}${priceChip}${volChip}${rangeChip}${trendChips}
+        <span class="alert-sev-badge" style="background:${sev.bg};color:${sev.color};border-color:${sev.border}">${sev.label}</span>
       </div>
     </div>
   </div>`;
