@@ -361,33 +361,6 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
 
 .btn-plane{filter:brightness(0) invert(1);flex-shrink:0}
 
-/* ═══ GDPR CONSENT BANNER ═══ */
-.consent-bar{
-  position:fixed;bottom:0;left:0;right:0;z-index:10000;
-  background:var(--bg,#fff);border-top:1px solid var(--border,rgba(26,25,22,.1));
-  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
-  gap:16px;flex-wrap:wrap;box-shadow:0 -4px 24px rgba(0,0,0,.08);
-  transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);
-}
-[data-theme="dark"] .consent-bar{background:var(--bg,#0c0b09);border-color:var(--border,rgba(232,213,176,.09))}
-.consent-bar.visible{transform:translateY(0)}
-.consent-text{font-family:var(--fm,'Inter',sans-serif);font-size:12px;color:var(--text2,#5a5248);line-height:1.5;flex:1;min-width:200px}
-.consent-text a{color:var(--cream-d,#c9aa82);text-decoration:none}
-.consent-btns{display:flex;gap:8px;flex-shrink:0}
-.consent-accept{
-  font-family:var(--fm,'Inter',sans-serif);font-size:12px;font-weight:700;
-  background:var(--cta,#f97316);color:#fff;
-  border:none;border-radius:20px;padding:8px 18px;cursor:pointer;transition:opacity .2s;
-}
-.consent-accept:hover{opacity:.9}
-.consent-decline{
-  font-family:var(--fm,'Inter',sans-serif);font-size:12px;
-  background:none;color:var(--text3,#9a8f7e);
-  border:1px solid var(--border,rgba(26,25,22,.1));border-radius:20px;
-  padding:8px 14px;cursor:pointer;transition:all .2s;
-}
-.consent-decline:hover{color:var(--text2,#5a5248)}
-@media(max-width:480px){.consent-bar{flex-direction:column;align-items:flex-start}.consent-btns{width:100%}.consent-accept,.consent-decline{flex:1;text-align:center}}
 </style>
 </head>
 <body>
@@ -796,30 +769,6 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
   });
 })();
 
-/* ═══ GDPR CONSENT LOGIC ═══ */
-(function(){
-  var key='pd_consent';
-  var stored=localStorage.getItem(key);
-  if(stored==='1'){return;}
-  if(stored==='0'){window['ga-disable-G-08QR9KY980']=true;return;}
-  window['ga-disable-G-08QR9KY980']=true;
-  setTimeout(function(){
-    var bar=document.getElementById('consentBar');
-    if(bar)bar.classList.add('visible');
-  },1500);
-})();
-function handleConsent(accepted){
-  localStorage.setItem('pd_consent',accepted?'1':'0');
-  var bar=document.getElementById('consentBar');
-  if(bar)bar.classList.remove('visible');
-  if(accepted){
-    window['ga-disable-G-08QR9KY980']=false;
-    if(typeof gtag!=='undefined'){
-      gtag('consent','update',{analytics_storage:'granted'});
-      gtag('event','page_view');
-    }
-  }
-}
 </script>
 
 
@@ -842,15 +791,6 @@ function handleConsent(accepted){
   </div>
 </div>
 
-<!-- ═══ GDPR CONSENT BANNER ═══ -->
-<div class="consent-bar" id="consentBar" role="dialog" aria-label="Cookie consent" aria-live="polite">
-  <p class="consent-text">
-    We use cookies and analytics to improve this service. By clicking Accept you consent to analytics tracking per our <a href="/privacy">Privacy Policy</a>. Declining means analytics won't load.
-  </p>
-  <div class="consent-btns">
-    <button class="consent-decline" onclick="handleConsent(false)">Decline</button>
-    <button class="consent-accept" onclick="handleConsent(true)">Accept</button>
-  </div>
 </div>
 
 </body>
