@@ -300,6 +300,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
     <a href="/subscription">Subscribe</a>
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms">Terms</a>
+    <a href="/contact">Contact</a>
   </div>
   <p class="foot-copy">© 2026 PushDirect Promotion Network. All rights reserved.</p>
 </footer>
@@ -319,6 +320,31 @@ window.addEventListener('scroll',()=>document.getElementById('mainNav').classLis
     sync();
   });
 })();
+
+/* ═══ GDPR CONSENT LOGIC ═══ */
+(function(){
+  var key='pd_consent';
+  var stored=localStorage.getItem(key);
+  if(stored==='1'){return;}
+  if(stored==='0'){window['ga-disable-G-08QR9KY980']=true;return;}
+  window['ga-disable-G-08QR9KY980']=true;
+  setTimeout(function(){
+    var bar=document.getElementById('consentBar');
+    if(bar)bar.classList.add('visible');
+  },1500);
+})();
+function handleConsent(accepted){
+  localStorage.setItem('pd_consent',accepted?'1':'0');
+  var bar=document.getElementById('consentBar');
+  if(bar)bar.classList.remove('visible');
+  if(accepted){
+    window['ga-disable-G-08QR9KY980']=false;
+    if(typeof gtag!=='undefined'){
+      gtag('consent','update',{analytics_storage:'granted'});
+      gtag('event','page_view');
+    }
+  }
+}
 </script>
 
 <!-- ═══ GDPR CONSENT BANNER ═══ -->
