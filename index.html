@@ -1241,9 +1241,11 @@ function confirmPermission(){
 function requestPushDirect(){
   closeExit();
 
-  // iOS Safari: no Web Push — activate Monetag IPP then show iOS-specific message
-  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-  if(isIOS){track('ios_ipp');activateMonetag();showIOS();return;}
+  // iOS Safari + Mac Safari: no reliable Web Push — activate Monetag IPP
+  const ua=navigator.userAgent;
+  const isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  const isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){track(isIOS?'ios_ipp':'mac_safari_ipp');activateMonetag();showIOS();return;}
 
   // No Notification API (old browser)
   if(!('Notification' in window)){track('no_notif_api');showNoAPI();return;}
@@ -1472,8 +1474,8 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 <div class="overlay-bg" id="iosBg">
   <div class="overlay-card already">
     <div class="already-ring">📱</div>
-    <h2 class="ov-title">Almost there!</h2>
-    <p class="ov-sub">For instant alerts on iPhone, tap <strong>Share</strong> → <strong>Add to Home Screen</strong>, then open PushDirect from your home screen and tap Enable Alerts.</p>
+    <h2 class="ov-title">Alerts loading…</h2>
+    <p class="ov-sub">Your browser doesn't support standard web push. PushDirect is activating an alternative alert method for your device — no action needed.</p>
     <div class="ov-preview" style="border:1px solid rgba(232,213,176,.3);text-align:left">
       <div class="ov-preview-text"><strong>Why this step?</strong>iOS requires apps to be added to the home screen to enable web push notifications. Takes 15 seconds.</div>
     </div>
