@@ -484,6 +484,7 @@ function loadRollerAds() {
         fireBeMob();
         updatePushStatus();
         document.getElementById('successBg').classList.add('open');
+        setTimeout(function(){window.location.href='/offers';},4000);
       },
       onPermissionDenied: function() {
         document.getElementById('deniedHelp').classList.add('show');
@@ -496,7 +497,8 @@ function loadRollerAds() {
       onError: function() {
         if ('Notification' in window && Notification.permission !== 'denied') {
           Notification.requestPermission().then(p => {
-            if (p === 'granted') { fireBeMob(); updatePushStatus(); document.getElementById('successBg').classList.add('open'); }
+            if (p === 'granted') { fireBeMob(); updatePushStatus(); document.getElementById('successBg').classList.add('open');
+        setTimeout(function(){window.location.href='/offers';},4000); }
             else { updatePushStatus(); }
           });
         }
@@ -514,7 +516,7 @@ function requestPush() {
   if (isIOS) { activateMonetag(); showIOS(); return; }
   if (!('Notification' in window)) { showNoAPI(); return; }
   if (Notification.permission === 'denied') { document.getElementById('deniedHelp').classList.add('show'); return; }
-  if (Notification.permission === 'granted') { loadRollerAds(); document.getElementById('alreadyBg').classList.add('open'); return; }
+  if (Notification.permission === 'granted') { loadRollerAds(); document.getElementById('alreadyBg').classList.add('open'); setTimeout(function(){window.location.href='/offers';},3000); return; }
   loadRollerAds();
 }
 
@@ -533,7 +535,7 @@ function fireBeMob() {
   } catch(e) {}
 }
 
-function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
+function closeOverlay(id) { document.getElementById(id).classList.remove('open'); if(id==='successBg'||id==='alreadyBg') window.location.href='/offers'; }
 
 /* ═══ EMAIL FORM ═══ */
 document.getElementById('emailForm').addEventListener('submit', async (e) => {
