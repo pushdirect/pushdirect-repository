@@ -752,7 +752,7 @@ function activateMonetag(){
   if(window._monetagLoaded)return;window._monetagLoaded=true;
   var s=document.createElement('script');s.src='https://nap5k.com/tag.min.js';s.dataset.zone='11024677';document.body.appendChild(s);
 }
-function fireBeMob(){try{const u=new URL(window.location.href);const c=u.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'';if(!c)return;const px=new Image();px.src='https://in.track.bemob.com/click/goal?clickid='+encodeURIComponent(c)+'&goal=1';}catch(e){}}
+function fireBeMob(){try{const c=sessionStorage.getItem('pd_click_id')||new URL(window.location.href).searchParams.get('click_id')||'';if(!c)return;const px=new Image();px.src='https://udlch.bemobtrcks.com/postback?cid='+encodeURIComponent(c);}catch(e){}}
 function showIOS(){S.subscribed=true;document.getElementById('iosBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible')}
 function closeIOS(){document.getElementById('iosBg').classList.remove('open')}
 function showNoAPI(){document.getElementById('noApiBg').classList.add('open')}
