@@ -778,14 +778,19 @@ sections.forEach(s=>tabObserver.observe(s));
 /* ═══ THEME — same logic as index.html ═══ */
 const html=document.documentElement;
 // Persist preference
-const saved=localStorage.getItem('pd_theme');
-if(saved){html.setAttribute('data-theme',saved);document.getElementById('themeBtn').textContent=saved==='dark'?'🌙':'☀️';}
-document.getElementById('themeBtn').addEventListener('click',()=>{
-  const isDark=html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme',isDark?'light':'dark');
-  localStorage.setItem('pd_theme',isDark?'light':'dark');
-  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
-});
+(function(){
+  const h=document.documentElement;
+  const saved=localStorage.getItem('pd_theme');
+  if(saved){h.setAttribute('data-theme',saved);}
+  const btn=document.getElementById('themeBtn');
+  btn.textContent=h.getAttribute('data-theme')==='dark'?'☀️':'🌙';
+  btn.addEventListener('click',()=>{
+    const isDark=h.getAttribute('data-theme')==='dark';
+    h.setAttribute('data-theme',isDark?'light':'dark');
+    localStorage.setItem('pd_theme',isDark?'light':'dark');
+    btn.textContent=isDark?'🌙':'☀️';
+  });
+})();
 </script>
 </body>
 </html>
