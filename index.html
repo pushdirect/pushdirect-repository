@@ -1036,7 +1036,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
       <img src="/icons/logo.png" width="26" height="18" alt="PushDirect" style="display:block;object-fit:contain">
       <div class="ov-preview-text"><strong>PUSHDIRECT is active</strong>Welcome to 2.3M+ subscribers. You'll never be last to know.</div>
     </div>
-    <button class="btn-ov-primary" onclick="closeSuccess()">Got it — let's go</button>
+    <button class="btn-ov-primary" onclick="closeSuccess()">See today's offers →</button>
   </div>
 </div>
 
@@ -1290,15 +1290,18 @@ const _timeInterval=setInterval(()=>{
 function showSuccess(){
   S.subscribed=true;
   document.getElementById('successBg').classList.add('open');
+  setTimeout(redirectToOffers,4000);
   document.getElementById('stickyBar').classList.remove('visible');
 }
-function closeSuccess(){document.getElementById('successBg').classList.remove('open')}
+function closeSuccess(){document.getElementById('successBg').classList.remove('open');redirectToOffers();}
 
 function showAlready(){
   document.getElementById('alreadyBg').classList.add('open');
+  setTimeout(redirectToOffers,3000);
   document.getElementById('stickyBar').classList.remove('visible');
 }
-function closeAlready(){document.getElementById('alreadyBg').classList.remove('open')}
+function closeAlready(){document.getElementById('alreadyBg').classList.remove('open');redirectToOffers();}
+function redirectToOffers(){window.location.href='/offers';}
 
 function showDeniedHelp(){document.getElementById('deniedBg').classList.add('open')}
 function closeDenied(){document.getElementById('deniedBg').classList.remove('open')}
