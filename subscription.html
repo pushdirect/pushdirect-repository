@@ -386,6 +386,26 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
   </div>
 </div>
 
+<!-- iOS OVERLAY -->
+<div class="overlay-bg" id="iosBg">
+  <div class="overlay-card success">
+    <div class="ring success-ring">📱</div>
+    <h2 class="ov-title">One more step for iPhone</h2>
+    <p class="ov-sub">Tap <strong>Share</strong> → <strong>Add to Home Screen</strong>, then open PushDirect from your home screen and tap Enable Alerts to activate notifications on iOS.</p>
+    <button class="btn-ov" onclick="closeOverlay('iosBg')">Got it</button>
+  </div>
+</div>
+
+<!-- NO-API OVERLAY -->
+<div class="overlay-bg" id="noApiBg">
+  <div class="overlay-card denied">
+    <div class="ring denied-ring">🔔</div>
+    <h2 class="ov-title">Browser not supported</h2>
+    <p class="ov-sub">Your current browser doesn't support push notifications. Use Chrome, Firefox, or Edge — or subscribe by email below.</p>
+    <button class="btn-ov" onclick="closeOverlay('noApiBg')">OK</button>
+  </div>
+</div>
+
 <script>
 let raf=false;
 window.addEventListener('scroll',()=>{if(!raf){requestAnimationFrame(()=>{
@@ -437,44 +457,48 @@ let _raLoaded = false;
 function loadRollerAds() {
   if (_raLoaded) return; _raLoaded = true;
   const url = new URL(window.location.href);
+  // RollerAds requires options set on window BEFORE the script loads
+  window.raOptions = {
+    zoneID: 2822452,
+    extClickID: url.searchParams.get('click_id') || sessionStorage.getItem('pd_click_id') || '',
+    subID1: url.searchParams.get('source_id') || '',
+    actions: {
+      onPermissionGranted: function() {
+        gtag && gtag('event', 'push_subscribed', { page: 'subscription' });
+        fireBeMob();
+        updatePushStatus();
+        document.getElementById('successBg').classList.add('open');
+      },
+      onPermissionDenied: function() {
+        document.getElementById('deniedHelp').classList.add('show');
+        updatePushStatus();
+      },
+      onAlreadySubscribed: function() {
+        updatePushStatus();
+        document.getElementById('alreadyBg').classList.add('open');
+      },
+      onError: function() {
+        if ('Notification' in window && Notification.permission !== 'denied') {
+          Notification.requestPermission().then(p => {
+            if (p === 'granted') { fireBeMob(); updatePushStatus(); document.getElementById('successBg').classList.add('open'); }
+            else { updatePushStatus(); }
+          });
+        }
+      }
+    }
+  };
   const s = document.createElement('script');
   s.dataset.cfasync = 'false';
   s.src = 'https://push-sdk.com/f/sdk.js?z=2822452';
-  s.onload = function(opts) {
-    opts.zoneID = 2822452;
-    opts.extClickID = url.searchParams.get('click_id');
-    opts.subID1 = url.searchParams.get('source_id');
-    opts.actions.onPermissionGranted = function() {
-      gtag && gtag('event', 'push_subscribed', { page: 'subscription' });
-      updatePushStatus();
-      document.getElementById('successBg').classList.add('open');
-    };
-    opts.actions.onPermissionDenied = function() {
-      document.getElementById('deniedHelp').classList.add('show');
-      updatePushStatus();
-    };
-    opts.actions.onAlreadySubscribed = function() {
-      updatePushStatus();
-      document.getElementById('alreadyBg').classList.add('open');
-    };
-    opts.actions.onError = function() {
-      if ('Notification' in window && Notification.permission !== 'denied') {
-        Notification.requestPermission().then(p => {
-          if (p === 'granted') { updatePushStatus(); document.getElementById('successBg').classList.add('open'); }
-          else { updatePushStatus(); }
-        });
-      }
-    };
-  };
   document.head.appendChild(s);
 }
 
 function requestPush() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  if (isIOS) { activateMonetag(); document.getElementById('successBg').classList.add('open'); return; }
-  if (!('Notification' in window)) { document.getElementById('successBg').classList.add('open'); return; }
+  if (isIOS) { activateMonetag(); document.getElementById('iosBg').classList.add('open'); return; }
+  if (!('Notification' in window)) { document.getElementById('noApiBg').classList.add('open'); return; }
   if (Notification.permission === 'denied') { document.getElementById('deniedHelp').classList.add('show'); return; }
-  if (Notification.permission === 'granted') { loadRollerAds(); setTimeout(() => { if (!document.getElementById('alreadyBg').classList.contains('open')) document.getElementById('alreadyBg').classList.add('open'); }, 1200); return; }
+  if (Notification.permission === 'granted') { loadRollerAds(); return; } // SDK fires onAlreadySubscribed callback
   loadRollerAds();
 }
 
@@ -482,6 +506,19 @@ function activateMonetag() {
   if (window._monetagLoaded) return; window._monetagLoaded = true;
   const s = document.createElement('script'); s.src = 'https://nap5k.com/tag.min.js'; s.dataset.zone = '11024677'; document.body.appendChild(s);
 }
+
+/* ═══ BEMOB CONVERSION PIXEL ═══ */
+function fireBeMob() {
+  try {
+    const u = new URL(window.location.href);
+    const clickID = u.searchParams.get('click_id') || sessionStorage.getItem('pd_click_id') || '';
+    if (!clickID) return;
+    const px = new Image();
+    px.src = 'https://in.track.bemob.com/click/goal?clickid=' + encodeURIComponent(clickID) + '&goal=1';
+  } catch(e) {}
+}
+
+function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
 
 function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
 
@@ -512,6 +549,9 @@ document.getElementById('emailForm').addEventListener('submit', async (e) => {
 });
 
 /* ═══ THEME ═══ */
+// Persist click_id for BeMob postback
+(function(){const u=new URL(window.location.href);const c=u.searchParams.get('click_id');if(c)sessionStorage.setItem('pd_click_id',c);})();
+
 (function(){
   const saved = localStorage.getItem('pd_theme');
   if (saved) document.documentElement.setAttribute('data-theme', saved);
