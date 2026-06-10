@@ -716,9 +716,17 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 [data-theme="dark"] .pref-btn{background:var(--surface);border-color:var(--border)}
 [data-theme="dark"] .pref-btn.selected{border-color:var(--cta);background:rgba(249,115,22,.12)}
 
+
+.sr-skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.sr-skip:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;padding:8px 16px;background:var(--brand,#1a1916);color:#fff;font-family:var(--fm,sans-serif);font-size:13px;font-weight:600;border-radius:6px;z-index:10000;text-decoration:none;outline:2px solid #fff}
 </style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does it work?", "acceptedAnswer": {"@type": "Answer", "text": "When you tap \"Enable Direct Alerts\", your browser asks for permission to send you notifications. Once you allow, PushDirect delivers alerts directly to your device — no app to download, no account to create."}}, {"@type": "Question", "name": "Do you sell my data?", "acceptedAnswer": {"@type": "Answer", "text": "Never. PushDirect does not sell or share subscriber data. Your trust isn't a product we monetize."}}, {"@type": "Question", "name": "Can I turn it off?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, at any time. Click the site settings icon on the left side of your address bar, find Notifications, and set it to Block. Takes 5 seconds."}}, {"@type": "Question", "name": "Why can't I see the permission prompt?", "acceptedAnswer": {"@type": "Answer", "text": "If you previously dismissed or blocked notifications for this site, your browser may not show the dialog again. Click the site settings icon → Notifications → Allow, then refresh."}}]}
+</script>
+
 </head>
 <body>
+<a href="#main-content" class="sr-skip">Skip to content</a>
 <div class="scroll-bar" id="scrollBar"></div>
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
@@ -757,7 +765,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
+<section id="main-content" class="hero" id="hero">
 
   <!-- LEFT: copy + CTA -->
   <div class="hero-left">
@@ -786,7 +794,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
       <span class="cpill">🛍️ Flash Deals</span>
     </div>
 
-    <button class="btn-cta" id="heroCta" onclick="requestPushDirect()">
+    <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" id="heroCta" onclick="requestPushDirect()">
       <img class="ico btn-plane" src="/icons/logo.png" width="18" height="13" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
       Enable Direct Alerts
     </button>
@@ -967,7 +975,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
   <div class="mid-cta-glow"></div>
   <h2 class="mid-cta-h">Your next exclusive deal<br>is already live.</h2>
   <p class="mid-cta-sub">Don't be the last to know. One tap gets you inside every reward window, free offer, and flash deal — every single time.</p>
-  <button class="btn-cta" onclick="requestPushDirect()" style="margin:0 auto">
+  <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="requestPushDirect()" style="margin:0 auto">
     <img class="ico btn-plane" src="/icons/logo.png" width="18" height="13" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
     Enable Direct Alerts
   </button>
@@ -1042,7 +1050,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 </div>
 
 <!-- ═══ SUCCESS SCREEN ═══ -->
-<div class="overlay-bg" id="successBg">
+<div class="overlay-bg" role="dialog" aria-modal="true" id="successBg">
   <div class="overlay-card success" id="successCard">
 
     <!-- Step 1: Confirmation -->
@@ -1066,7 +1074,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 </div>
 
 <!-- ═══ ALREADY SUBSCRIBED SCREEN ═══ -->
-<div class="overlay-bg" id="alreadyBg">
+<div class="overlay-bg" role="dialog" aria-modal="true" id="alreadyBg">
   <div class="overlay-card already">
     <div class="already-ring">⚡</div>
     <h2 class="ov-title">You're already in.</h2>
@@ -1080,7 +1088,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 </div>
 
 <!-- ═══ DENIED SCREEN ═══ -->
-<div class="overlay-bg" id="deniedBg">
+<div class="overlay-bg" role="dialog" aria-modal="true" id="deniedBg">
   <div class="overlay-card denied">
     <div class="denied-ring">🔔</div>
     <h2 class="ov-title">Notifications blocked</h2>
@@ -1112,7 +1120,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
     <span class="exit-em">⚡</span>
     <h2 class="exit-h">Wait — you'll miss the next one.</h2>
     <p class="exit-sub">Takes one tap. Alerts arrive before the window closes. Always first, never late.</p>
-    <button class="btn-cta" onclick="requestPushDirect();closeExit()" style="width:100%;justify-content:center;font-size:16px;padding:16px;animation:none">
+    <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="requestPushDirect();closeExit()" style="width:100%;justify-content:center;font-size:16px;padding:16px;animation:none">
       <img class="ico btn-plane" src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
       Enable Direct Alerts
     </button>
@@ -1121,7 +1129,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 
 <!-- ═══ STICKY BAR ═══ -->
 <div class="sticky-bar" id="stickyBar">
-  <button class="btn-cta" onclick="requestPushDirect()">
+  <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="requestPushDirect()">
     <img class="ico btn-plane" src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
     Enable Direct Alerts
   </button>
@@ -1556,7 +1564,7 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 <!-- Monetag IPP: injected on-demand for iOS via activateMonetag() -->
 
 <!-- ═══ iOS OVERLAY ═══ -->
-<div class="overlay-bg" id="iosBg">
+<div class="overlay-bg" role="dialog" aria-modal="true" id="iosBg">
   <div class="overlay-card already">
     <div class="already-ring">📱</div>
     <h2 class="ov-title">We'll alert you differently.</h2>
@@ -1569,7 +1577,7 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 </div>
 
 <!-- ═══ NO-API OVERLAY ═══ -->
-<div class="overlay-bg" id="noApiBg">
+<div class="overlay-bg" role="dialog" aria-modal="true" id="noApiBg">
   <div class="overlay-card denied">
     <div class="denied-ring">🔔</div>
     <h2 class="ov-title">Browser not supported</h2>
@@ -1581,6 +1589,50 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 
 </div>
 
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
+</script>
+
+/* ═══ MODAL ACCESSIBILITY: aria-modal, focus trap, Escape ═══ */
+(function(){
+  const FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])';
+  function trapFocus(modal){
+    const els=[...modal.querySelectorAll(FOCUSABLE)];
+    if(!els.length)return;
+    els[0].focus();
+    modal.addEventListener('keydown',function ft(e){
+      if(e.key==='Tab'){
+        const fi=els[0],la=els[els.length-1];
+        if(e.shiftKey&&document.activeElement===fi){e.preventDefault();la.focus();}
+        else if(!e.shiftKey&&document.activeElement===la){e.preventDefault();fi.focus();}
+      }
+      if(e.key==='Escape'){
+        modal.classList.remove('open');
+        modal.removeEventListener('keydown',ft);
+      }
+    });
+  }
+  const mo=new MutationObserver(muts=>{
+    muts.forEach(m=>{
+      m.target.querySelectorAll('.overlay-bg.open,.preperm-bg.open,.exit-bg.open').forEach(modal=>{
+        if(!modal.dataset.a11yInit){
+          modal.dataset.a11yInit='1';
+          modal.setAttribute('role','dialog');
+          modal.setAttribute('aria-modal','true');
+          const h=modal.querySelector('.ov-title,.preperm-title,.exit-h');
+          if(h){if(!h.id)h.id='modal-title-'+Math.random().toString(36).slice(2,7);modal.setAttribute('aria-labelledby',h.id);}
+          trapFocus(modal);
+        }
+      });
+    });
+  });
+  mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+})();
 </body>
 </html>
 
