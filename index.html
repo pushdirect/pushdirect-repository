@@ -1000,6 +1000,7 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
     <a href="/subscription">Subscribe</a>
     <a href="/privacy">Privacy</a>
     <a href="/terms">Terms</a>
+    <a href="/contact">Contact</a>
   </div>
   <p class="foot-copy">© 2026 PushDirect Promotion Network. All rights reserved.</p>
 </footer>
@@ -1110,6 +1111,8 @@ function track(ev,p={}){
   }
 }
 track('page_view',{device:/Mobi/.test(navigator.userAgent)?'mobile':'desktop'});
+// Persist click_id for BeMob postback even after navigation
+(function(){const u=new URL(window.location.href);const c=u.searchParams.get('click_id');if(c)sessionStorage.setItem('pd_click_id',c);})();
 
 /* ═══ NAV + SCROLL ═══ */
 let raf=false;
@@ -1172,36 +1175,40 @@ function loadRollerAds(){
     const sourceID=url.searchParams.get('source_id');
     const s=document.createElement('script');
     s.dataset.cfasync='false';
-    s.src='https://push-sdk.com/f/sdk.js?z=2822452';
-    s.onload=function(opts){
-      opts.zoneID=2822452;
-      opts.extClickID=clickID;
-      opts.subID1=sourceID;
-      opts.actions.onPermissionGranted=function(){
-        track('subscribed_rollerads',{ms:Date.now()-S.t0});
-        showSuccess();
-      };
-      opts.actions.onPermissionDenied=function(){
-        track('denied_rollerads');
-        showDeniedHelp();
-      };
-      opts.actions.onAlreadySubscribed=function(){
-        track('already_subscribed_rollerads');
-        showAlready();
-      };
-      opts.actions.onError=function(){
-        track('error_rollerads');
-        if('Notification' in window && Notification.permission==='granted'){
-          showAlready();
-        } else if('Notification' in window && Notification.permission!=='denied'){
-          Notification.requestPermission().then(p=>{
-            if(p==='granted')showSuccess(); else showDeniedHelp();
-          });
-        } else {
+    // RollerAds requires options set on window BEFORE the script loads
+    window.raOptions={
+      zoneID:2822452,
+      extClickID:clickID||'',
+      subID1:sourceID||'',
+      actions:{
+        onPermissionGranted:function(){
+          track('subscribed_rollerads',{ms:Date.now()-S.t0});
+          fireBeMob();
+          showSuccess();
+        },
+        onPermissionDenied:function(){
+          track('denied_rollerads');
           showDeniedHelp();
+        },
+        onAlreadySubscribed:function(){
+          track('already_subscribed_rollerads');
+          showAlready();
+        },
+        onError:function(){
+          track('error_rollerads');
+          if('Notification' in window&&Notification.permission==='granted'){
+            showAlready();
+          } else if('Notification' in window&&Notification.permission!=='denied'){
+            Notification.requestPermission().then(p=>{
+              if(p==='granted'){fireBeMob();showSuccess();}else showDeniedHelp();
+            });
+          } else {
+            showDeniedHelp();
+          }
         }
-      };
+      }
     };
+    s.src='https://push-sdk.com/f/sdk.js?z=2822452';
     document.head.appendChild(s);
   })();
 }
@@ -1231,12 +1238,12 @@ function confirmPermission(){
 function requestPushDirect(){
   closeExit();
 
-  // iOS Safari: no Web Push — activate Monetag IPP then show success
+  // iOS Safari: no Web Push — activate Monetag IPP then show iOS-specific message
   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-  if(isIOS){track('ios_ipp');activateMonetag();showSuccess();return;}
+  if(isIOS){track('ios_ipp');activateMonetag();showIOS();return;}
 
-  // No Notification API
-  if(!('Notification' in window)){track('no_notif_api');showSuccess();return;}
+  // No Notification API (old browser)
+  if(!('Notification' in window)){track('no_notif_api');showNoAPI();return;}
 
   // Hard blocked — skip everything, go straight to help screen
   if(Notification.permission==='denied'){showDeniedHelp();return;}
@@ -1302,6 +1309,32 @@ function activateMonetag(){
   s.dataset.zone='11024677';
   document.body.appendChild(s);
 }
+
+/* ═══ BEMOB CONVERSION PIXEL ═══ */
+// Fires a server-to-server postback to BeMob on confirmed push opt-in.
+// Replace YOUR_BEMOB_OFFER_ID and YOUR_BEMOB_GOAL with your actual values.
+// The click_id captured from the landing URL is passed as the conversion token.
+function fireBeMob(){
+  try{
+    const url=new URL(window.location.href);
+    const clickID=url.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'';
+    if(!clickID)return; // No tracked click — organic, skip postback
+    const px=new Image();
+    px.src='https://in.track.bemob.com/click/goal?clickid='+encodeURIComponent(clickID)+'&goal=1';
+  }catch(e){}
+}
+
+/* ═══ iOS / NO-API OVERLAYS ═══ */
+function showIOS(){
+  S.subscribed=true;
+  document.getElementById('iosBg').classList.add('open');
+  document.getElementById('stickyBar').classList.remove('visible');
+}
+function closeIOS(){document.getElementById('iosBg').classList.remove('open')}
+function showNoAPI(){
+  document.getElementById('noApiBg').classList.add('open');
+}
+function closeNoAPI(){document.getElementById('noApiBg').classList.remove('open')}
 
 /* ═══ FAQ ═══ */
 function toggleFaq(el){
@@ -1428,5 +1461,29 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 </script>
 
 <!-- Monetag IPP: injected on-demand for iOS via activateMonetag() -->
+
+<!-- ═══ iOS OVERLAY ═══ -->
+<div class="overlay-bg" id="iosBg">
+  <div class="overlay-card already">
+    <div class="already-ring">📱</div>
+    <h2 class="ov-title">Almost there!</h2>
+    <p class="ov-sub">For instant alerts on iPhone, tap <strong>Share</strong> → <strong>Add to Home Screen</strong>, then open PushDirect from your home screen and tap Enable Alerts.</p>
+    <div class="ov-preview" style="border:1px solid rgba(232,213,176,.3);text-align:left">
+      <div class="ov-preview-text"><strong>Why this step?</strong>iOS requires apps to be added to the home screen to enable web push notifications. Takes 15 seconds.</div>
+    </div>
+    <button class="btn-ov-primary" onclick="closeIOS()">Got it</button>
+  </div>
+</div>
+
+<!-- ═══ NO-API OVERLAY ═══ -->
+<div class="overlay-bg" id="noApiBg">
+  <div class="overlay-card denied">
+    <div class="denied-ring">🔔</div>
+    <h2 class="ov-title">Browser not supported</h2>
+    <p class="ov-sub">Your current browser doesn't support push notifications. Try Chrome, Firefox, or Edge — or subscribe by email for deal alerts.</p>
+    <button class="btn-ov-primary" onclick="window.location='/subscription';closeNoAPI()">Subscribe by email</button>
+    <button class="btn-ov-sec" onclick="closeNoAPI()">Dismiss</button>
+  </div>
+</div>
 </body>
 </html>
