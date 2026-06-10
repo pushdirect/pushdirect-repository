@@ -541,11 +541,10 @@ function activateMonetag() {
 /* ═══ BEMOB CONVERSION PIXEL ═══ */
 function fireBeMob() {
   try {
-    const u = new URL(window.location.href);
-    const clickID = u.searchParams.get('click_id') || sessionStorage.getItem('pd_click_id') || '';
+    const clickID = sessionStorage.getItem('pd_click_id') || new URL(window.location.href).searchParams.get('click_id') || '';
     if (!clickID) return;
     const px = new Image();
-    px.src = 'https://in.track.bemob.com/click/goal?clickid=' + encodeURIComponent(clickID) + '&goal=1';
+    px.src = 'https://udlch.bemobtrcks.com/postback?cid=' + encodeURIComponent(clickID);
   } catch(e) {}
 }
 
