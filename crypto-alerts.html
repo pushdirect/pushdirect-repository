@@ -25,7 +25,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;0,900&family=Barlow+Condensed:wght@700;800;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   /* Core brand — matches index.html */
@@ -53,9 +53,7 @@
   --sh:0 6px 28px rgba(0,0,0,.1);
   --sh-lg:0 16px 56px rgba(0,0,0,.16);
   /* Fonts */
-  --font-display:'Barlow Condensed',sans-serif;
-  --font-body:'Barlow',sans-serif;
-  --font-mono:'DM Mono',monospace;
+  --fd:'Poppins',sans-serif;--fb:'Inter',sans-serif;--fm:'Inter',sans-serif;
   --radius:12px;--ease:cubic-bezier(0.16,1,0.3,1);
 }
 [data-theme="dark"]{
@@ -83,23 +81,83 @@
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{background:var(--bg);color:var(--text-1);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
-nav.scrolled{background:rgba(12,11,9,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+/* ═══ NAV ═══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:14px 24px;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:box-shadow .4s var(--ease);
+}
+nav.scrolled{box-shadow:var(--sh-sm)}
+[data-theme="dark"] nav{background:rgba(12,11,9,.96);border-color:var(--border)}
+
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-logo-text{font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:.06em;color:var(--text-1);line-height:1}
-.logo-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;color:var(--taupe);text-transform:uppercase;display:block;margin-top:2px;font-weight:500}
-.nav-links{display:flex;align-items:center;gap:6px}
-.nav-link{font-family:var(--font-mono);font-size:11px;color:var(--text-2);padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:20px;text-decoration:none;transition:all .2s}
-.nav-link:hover{color:var(--text-1);border-color:var(--border-str)}
-.nav-link.active{color:var(--cream-dark);border-color:var(--border-str)}
-.btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text-2);transition:all .2s;flex-shrink:0}
-.btn-theme:hover{background:var(--surface-2);border-color:var(--border-str)}
+.logo-text{font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--text1);line-height:1}
+.logo-sub{font-family:var(--fm);font-size:9px;letter-spacing:.16em;color:var(--taupe);text-transform:uppercase;display:block;margin-top:2px;font-weight:500}
+
+.nav-r{display:flex;align-items:center;gap:10px}
+.live-dot{
+  display:inline-block;width:7px;height:7px;
+  background:var(--taupe);border-radius:50%;
+  animation:blink 2s ease-in-out infinite;
+  box-shadow:0 0 8px rgba(154,143,126,.55);
+  flex-shrink:0;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.btn-theme{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:15px;transition:all .2s;color:var(--text2);
+}
+.btn-theme:hover{background:var(--surface2)}
+.nav-back{
+  font-family:var(--fm);font-size:12px;font-weight:600;letter-spacing:.06em;
+  color:var(--text2);padding:6px 14px;
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  text-decoration:none;transition:all .2s;
+}
+.nav-back:hover{background:var(--surface2);color:var(--text1)}
+
+/* ═══ SUBNAV ═══ */
+.subnav{
+  position:fixed;top:57px;left:0;right:0;z-index:99;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;gap:0;
+  padding:0;height:36px;
+  overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  transform:translateY(0);transition:transform .35s var(--ease);
+}
+.subnav::-webkit-scrollbar{display:none}
+.subnav--hidden{transform:translateY(-100%)}
+[data-theme="dark"] .subnav{background:rgba(12,11,9,.96);border-color:var(--border)}
+.subnav-link{
+  font-family:var(--fm);font-size:12px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text2);text-decoration:none;
+  padding:8px 16px;border-radius:20px;
+  transition:background .18s,color .18s;
+  white-space:nowrap;flex-shrink:0;
+}
+.subnav-link:hover{background:var(--surface2);color:var(--text1)}
+.subnav-link.active{color:var(--text1);background:var(--surface)}
+.subnav-sep{
+  color:var(--border-s);font-size:14px;user-select:none;
+  flex-shrink:0;padding:0 2px;
+}
 
 .orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;animation:orbFloat 22s ease-in-out infinite}
 .orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(232,213,176,.055),transparent 70%);top:-250px;left:-150px}
 .orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(154,143,126,.07),transparent 70%);top:40%;right:-200px;animation-delay:-8s}
 
-.hero{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:120px 24px 80px;text-align:center;position:relative;overflow:hidden}
+.hero{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:130px 24px 80px;text-align:center;position:relative;overflow:hidden}
 .hero-inner{max-width:800px;position:relative;z-index:1}
 .kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-dark);margin-bottom:20px;animation:fadeUp .8s var(--ease) both}
 .hero-h1{font-family:var(--font-display);font-size:clamp(48px,9vw,100px);font-weight:900;line-height:.93;letter-spacing:-.02em;margin-bottom:28px;animation:fadeUp .8s var(--ease) .08s both}
@@ -301,6 +359,16 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
 [data-theme="light"] .coin-card,[data-theme="light"] .deal-card,[data-theme="light"] .signal,[data-theme="light"] .faq-item,[data-theme="light"] .step{background:rgba(26,25,22,.03);border-color:rgba(26,25,22,.08)}
 [data-theme="light"] .faq-item.open{border-color:rgba(201,170,130,.5)}
 [data-theme="light"] .btn-ov-sec{border-color:rgba(26,25,22,.15);color:#5a5248}
+@media(max-width:600px){
+  .subnav{justify-content:flex-start;padding:0 12px}
+  .subnav-link{padding:8px 12px;font-size:11px;letter-spacing:.04em}
+}
+@media(max-width:480px){
+  nav{padding:12px 18px}
+  .nav-back{display:none}
+  .subnav-sep{display:none}
+  .subnav-link{padding:8px 10px}
+}
 </style>
 </head>
 <body>
@@ -308,19 +376,34 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
-<nav id="nav">
-  <a href="/" class="nav-logo">
+<!-- SUBNAV -->
+<nav class="subnav" aria-label="Site navigation" id="subnav">
+  <a href="https://pushdirect.network" class="subnav-link">Home</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/offers" class="subnav-link">Offers</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/deal-alerts" class="subnav-link">Deal Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/crypto-alerts" class="subnav-link active">Crypto Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/subscription" class="subnav-link">Subscribe</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/faq" class="subnav-link">FAQ</a>
+</nav>
+
+<!-- MAIN NAV -->
+<nav id="mainNav">
+  <a href="https://pushdirect.network" class="nav-logo">
     <svg width="36" height="25" viewBox="0 0 80 56" fill="none"><polygon points="2,28 52,4 42,30" fill="#e8d5b0" opacity=".95"/><polygon points="22,28 52,4 42,30" fill="#9a8f7e" opacity=".8"/><polygon points="22,28 42,30 30,46" fill="#b8a88a" opacity=".75"/></svg>
     <div>
-      <div class="nav-logo-text">PUSHDIRECT</div>
+      <div class="logo-text">PUSHDIRECT</div>
       <span class="logo-sub">Promotion Network</span>
     </div>
   </a>
-  <div class="nav-links">
-    <a href="/deal-alerts" class="nav-link deals">Deal Alerts</a>
-    <a href="/" class="nav-link">← Home</a>
+  <div class="nav-r">
+    <a href="/" class="nav-back">← Home</a>
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
   </div>
-  <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
 </nav>
 
 <section class="hero">
