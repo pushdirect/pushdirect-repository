@@ -375,6 +375,35 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
 
 .sr-skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .sr-skip:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;padding:8px 16px;background:var(--brand,#1a1916);color:#fff;font-family:var(--fm,sans-serif);font-size:13px;font-weight:600;border-radius:6px;z-index:10000;text-decoration:none;outline:2px solid #fff}
+
+/* ═══ DEAL CATEGORIES ═══ */
+.chip-grid{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 8px}
+.chip-grid a{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid rgba(154,143,126,.35);border-radius:999px;font-size:13.5px;color:var(--text1);text-decoration:none;background:rgba(154,143,126,.08);transition:all .2s;font-family:var(--fm)}
+.chip-grid a:hover{border-color:var(--cream-d);transform:translateY(-1px);background:rgba(154,143,126,.14)}
+[data-theme="dark"] .chip-grid a{background:rgba(154,143,126,.06);border-color:rgba(154,143,126,.25)}
+.deals-section{padding:80px 0;border-top:1px solid var(--border)}
+.deals-section .form-card{background:rgba(232,213,176,.04);border:1px solid rgba(232,213,176,.14);border-radius:16px;padding:36px 32px;box-shadow:var(--sh);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);max-width:520px}
+[data-theme="light"] .deals-section .form-card{background:rgba(30,29,27,.04);border-color:rgba(30,29,27,.12)}
+.deals-section .form-desc{font-family:var(--fm);font-size:12px;letter-spacing:.06em;color:var(--text2);margin-bottom:24px;padding:12px 16px;background:rgba(232,213,176,.05);border-left:2px solid var(--cream-d);border-radius:0 8px 8px 0;line-height:1.6}
+.deals-section .form-row{margin-bottom:18px}
+.deals-section .form-label{display:block;font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.deals-section .form-label .opt{color:var(--text3);font-size:10px;letter-spacing:.06em;text-transform:none}
+.deals-section .form-input{width:100%;padding:13px 16px;background:rgba(232,213,176,.04);border:1px solid var(--border-s);border-radius:10px;color:var(--text1);font-family:var(--fb);font-size:15px;transition:border-color .2s,background .2s,box-shadow .2s;outline:none;-webkit-appearance:none}
+.deals-section .form-input::placeholder{color:var(--text3)}
+.deals-section .form-input:focus{border-color:var(--cream-d);background:rgba(232,213,176,.07);box-shadow:0 0 0 3px rgba(232,213,176,.08)}
+[data-theme="light"] .deals-section .form-input{background:rgba(30,29,27,.04)}
+[data-theme="light"] .deals-section .form-input:focus{background:rgba(30,29,27,.07)}
+.deals-section .btn-submit{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:.04em;text-transform:uppercase;padding:17px 44px;border-radius:50px;border:none;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s,opacity .2s;box-shadow:0 8px 32px rgba(249,115,22,.28);margin-top:6px}
+.deals-section .btn-submit:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 12px 48px rgba(249,115,22,.38)}
+.deals-section .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.deals-section .hp-field{display:none;visibility:hidden;position:absolute;left:-9999px}
+.deals-section .success-panel{display:none;text-align:center;padding:12px 0 8px}
+.deals-section .success-icon{width:52px;height:52px;border-radius:50%;background:rgba(126,203,154,.12);border:1px solid rgba(126,203,154,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:22px}
+.deals-section .success-title{font-family:var(--fd);font-size:26px;font-weight:900;letter-spacing:-.01em;color:var(--text1);margin-bottom:8px}
+.deals-section .success-msg{font-size:14px;color:var(--text2)}
+.deals-section .success-msg strong{color:var(--cream-d)}
+.deals-section .form-privacy{font-family:var(--fm);font-size:10px;letter-spacing:.04em;color:var(--text3);text-align:center;margin-top:16px;line-height:1.7}
+
 </style>
 </head>
 <body>
@@ -392,6 +421,8 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
   <a href="https://pushdirect.network/deal-alerts" class="subnav-link active">Deal Alerts</a>
   <span class="subnav-sep">|</span>
   <a href="https://pushdirect.network/crypto-alerts" class="subnav-link">Crypto Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/blog" class="subnav-link">Blog</a>
   <span class="subnav-sep">|</span>
   <a href="https://pushdirect.network/subscription" class="subnav-link">Subscribe</a>
   <span class="subnav-sep">|</span>
@@ -500,6 +531,56 @@ footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:cen
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I stop deal alerts at any time? <span class="faq-arr">▼</span></div><div class="faq-a">Yes — instantly. Click any notification → browser settings → Notifications → Block. Or click the lock icon in your address bar on pushdirect.network. Takes 5 seconds. No guilt trips, no confirmation loops.</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Are the deals exclusive to PushDirect subscribers? <span class="faq-arr">▼</span></div><div class="faq-a">Some are. Retail partners provide early-access windows for PushDirect's subscriber base before deals go public. The average first-mover window is 4–8 minutes ahead of social media and deal aggregator sites.</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is my data safe with PushDirect? <span class="faq-arr">▼</span></div><div class="faq-a">Push notification subscriptions don't require personal data. PushDirect never collects your email, name, or payment information for the free tier. We don't sell subscriber data. Ever.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEALS CATEGORY + EMAIL SECTION -->
+<section class="deals-section">
+  <div class="wrap">
+    <div class="sec-tag">Browse &amp; Subscribe</div>
+    <h2 class="sec-h">Deal categories</h2>
+    <p class="sec-sub">Flash sales, exclusive promos, and time-sensitive offers — delivered to your inbox before they sell out.</p>
+    <div class="chip-grid">
+      <a href="/deals/software">💾 Software</a>
+      <a href="/deals/travel">✈️ Travel</a>
+      <a href="/deals/electronics">🔌 Electronics</a>
+      <a href="/deals/ai-tools">🤖 AI Tools</a>
+      <a href="/deals/finance">💳 Finance</a>
+      <a href="/deals/gaming">🎮 Gaming</a>
+      <a href="/deals/hosting">🖥️ Hosting</a>
+      <a href="/deals/vpn">🔒 VPN</a>
+      <a href="/deals/saas">📊 SaaS</a>
+      <a href="/deals/shopping">🛍️ Shopping</a>
+    </div>
+    <div style="margin-top:36px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+      <div class="form-card" style="flex:1;min-width:280px">
+        <p class="form-desc">Get early access to promotions, sales alerts, and member-only deals curated by the PushDirect network — no spam, unsubscribe anytime.</p>
+        <form id="dealsEmailForm" method="POST" action="https://api.web3forms.com/submit">
+          <input type="hidden" name="access_key" value="a4b6220e-4b69-41bd-966b-59d0f1014186">
+          <input type="hidden" name="subject" value="New PushDirect Deal Alert Email Signup">
+          <input type="hidden" name="from_name" value="PushDirect Network">
+          <p class="hp-field"><label>Don't fill this out: <input name="botcheck" tabindex="-1" autocomplete="off"></label></p>
+          <div class="form-row">
+            <label class="form-label" for="dealEmailName">Your name <span class="opt">(optional)</span></label>
+            <input class="form-input" type="text" id="dealEmailName" name="name" placeholder="e.g. Alex" autocomplete="given-name">
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="dealEmailAddr">Email address <span style="color:var(--cream-d)">*</span></label>
+            <input class="form-input" type="email" id="dealEmailAddr" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+          <button type="submit" class="btn-submit" id="dealsSubmitBtn">
+            <svg width="18" height="13" viewBox="0 0 40 28" fill="none" aria-hidden="true"><polygon points="1,14 30,2 24,15" fill="#fff"/><polygon points="12,14 30,2 24,15" fill="rgba(255,255,255,0.5)"/></svg>
+            Get Deal Alerts by Email
+          </button>
+          <p class="form-privacy">No spam · No sharing · Unsubscribe any time</p>
+        </form>
+        <div class="success-panel" id="dealsSuccessPanel" role="status" aria-live="polite">
+          <div class="success-icon">✓</div>
+          <div class="success-title">You're on the list!</div>
+          <p class="success-msg">Watch for <strong>exclusive deals and promos</strong> heading your way.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -916,6 +997,39 @@ if('serviceWorker' in navigator){
   </div>
 </div>
 <script defer src="/pushdirect-core.js"></script>
+
+<script>
+/* ═══ DEALS EMAIL FORM ═══ */
+(function(){
+  var form=document.getElementById('dealsEmailForm');
+  var successPanel=document.getElementById('dealsSuccessPanel');
+  var submitBtn=document.getElementById('dealsSubmitBtn');
+  if(!form)return;
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(form.querySelector('[name="botcheck"]').value)return;
+    submitBtn.disabled=true;submitBtn.textContent='Sending…';
+    var data=Object.fromEntries(new FormData(form));
+    fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    }).then(function(r){return r.json();}).then(function(result){
+      if(result.success){
+        form.style.display='none';
+        successPanel.style.display='block';
+        typeof gtag==='function'&&gtag('event','email_subscribed',{page:'deal-alerts',event_category:'conversion'});
+      } else {
+        throw new Error(result.message||'Submission failed');
+      }
+    }).catch(function(){
+      submitBtn.disabled=false;submitBtn.textContent='Get Deal Alerts by Email';
+      alert('Something went wrong — please try again.');
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
 
