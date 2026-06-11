@@ -26,7 +26,22 @@ const PD_VARIANT=(function(){
 })();
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'FAQ — PushDirect Promotion Network',page_location:'https://pushdirect.network/faq',send_page_view:true});</script>
+<script>
+(function(){
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){
+    window._monetagLoaded=true;
+    var s=document.createElement('script');
+    s.dataset.zone='11024677';
+    s.dataset.cfasync='false';
+    s.src='https://nap5k.com/tag.min.js';
+    document.head.appendChild(s);
+  }
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://push-sdk.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,6 +60,10 @@ const PD_VARIANT=(function(){
   --sh:0 6px 28px rgba(0,0,0,.1);--sh-lg:0 16px 56px rgba(0,0,0,.16);
 }
 [data-theme="dark"]{
+  --sh-xs:0 1px 4px rgba(0,0,0,.5);
+  --sh-sm:0 2px 16px rgba(0,0,0,.55);
+  --sh:0 6px 28px rgba(0,0,0,.65);
+  --sh-lg:0 16px 56px rgba(0,0,0,.75);
   --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;
   --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
   --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);
@@ -95,7 +114,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .btn-cta{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:15px 36px;border-radius:50px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(249,115,22,.3);text-decoration:none}
 .btn-cta:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(249,115,22,.4)}
 
-footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--border);background:var(--bg2);text-align:center;margin-top:80px}
+footer{position:relative;z-index:1;padding-bottom:120px;position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--border);background:var(--bg2);text-align:center;margin-top:80px}
 .foot-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
 .foot-logo-text{font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--text1)}
 .foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:16px}
