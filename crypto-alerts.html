@@ -1188,6 +1188,7 @@ if('serviceWorker' in navigator){
 }
 </script>
 
+<script>
 /* ═══ MODAL ACCESSIBILITY: aria-modal, focus trap, Escape ═══ */
 (function(){
   const FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])';
@@ -1223,6 +1224,7 @@ if('serviceWorker' in navigator){
   });
   mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
 })();
+</script>
 
 <!-- ═══ iOS BROWSER OVERLAY — Add to Home Screen ═══ -->
 <div class="overlay-bg" role="dialog" aria-modal="true" id="iosBrowserBg">
@@ -1254,3 +1256,4 @@ if('serviceWorker' in navigator){
 <script defer src="/pushdirect-core.js"></script>
 </body>
 </html>
+
