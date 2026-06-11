@@ -11,16 +11,19 @@
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 <link rel="canonical" href="https://pushdirect.network/contact">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://push-sdk.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;0,900&family=Barlow+Condensed:wght@700;800;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
 
 
+<script>
 /* ═══ A/B VARIANT ═══ */
 const PD_VARIANT=(function(){
   let v=sessionStorage.getItem('pd_ab');
   if(!v){v=Math.random()<0.5?'A':'B';sessionStorage.setItem('pd_ab',v);}
   return v;
 })();
+</script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
 <style>
 :root{--bg:#0c0b09;--bg-3:#1a1814;--surface:rgba(232,213,176,0.05);--surface-2:rgba(232,213,176,0.08);--border:rgba(232,213,176,0.09);--border-str:rgba(232,213,176,0.16);--text-1:#f5f0e8;--text-2:#9a8f7e;--text-3:#5a5248;--cream:#e8d5b0;--cream-light:#f2e6cb;--cream-dark:#c9aa82;--font-display:'Barlow Condensed',sans-serif;--font-body:'Barlow',sans-serif;--font-mono:'DM Mono',monospace;--radius:12px;--radius-lg:20px;--ease:cubic-bezier(0.16,1,0.3,1)}
@@ -275,7 +278,7 @@ if('serviceWorker' in navigator){
     <img src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;filter:brightness(0) invert(1)">
     Enable Direct Alerts
   </button>
-  <div class="sticky-tag">Join 2.3M+ · Cancel anytime</div>
+  <div class="sticky-tag">Free alerts · Cancel anytime</div>
 </div>
 
 <!-- ALREADY OVERLAY -->
@@ -366,5 +369,6 @@ function pdSubmitEmail(e){
   fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'a4b6220e-4b69-41bd-966b-59d0f1014186',email:em,subject:'PushDirect email signup ('+location.pathname+')',message:'Email: '+em})}).then(r=>r.json()).then(d=>{if(d.success){document.getElementById('pdDeniedForm').style.display='none';document.getElementById('pdDeniedThanks').style.display='block';}}).catch(()=>{});
 }
 </script>
+<script defer src="/pushdirect-core.js"></script>
 </body>
 </html>
