@@ -347,6 +347,7 @@ if('serviceWorker' in navigator){
 }
 </script>
 
+<script>
 /* ═══ MODAL ACCESSIBILITY: aria-modal, focus trap, Escape ═══ */
 (function(){
   const FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])';
@@ -382,6 +383,7 @@ if('serviceWorker' in navigator){
   });
   mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
 })();
+</script>
 
 <!-- STICKY BAR -->
 <div class="sticky-bar" id="pdStickyBar">
@@ -483,3 +485,4 @@ function pdSubmitEmail(e){
 <script defer src="/pushdirect-core.js"></script>
 </body>
 </html>
+
