@@ -1487,14 +1487,18 @@ function toggleFaq(el){
 (function(){
   const h=document.documentElement;
   const saved=localStorage.getItem('pd_theme');
-  if(saved){h.setAttribute('data-theme',saved);}
+  // Resolve initial theme: saved pref → system pref → default light
+  const preferred=saved||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  h.setAttribute('data-theme',preferred);
   const btn=document.getElementById('themeBtn');
-  btn.textContent=h.getAttribute('data-theme')==='dark'?'☀️':'🌙';
+  // Icon convention: show ☀️ when dark (click to go light), 🌙 when light (click to go dark)
+  btn.textContent=preferred==='dark'?'☀️':'🌙';
   btn.addEventListener('click',()=>{
     const isDark=h.getAttribute('data-theme')==='dark';
-    h.setAttribute('data-theme',isDark?'light':'dark');
-    localStorage.setItem('pd_theme',isDark?'light':'dark');
-    btn.textContent=isDark?'🌙':'☀️';
+    const next=isDark?'light':'dark';
+    h.setAttribute('data-theme',next);
+    localStorage.setItem('pd_theme',next);
+    btn.textContent=next==='dark'?'☀️':'🌙';
   });
 })();
 
@@ -1630,6 +1634,7 @@ if('serviceWorker' in navigator){
 }
 </script>
 
+<script>
 /* ═══ MODAL ACCESSIBILITY: aria-modal, focus trap, Escape ═══ */
 (function(){
   const FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])';
@@ -1665,6 +1670,7 @@ if('serviceWorker' in navigator){
   });
   mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
 })();
+</script>
 
 <!-- ═══ iOS BROWSER OVERLAY — Add to Home Screen ═══ -->
 <div class="overlay-bg" role="dialog" aria-modal="true" id="iosBrowserBg">
@@ -1696,5 +1702,6 @@ if('serviceWorker' in navigator){
 <script defer src="/pushdirect-core.js"></script>
 </body>
 </html>
+
 
 
