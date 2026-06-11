@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://pushdirect.network/contact">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://push-sdk.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
 
 
@@ -24,7 +24,7 @@ const PD_VARIANT=(function(){
   return v;
 })();
 </script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'Contact — PushDirect Promotion Network',page_location:'https://pushdirect.network/contact',send_page_view:true});</script>
 <style>
 :root{
   --brand:#1a1916;--brand-mid:#2d2b27;
@@ -81,7 +81,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .success-icon{font-size:40px;display:block;margin-bottom:16px}
 .success-title{font-family:var(--fd);font-size:26px;font-weight:900;color:var(--text1);margin-bottom:8px}
 .success-msg{font-size:15px;color:var(--text2)}
-footer{position:relative;z-index:1;text-align:center;padding:36px 24px 40px;border-top:1px solid var(--border);margin-top:auto}
+footer{position:relative;z-index:1;padding-bottom:120px;position:relative;z-index:1;text-align:center;padding:36px 24px 40px;border-top:1px solid var(--border);margin-top:auto}
 .foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:16px}
 .foot-links a{font-family:var(--fm);font-size:11px;color:var(--text3);text-decoration:none;transition:color .2s}
 .foot-links a:hover{color:var(--text2)}
@@ -94,7 +94,11 @@ footer{position:relative;z-index:1;text-align:center;padding:36px 24px 40px;bord
 
 /* ═══ STICKY SUBSCRIBE BAR ═══ */
 .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:90;padding:16px 20px 28px;background:linear-gradient(to top,rgba(255,255,255,1) 65%,transparent);display:flex;flex-direction:column;align-items:center;gap:6px;transform:translateY(100%);transition:transform .5s cubic-bezier(.16,1,.3,1);pointer-events:none;}
-[data-theme="dark"] .sticky-bar{background:linear-gradient(to top,rgba(12,11,9,1) 65%,transparent)}
+[data-theme="dark"] .sticky-bar{
+  --sh-xs:0 1px 4px rgba(0,0,0,.5);
+  --sh-sm:0 2px 16px rgba(0,0,0,.55);
+  --sh:0 6px 28px rgba(0,0,0,.65);
+  --sh-lg:0 16px 56px rgba(0,0,0,.75);background:linear-gradient(to top,rgba(12,11,9,1) 65%,transparent)}
 .sticky-bar.visible{transform:translateY(0);pointer-events:all}
 .sticky-bar .btn-sub{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#f97316,#ea6f0e);color:#fff;font-family:var(--fd,'Poppins',sans-serif);font-weight:700;font-size:16px;padding:16px 36px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 8px 32px rgba(249,115,22,.28);width:100%;max-width:420px;justify-content:center;}
 .sticky-tag{font-family:var(--fm,'Inter',sans-serif);font-size:11px;color:var(--text3,#9a8f7e);font-weight:500}
@@ -163,18 +167,35 @@ footer{position:relative;z-index:1;text-align:center;padding:36px 24px 40px;bord
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://pushdirect.network/#organization", "name": "PushDirect Promotion Network", "url": "https://pushdirect.network"}, {"@type": "WebSite", "@id": "https://pushdirect.network/#website", "url": "https://pushdirect.network", "name": "PushDirect Promotion Network", "publisher": {"@id": "https://pushdirect.network/#organization"}}, {"@type": "WebPage", "@id": "https://pushdirect.network/contact#webpage", "url": "https://pushdirect.network/contact", "name": "Contact — PushDirect Promotion Network", "description": "Contact PushDirect to unsubscribe from emails, report an issue, or get in touch with the team.", "isPartOf": {"@id": "https://pushdirect.network/#website"}}]}
 </script>
+<script>
+(function(){
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){
+    window._monetagLoaded=true;
+    var s=document.createElement('script');
+    s.dataset.zone='11024677';
+    s.dataset.cfasync='false';
+    s.src='https://nap5k.com/tag.min.js';
+    document.head.appendChild(s);
+  }
+})();
+</script>
 
 </head>
 <body>
 <a href="#main-content" class="sr-skip">Skip to content</a>
 <nav class="subnav" aria-label="Site navigation" id="subnav">
-  <a href="https://pushdirect.network" class="subnav-link active">Home</a>
+  <a href="https://pushdirect.network" class="subnav-link">Home</a>
   <span class="subnav-sep">|</span>
   <a href="https://pushdirect.network/offers" class="subnav-link">Offers</a>
   <span class="subnav-sep">|</span>
   <a href="https://pushdirect.network/deal-alerts" class="subnav-link">Deal Alerts</a>
   <span class="subnav-sep">|</span>
   <a href="https://pushdirect.network/crypto-alerts" class="subnav-link">Crypto Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/blog" class="subnav-link">Blog</a>
   <span class="subnav-sep">|</span>
   <a href="https://pushdirect.network/subscription" class="subnav-link">Subscribe</a>
   <span class="subnav-sep">|</span>
