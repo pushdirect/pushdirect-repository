@@ -11,3 +11,9 @@
   Content-Type: application/javascript
   Service-Worker-Allowed: /
   Cache-Control: no-cache, no-store, must-revalidate
+
+/pushdirect-core.js
+  Cache-Control: public, max-age=3600
+
+/icons/*
+  Cache-Control: public, max-age=604800
