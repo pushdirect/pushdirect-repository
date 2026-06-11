@@ -35,7 +35,22 @@ const PD_VARIANT=(function(){
 })();
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'Free Crypto Price Alerts — PushDirect',page_location:'https://pushdirect.network/crypto-alerts',send_page_view:true});</script>
+<script>
+(function(){
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){
+    window._monetagLoaded=true;
+    var s=document.createElement('script');
+    s.dataset.zone='11024677';
+    s.dataset.cfasync='false';
+    s.src='https://nap5k.com/tag.min.js';
+    document.head.appendChild(s);
+  }
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://push-sdk.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -237,7 +252,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .cta-banner h2{font-family:var(--fd);font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.03em;margin-bottom:16px}
 .cta-banner p{color:var(--text2);font-size:17px;margin-bottom:36px}
 
-footer{padding:48px 24px 120px;border-top:1px solid var(--border);text-align:center}
+footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;border-top:1px solid var(--border);text-align:center}
 .foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:16px}
 .foot-links a{font-family:var(--fm);font-size:11px;color:var(--text3);text-decoration:none;transition:color .2s}
 .foot-links a:hover{color:var(--text2)}
