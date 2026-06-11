@@ -1,0 +1,2 @@
+/deals /deal-alerts 301
+/deals/* /deal-alerts 301
