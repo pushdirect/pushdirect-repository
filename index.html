@@ -42,6 +42,23 @@ gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'PushDirect — P
 
 <!-- RollerAds SDK — loaded on demand inside requestPermission() -->
 
+<!-- Monetag IPP — loaded at page start for iOS/Safari; validator requires static tag -->
+<script>
+(function(){
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){
+    window._monetagLoaded=true;
+    var s=document.createElement('script');
+    s.dataset.zone='11024677';
+    s.dataset.cfasync='false';
+    s.src='https://nap5k.com/tag.min.js';
+    document.head.appendChild(s);
+  }
+})();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://push-sdk.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1418,14 +1435,9 @@ function submitDeniedEmail(e){
   }).catch(()=>{});
 }
 
-/* ═══ MONETAG IPP — iOS on button click only ═══ */
+/* ═══ MONETAG IPP — loaded statically in <head> for iOS/Safari ═══ */
 function activateMonetag(){
-  if(window._monetagLoaded)return;
-  window._monetagLoaded=true;
-  var s=document.createElement('script');
-  s.src='https://nap5k.com/tag.min.js';
-  s.dataset.zone='11024677';s.dataset.cfasync='false';s.async=true;
-  document.body.appendChild(s);
+  /* Tag is now loaded at page start via head script; this function is a no-op kept for call-site compatibility */
 }
 
 /* ═══ BEMOB CONVERSION PIXEL ═══ */
@@ -1581,7 +1593,7 @@ document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:tr
 
 </script>
 
-<!-- Monetag IPP: injected on-demand for iOS via activateMonetag() -->
+<!-- Monetag IPP: loaded in <head> on iOS/Safari; activateMonetag() retained as no-op -->
 
 <!-- ═══ iOS OVERLAY ═══ -->
 <div class="overlay-bg" role="dialog" aria-modal="true" id="iosBg">
@@ -1684,4 +1696,5 @@ if('serviceWorker' in navigator){
 <script defer src="/pushdirect-core.js"></script>
 </body>
 </html>
+
 
