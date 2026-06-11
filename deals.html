@@ -64,12 +64,12 @@ nav.scrolled{background:rgba(12,11,9,0.9);backdrop-filter:blur(20px);-webkit-bac
 .nav-back:hover{color:var(--text1);border-color:var(--border-s);background:var(--surface2)}
 .btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text2);transition:all .2s}
 .btn-theme:hover{background:var(--surface2);border-color:var(--border-s)}
-.page-wrap{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 24px 80px}
-.page-inner{width:100%;max-width:560px;text-align:center}
-.page-kicker{font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-d);margin-bottom:18px;animation:fadeUp .7s var(--ease) both}
-.page-h1{font-family:var(--fd);font-size:clamp(42px,8vw,88px);font-weight:900;line-height:.95;letter-spacing:-.02em;color:var(--text1);margin-bottom:20px;animation:fadeUp .7s var(--ease) .06s both}
-.page-h1 .gold{background:linear-gradient(135deg,var(--cream-l),var(--cream-d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.page-sub{font-size:17px;color:var(--text2);margin-bottom:48px;animation:fadeUp .7s var(--ease) .12s both}
+
+
+
+
+
+
 .form-card{background:rgba(232,213,176,0.04);border:1px solid rgba(232,213,176,0.14);border-radius:var(--radius-lg);padding:40px 36px;box-shadow:0 32px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(232,213,176,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:fadeUp .7s var(--ease) .18s both;text-align:left}
 .form-desc{font-family:var(--fm);font-size:12px;letter-spacing:.06em;color:var(--text2);margin-bottom:28px;padding:12px 16px;background:rgba(232,213,176,0.05);border-left:2px solid var(--cream-d);border-radius:0 8px 8px 0;line-height:1.6}
 .form-row{margin-bottom:20px}
@@ -99,8 +99,8 @@ footer{position:relative;z-index:1;text-align:center;padding:36px 24px 40px;bord
 .foot-links a{font-family:var(--fm);font-size:11px;color:var(--text3);text-decoration:none;transition:color .2s;letter-spacing:.04em}
 .foot-links a:hover{color:var(--text2)}
 .foot-copy{font-family:var(--fm);font-size:11px;color:var(--text3);line-height:1.7}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){.form-card{padding:28px 20px}.page-h1{font-size:clamp(36px,10vw,64px)}.trust-strip{gap:16px}}
+to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.form-card{padding:28px 20px}.trust-strip{gap:16px}}
 [data-theme="light"] .form-card{background:rgba(30,29,27,0.04);border-color:rgba(30,29,27,0.12);box-shadow:0 16px 48px rgba(0,0,0,0.1)}
 
 
@@ -159,6 +159,37 @@ footer{position:relative;z-index:1;text-align:center;padding:36px 24px 40px;bord
 .subnav-link:hover{background:var(--surface2);color:var(--text1)}
 .subnav-link.active{color:var(--text1);background:var(--surface)}
 .subnav-sep{color:var(--border-s);font-size:14px;user-select:none;flex-shrink:0;padding:0 2px}
+.page-header{
+  position:relative;z-index:1;
+  padding:118px 32px 56px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.page-header .wrap{padding:0}
+.ph-kicker{
+  font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--taupe);margin-bottom:14px;font-weight:600;
+  animation:fadeUp .7s var(--ease) both;
+}
+.ph-h1{
+  font-family:var(--fd);font-size:clamp(38px,5vw,64px);
+  font-weight:900;line-height:.95;letter-spacing:-.03em;
+  color:var(--text1);margin-bottom:16px;
+  animation:fadeUp .7s var(--ease) .08s both;
+}
+.ph-h1 .gold{
+  background:linear-gradient(135deg,var(--cta),var(--cream-d));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ph-sub{
+  font-size:16px;color:var(--text2);max-width:520px;line-height:1.65;
+  animation:fadeUp .7s var(--ease) .15s both;
+}
+.ph-cta-row{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:28px;
+  animation:fadeUp .7s var(--ease) .22s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PushDirect Promotion Network">
@@ -242,11 +273,15 @@ footer{position:relative;z-index:1;text-align:center;padding:36px 24px 40px;bord
     <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
   </div>
 </nav>
-<main id="main-content" class="page-wrap">
+<div id="main-content" class="page-header">
+  <div class="wrap" style="padding:0 32px">
+    <div class="ph-kicker">Deals &amp; Promotions · Flash Sales · Exclusive Offers</div>
+    <h1 class="ph-h1">Never miss a <span class="gold">great deal</span></h1>
+    <p class="ph-sub">Flash sales, exclusive promos, and time-sensitive offers — delivered straight to your device before they sell out.</p>
+  </div>
+</div>
+<main class="page-wrap">
   <div class="page-inner">
-    <div class="page-kicker">Deals &amp; Promotions</div>
-    <h1 class="page-h1">Never miss a<br><span class="gold">great deal</span></h1>
-    <p class="page-sub">Flash sales, exclusive promos, and time-sensitive offers — delivered straight to your inbox before they sell out.</p>
     <div class="pd-sec-h">Browse deal categories</div>
     <div class="chip-grid"><a href="/deals/software">💾 Software</a><a href="/deals/travel">✈️ Travel</a><a href="/deals/electronics">🔌 Electronics</a><a href="/deals/ai-tools">🤖 AI Tools</a><a href="/deals/finance">💳 Finance</a><a href="/deals/gaming">🎮 Gaming</a><a href="/deals/hosting">🖥️ Hosting</a><a href="/deals/vpn">🔒 VPN</a><a href="/deals/saas">📊 SaaS</a><a href="/deals/shopping">🛍️ Shopping</a></div>
     <div class="form-card">
