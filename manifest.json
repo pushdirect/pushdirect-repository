@@ -32,13 +32,13 @@
   ],
   "screenshots": [
     {
-      "src": "/screenshots/mobile.png",
+      "src": "/screeshots/mobile.png",
       "sizes": "390x844",
       "type": "image/png",
       "label": "PushDirect mobile view"
     },
     {
-      "src": "/screenshots/desktop.png",
+      "src": "/screeshots/desktop.png",
       "sizes": "1280x800",
       "type": "image/png",
       "form_factor": "wide",
