@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Deal Hunting Guides &amp; Savings Strategies | PushDirect</title>
+<meta name="description" content="Guides, tips, and insights from PushDirect — how push notifications work, how to save more, and how to stay ahead of deals.">
+<link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'Blog — PushDirect',page_location:'https://pushdirect.network/blog',send_page_view:true});
+</script>
+<script>
+(function(){
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){
+    window._monetagLoaded=true;
+    var s=document.createElement('script');
+    s.dataset.zone='11024677';
+    s.dataset.cfasync='false';
+    s.src='https://nap5k.com/tag.min.js';
+    document.head.appendChild(s);
+  }
+})();
+</script>
+<style>
+:root{
+  --brand:#1a1916;--brand-mid:#2d2b27;
+  --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --taupe:#9a8f7e;--cta:#f97316;--cta-d:#ea6f0e;
+  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;
+  --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
+  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);
+  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);
+  --fd:'Poppins',sans-serif;--fb:'Inter',sans-serif;--fm:'Inter',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sh-xs:0 1px 4px rgba(0,0,0,.05);--sh-sm:0 2px 12px rgba(0,0,0,.07);
+  --sh:0 6px 28px rgba(0,0,0,.1);--sh-lg:0 16px 56px rgba(0,0,0,.16);
+}
+[data-theme="dark"]{
+  --sh-xs:0 1px 4px rgba(0,0,0,.5);
+  --sh-sm:0 2px 16px rgba(0,0,0,.55);
+  --sh:0 6px 28px rgba(0,0,0,.65);
+  --sh-lg:0 16px 56px rgba(0,0,0,.75);
+  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;
+  --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
+  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);
+  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);
+}
+[data-theme="dark"] nav{background:rgba(12,11,9,.96);border-color:var(--border)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text1);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* ═══ SUBNAV ═══ */
+.subnav{
+  position:fixed;top:57px;left:0;right:0;z-index:99;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;gap:0;
+  padding:0;height:36px;
+  overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  transform:translateY(0);transition:transform .35s var(--ease);
+}
+.subnav::-webkit-scrollbar{display:none}
+.subnav--hidden{transform:translateY(-100%);pointer-events:none}
+[data-theme="dark"] .subnav{background:rgba(12,11,9,.96);border-color:var(--border)}
+.subnav-link{
+  font-family:var(--fm);font-size:12px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text2);text-decoration:none;
+  padding:8px 16px;border-radius:20px;
+  transition:background .18s,color .18s;
+  white-space:nowrap;flex-shrink:0;
+}
+.subnav-link:hover{background:var(--surface2);color:var(--text1)}
+.subnav-link.active{color:var(--text1);background:var(--surface)}
+.subnav-sep{color:var(--border-s);font-size:14px;user-select:none;flex-shrink:0;padding:0 2px}
+
+/* ═══ NAV ═══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;transition:box-shadow .4s var(--ease)}
+nav.scrolled{box-shadow:var(--sh-sm)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-text{font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--text1);line-height:1}
+.logo-sub{font-family:var(--fm);font-size:9px;letter-spacing:.16em;color:var(--taupe);text-transform:uppercase;display:block;margin-top:2px;font-weight:500}
+.nav-r{display:flex;align-items:center;gap:10px}
+.nav-back{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--text2);padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:20px;text-decoration:none;transition:all .2s}
+.nav-back:hover{color:var(--text1);border-color:var(--border-s)}
+.btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text2);transition:all .2s}
+.btn-theme:hover{background:var(--surface2)}
+
+/* ═══ PAGE HEADER ═══ */
+.page-header{
+  position:relative;z-index:1;
+  padding:118px 32px 56px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px}
+.page-header .wrap{padding:0}
+.ph-kicker{
+  font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--taupe);margin-bottom:14px;font-weight:600;
+  animation:fadeUp .7s var(--ease) both;
+}
+.ph-h1{
+  font-family:var(--fd);font-size:clamp(38px,5vw,64px);
+  font-weight:900;line-height:.95;letter-spacing:-.03em;
+  color:var(--text1);margin-bottom:16px;
+  animation:fadeUp .7s var(--ease) .08s both;
+}
+.ph-h1 .gold{
+  background:linear-gradient(135deg,var(--cta),var(--cream-d));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ph-sub{
+  font-size:16px;color:var(--text2);max-width:520px;line-height:1.65;
+  animation:fadeUp .7s var(--ease) .15s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ BLOG GRID ═══ */
+.blog-section{padding:56px 32px 120px;max-width:1100px;margin:0 auto}
+.section-label{
+  font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--taupe);margin-bottom:12px;font-weight:600;
+  display:flex;align-items:center;gap:10px;
+}
+.section-label::before{content:'';display:block;width:20px;height:2px;background:var(--cream-d);border-radius:2px}
+.section-h{
+  font-family:var(--fd);font-size:clamp(22px,3vw,32px);font-weight:800;
+  letter-spacing:-.03em;color:var(--text1);margin-bottom:32px;line-height:1.1;
+}
+
+/* Article cards */
+.article-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.article-card{
+  display:block;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:28px;
+  text-decoration:none;
+  color:inherit;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.article-card:hover{
+  border-color:var(--border-s);
+  box-shadow:var(--sh-sm);
+  transform:translateY(-3px);
+}
+[data-theme="dark"] .article-card{background:var(--bg2)}
+.ac-cat{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--taupe);font-weight:600;margin-bottom:14px;
+}
+.ac-icon{font-size:14px}
+.ac-title{
+  font-family:var(--fd);font-size:18px;font-weight:800;
+  letter-spacing:-.02em;color:var(--text1);
+  line-height:1.3;margin-bottom:10px;
+}
+.ac-desc{
+  font-size:13.5px;color:var(--text2);line-height:1.6;
+  margin-bottom:18px;
+}
+.ac-meta{
+  font-family:var(--fm);font-size:11px;color:var(--text3);
+  display:flex;align-items:center;gap:8px;
+}
+.ac-meta::before{content:'';display:block;width:16px;height:1px;background:var(--border-s)}
+.ac-read{
+  margin-left:auto;
+  font-family:var(--fm);font-size:11px;font-weight:600;
+  color:var(--cta);letter-spacing:.04em;
+}
+
+/* Featured card (first article — full width) */
+.article-card.featured{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:start;
+  gap:24px;
+  padding:36px;
+}
+.article-card.featured .ac-title{font-size:clamp(22px,2.5vw,28px)}
+.article-card.featured .ac-desc{font-size:15px;max-width:540px}
+.featured-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cta);font-weight:700;
+  background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);
+  border-radius:20px;padding:4px 10px;margin-bottom:12px;
+}
+.featured-arrow{
+  font-size:28px;color:var(--border-s);flex-shrink:0;margin-top:8px;
+  transition:color .2s,transform .2s;
+}
+.article-card.featured:hover .featured-arrow{
+  color:var(--cta);transform:translateX(4px);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:860px){
+  .article-grid{grid-template-columns:1fr 1fr}
+  .article-card.featured{grid-template-columns:1fr}
+  .featured-arrow{display:none}
+  .page-header{padding:118px 20px 48px}
+  .blog-section{padding:48px 20px 100px}
+}
+@media(max-width:560px){
+  .article-grid{grid-template-columns:1fr}
+}
+
+/* ═══ FOOTER ═══ */
+footer{
+  position:relative;z-index:1;
+  padding:40px 24px;padding-bottom:120px;
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+.foot-links{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:12px}
+.foot-links a{font-family:var(--fm);font-size:11px;color:var(--text3);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--text2)}
+.foot-copy{font-family:var(--fm);font-size:11px;color:var(--text3)}
+</style>
+</head>
+<body>
+
+<nav class="subnav" aria-label="Site navigation" id="subnav">
+  <a href="https://pushdirect.network" class="subnav-link">Home</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/offers" class="subnav-link">Offers</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/deal-alerts" class="subnav-link">Deal Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/crypto-alerts" class="subnav-link">Crypto Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/blog" class="subnav-link active">Blog</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/subscription" class="subnav-link">Subscribe</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/faq" class="subnav-link">FAQ</a>
+</nav>
+
+<nav id="mainNav">
+  <a href="/" class="nav-logo">
+    <img src="/icons/logo.png" width="36" height="25" alt="PushDirect" style="display:block;object-fit:contain">
+    <div><div class="logo-text">PUSHDIRECT</div><span class="logo-sub">Promotion Network</span></div>
+  </a>
+  <div class="nav-r">
+    <a href="/" class="nav-back">← Home</a>
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
+  </div>
+</nav>
+
+<div id="main-content" class="page-header">
+  <div class="wrap" style="padding:0 32px">
+    <div class="ph-kicker">Guides · Tips · Insights</div>
+    <h1 class="ph-h1">The PushDirect <span class="gold">blog</span></h1>
+    <p class="ph-sub">How push notifications work, how to save more, and how to stay ahead of deals before the crowd.</p>
+  </div>
+</div>
+
+<div class="blog-section">
+
+  <div class="section-label">Latest articles</div>
+  <div class="section-h">5 articles</div>
+
+  <div class="article-grid">
+
+    <!-- FEATURED: Flash Sale Strategy -->
+    <a href="/blog/flash-sale-strategy" class="article-card featured">
+      <div>
+        <div class="featured-badge">⭐ Editor's pick</div>
+        <div class="ac-cat"><span class="ac-icon">⚡</span>Deal Strategy</div>
+        <div class="ac-title">How Flash Sales Really Work — and How to Win Them</div>
+        <div class="ac-desc">Flash sales are engineered scarcity: capped inventory, short windows, first-come pricing. How retailers design them — and how to be first in the door.</div>
+        <div class="ac-meta">Jun 11, 2026 · 5 min read <span class="ac-read">Read →</span></div>
+      </div>
+      <div class="featured-arrow">→</div>
+    </a>
+
+    <!-- Cashback Stacking -->
+    <a href="/blog/cashback-stacking-guide" class="article-card">
+      <div class="ac-cat"><span class="ac-icon">💳</span>Savings Tactics</div>
+      <div class="ac-title">Cashback Stacking: The Layered Way to Pay Less on Everything</div>
+      <div class="ac-desc">Coupons, cashback portals, card rewards, and boost windows can stack on a single purchase. A practical guide to layering discounts.</div>
+      <div class="ac-meta">Jun 11, 2026 · 6 min read <span class="ac-read">Read →</span></div>
+    </a>
+
+    <!-- Software Full Price -->
+    <a href="/blog/how-to-never-pay-full-price-for-software" class="article-card">
+      <div class="ac-cat"><span class="ac-icon">💾</span>Software Deals</div>
+      <div class="ac-title">How to Never Pay Full Price for Software (Year-Round Strategy)</div>
+      <div class="ac-desc">Software list prices are a starting point, not a rule. A practical system for catching license sales, upgrade windows, and promo drops.</div>
+      <div class="ac-meta">Jun 11, 2026 · 6 min read <span class="ac-read">Read →</span></div>
+    </a>
+
+    <!-- VPN Deals -->
+    <a href="/blog/best-time-to-buy-vpn-deals" class="article-card">
+      <div class="ac-cat"><span class="ac-icon">🔒</span>VPN &amp; Privacy</div>
+      <div class="ac-title">The Best Time to Buy a VPN (And Why Monthly Pricing Is a Trap)</div>
+      <div class="ac-desc">VPN multi-year promos routinely run 60–80% below monthly list price. When the discount windows open, and how to catch them.</div>
+      <div class="ac-meta">Jun 11, 2026 · 5 min read <span class="ac-read">Read →</span></div>
+    </a>
+
+    <!-- AI Tool Discounts -->
+    <a href="/blog/ai-tool-discounts-guide" class="article-card">
+      <div class="ac-cat"><span class="ac-icon">🤖</span>AI Tools</div>
+      <div class="ac-title">AI Tool Discounts: Why Launch Pricing Disappears (and How to Catch It)</div>
+      <div class="ac-desc">AI tools discount hardest at launch — early-bird tiers, lifetime windows, and credit bonuses that never return. How to be there at the right time.</div>
+      <div class="ac-meta">Jun 11, 2026 · 5 min read <span class="ac-read">Read →</span></div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="foot-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="/faq">FAQ</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <p class="foot-copy">&copy; 2026 PushDirect Promotion Network</p>
+</footer>
+
+<script>
+(function(){
+  const h=document.documentElement;
+  const saved=localStorage.getItem('pd_theme');
+  const preferred=saved||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  h.setAttribute('data-theme',preferred);
+  const btn=document.getElementById('themeBtn');
+  btn.textContent=preferred==='dark'?'☀️':'🌙';
+  btn.addEventListener('click',()=>{
+    const isDark=h.getAttribute('data-theme')==='dark';
+    const next=isDark?'light':'dark';
+    h.setAttribute('data-theme',next);
+    localStorage.setItem('pd_theme',next);
+    btn.textContent=next==='dark'?'☀️':'🌙';
+  });
+})();
+</script>
+<script>
+let raf=false;
+window.addEventListener('scroll',()=>{if(!raf){requestAnimationFrame(()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',scrollY>50);
+  raf=false;});raf=true;}},{passive:true});
+let subnavHovered=false;
+const subnavEl=document.getElementById('subnav');
+const mainNavEl=document.getElementById('mainNav');
+function showSubnav(){subnavHovered=true;subnavEl.classList.remove('subnav--hidden')}
+function hideSubnav(){subnavHovered=false;if(window.scrollY>10)subnavEl.classList.add('subnav--hidden')}
+mainNavEl.addEventListener('mouseenter',showSubnav);
+mainNavEl.addEventListener('mouseleave',hideSubnav);
+subnavEl.addEventListener('mouseenter',showSubnav);
+subnavEl.addEventListener('mouseleave',hideSubnav);
+window.addEventListener('scroll',()=>{
+  if(!subnavHovered)subnavEl.classList.toggle('subnav--hidden',window.scrollY>10);
+},{passive:true});
+</script>
+</body>
+</html>
