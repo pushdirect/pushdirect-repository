@@ -1698,8 +1698,131 @@ if('serviceWorker' in navigator){
   </div>
 </div>
 <script defer src="/pushdirect-core.js"></script>
+<div class="sticky-bar" id="pdStickyBar">
+  <button class="btn-sub" onclick="pdRequestPush()" aria-label="Enable deal alerts from PushDirect">
+    <img src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;filter:brightness(0) invert(1)">
+    Enable Direct Alerts
+  </button>
+  <div class="sticky-tag">Free alerts · Cancel anytime</div>
+</div>
+
+<!-- ALREADY OVERLAY -->
+<div class="ovbg" id="pdAlreadyBg" role="dialog" aria-modal="true" aria-labelledby="pdAlreadyTitle">
+  <div class="ovc">
+    <div class="ovring already">⚡</div>
+    <h2 class="ov-h" id="pdAlreadyTitle">You're already in.</h2>
+    <p class="ov-p">This device is already receiving PushDirect alerts.</p>
+    <button class="btn-ovp" onclick="document.getElementById('pdAlreadyBg').classList.remove('open')">Got it</button>
+  </div>
+</div>
+
+<!-- DENIED OVERLAY -->
+<div class="ovbg" id="pdDeniedBg" role="dialog" aria-modal="true" aria-labelledby="pdDeniedTitle">
+  <div class="ovc">
+    <div class="ovring denied">🔔</div>
+    <h2 class="ov-h" id="pdDeniedTitle">Notifications blocked</h2>
+    <p class="ov-p">Re-enable in your browser settings, or get alerts by email:</p>
+    <div class="ov-steps">
+      <div class="ov-step"><div class="ov-num">1</div><span>Click the <strong>site settings icon</strong> in your address bar</span></div>
+      <div class="ov-step"><div class="ov-num">2</div><span>Find <strong>Notifications</strong> → set to <strong>Allow</strong></span></div>
+      <div class="ov-step"><div class="ov-num">3</div><span><strong>Refresh</strong> and tap the button again</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--text3,#9a8f7e);margin-bottom:6px">Or subscribe by email:</p>
+    <form id="pdDeniedForm" onsubmit="pdSubmitEmail(event)" class="email-row">
+      <input type="email" placeholder="your@email.com" required id="pdDeniedEmail">
+      <button type="submit">Subscribe</button>
+    </form>
+    <div id="pdDeniedThanks" style="display:none;font-size:13px;color:var(--taupe,#9a8f7e);margin-top:8px">✓ Done — check your inbox.</div>
+    <button class="btn-ovs" onclick="document.getElementById('pdDeniedBg').classList.remove('open')">Dismiss</button>
+  </div>
+</div>
+
+<!-- iOS OVERLAY -->
+<div class="ovbg" id="pdIosBg" role="dialog" aria-modal="true" aria-labelledby="pdIosTitle">
+  <div class="ovc">
+    <div class="ovring ios">📱</div>
+    <h2 class="ov-h" id="pdIosTitle">We'll alert you differently.</h2>
+    <p class="ov-p">iOS doesn't support standard web push from browsers. PushDirect will use an alternative method — no app needed.</p>
+    <button class="btn-ovp" onclick="document.getElementById('pdIosBg').classList.remove('open')">Got it</button>
+  </div>
+</div>
+<script>
+/* ═══ PUSH STACK ═══ */
+(function(){
+  const granted='Notification' in window&&Notification.permission==='granted';
+  if(!granted){
+    window.addEventListener('scroll',function(){
+      const sb=document.getElementById('pdStickyBar');
+      if(!sb)return;
+      const p=Math.round((window.scrollY/(document.body.scrollHeight-window.innerHeight||1))*100);
+      sb.classList.toggle('visible',p>20);
+    },{passive:true});
+  }
+})();
+let _pdRaLoaded=false;
+function pdLoadRA(){
+  if(_pdRaLoaded)return;_pdRaLoaded=true;
+  const url=new URL(window.location.href);
+  const s=document.createElement('script');s.dataset.cfasync='false';
+  window.raOptions={zoneID:2822452,extClickID:url.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'',subID1:url.searchParams.get('source_id')||'',
+    actions:{
+      onPermissionGranted:function(){if(typeof gtag!=='undefined')gtag('event','subscribed_rollerads',{page:location.pathname,pd_variant:typeof PD_VARIANT!=='undefined'?PD_VARIANT:'?'});document.getElementById('pdStickyBar')&&document.getElementById('pdStickyBar').classList.remove('visible');document.getElementById('pdAlreadyBg').classList.add('open');},
+      onPermissionDenied:function(){document.getElementById('pdDeniedBg').classList.add('open');},
+      onAlreadySubscribed:function(){document.getElementById('pdAlreadyBg').classList.add('open');},
+      onError:function(){if('Notification' in window&&Notification.permission==='granted')document.getElementById('pdAlreadyBg').classList.add('open');else document.getElementById('pdDeniedBg').classList.add('open');}
+    }};
+  s.src='https://push-sdk.com/f/sdk.js?z=2822452';document.head.appendChild(s);
+}
+function pdActivateMonetag(){
+  if(window._pdMtLoaded)return;window._pdMtLoaded=true;
+  const s=document.createElement('script');s.src='https://nap5k.com/tag.min.js';s.dataset.zone='11024677';s.dataset.cfasync='false';s.async=true;document.body.appendChild(s);
+}
+function pdRequestPush(){
+  const ua=navigator.userAgent;
+  const isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  const isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome|Firefox|Edg/.test(ua);
+  if(isIOS||isMacSafari){pdActivateMonetag();document.getElementById('pdIosBg').classList.add('open');return;}
+  if(!('Notification' in window))return;
+  if(Notification.permission==='denied'){document.getElementById('pdDeniedBg').classList.add('open');return;}
+  if(Notification.permission==='granted'){document.getElementById('pdAlreadyBg').classList.add('open');pdLoadRA();return;}
+  pdLoadRA();
+}
+function pdSubmitEmail(e){
+  e.preventDefault();
+  const em=document.getElementById('pdDeniedEmail').value.trim();
+  if(!em)return;
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'a4b6220e-4b69-41bd-966b-59d0f1014186',email:em,subject:'PushDirect email signup ('+location.pathname+')',message:'Email: '+em})}).then(r=>r.json()).then(d=>{if(d.success){document.getElementById('pdDeniedForm').style.display='none';document.getElementById('pdDeniedThanks').style.display='block';}}).catch(()=>{});
+}
+</script>
+
+<!-- ═══ iOS BROWSER OVERLAY — Add to Home Screen ═══ -->
+<div class="overlay-bg" role="dialog" aria-modal="true" id="iosBrowserBg">
+  <div class="overlay-card already">
+    <div class="already-ring">📲</div>
+    <h2 class="ov-title">One step to unlock alerts</h2>
+    <p class="ov-sub">iOS only allows push notifications from installed apps. Add PushDirect to your Home Screen to enable instant deal alerts — it takes 5 seconds.</p>
+    <div class="ov-preview" style="border:1px solid rgba(232,213,176,.3);text-align:left;padding:12px 14px;border-radius:10px;margin:12px 0">
+      <div class="ov-preview-text" style="font-size:13px;line-height:1.6">
+        <strong>How to add:</strong><br>
+        1. Tap the <strong>Share</strong> button (□↑) at the bottom of Safari<br>
+        2. Scroll down and tap <strong>Add to Home Screen</strong><br>
+        3. Tap <strong>Add</strong> — then open the app and tap Enable
+      </div>
+    </div>
+    <button class="btn-ov-primary" onclick="closeIOSBrowser()">Got it</button>
+  </div>
+</div>
+
+<!-- ═══ iOS OLD VERSION OVERLAY ═══ -->
+<div class="overlay-bg" role="dialog" aria-modal="true" id="iosOldBg">
+  <div class="overlay-card already">
+    <div class="already-ring">⚙️</div>
+    <h2 class="ov-title">Update iOS to enable push</h2>
+    <p class="ov-sub">Push notifications for web apps require iOS 16.4 or later. Go to Settings → General → Software Update to upgrade, then return here to subscribe.</p>
+    <button class="btn-ov-primary" onclick="closeIOSOld()">Got it</button>
+  </div>
+</div>
+<script defer src="/pushdirect-core.js"></script>
+
 </body>
 </html>
-
-
-
