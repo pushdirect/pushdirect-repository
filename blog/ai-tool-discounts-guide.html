@@ -206,12 +206,40 @@ footer{position:relative;z-index:1;padding-bottom:120px;position:relative;z-inde
 .blog-card:hover{border-color:var(--cream-dark,#c9aa82);transform:translateY(-2px)}
 .blog-card .bt{font-weight:800;font-size:18px;color:var(--text1,#f0e8d8);line-height:1.35;margin:4px 0 8px}
 .blog-card .bd{font-size:14px;color:var(--text2,#9a8f7e);line-height:1.6}
+
+/* ═══ SUBNAV ═══ */
+.subnav{position:fixed;top:57px;left:0;right:0;z-index:99;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:0;padding:0;height:36px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;transform:translateY(0);transition:transform .35s var(--ease);}
+.subnav::-webkit-scrollbar{display:none}
+.subnav--hidden{transform:translateY(-100%);pointer-events:none}
+[data-theme="dark"] .subnav{background:rgba(12,11,9,.96);border-color:var(--border)}
+.subnav-link{font-family:var(--fm);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);text-decoration:none;padding:8px 16px;border-radius:20px;transition:background .18s,color .18s;white-space:nowrap;flex-shrink:0;}
+.subnav-link:hover{background:var(--surface2);color:var(--text1)}
+.subnav-link.active{color:var(--text1);background:var(--surface)}
+.subnav-sep{color:var(--border-s);font-size:14px;user-select:none;flex-shrink:0;padding:0 2px}
+@media(max-width:600px){.subnav{justify-content:flex-start;padding:0 12px}.subnav-link{padding:8px 12px;font-size:11px;letter-spacing:.04em}}
+@media(max-width:480px){.subnav-sep{display:none}.subnav-link{padding:8px 10px}}
 </style>
 </head>
 <body data-pd-a2hs="auto">
 <a href="#main-content" class="sr-skip">Skip to content</a>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
+<!-- SUBNAV -->
+<nav class="subnav" aria-label="Site navigation" id="subnav">
+  <a href="https://pushdirect.network" class="subnav-link">Home</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/offers" class="subnav-link">Offers</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/deal-alerts" class="subnav-link">Deal Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/crypto-alerts" class="subnav-link">Crypto Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/blog" class="subnav-link active">Blog</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/subscription" class="subnav-link">Subscribe</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/faq" class="subnav-link">FAQ</a>
+</nav>
 <nav id="mainNav">
     <a href="https://pushdirect.network" class="nav-logo">
     <img src="/icons/logo.png" width="36" height="25" alt="PushDirect" style="display:block;object-fit:contain">
@@ -456,6 +484,23 @@ function pdSubmitEmail(e){
 }
 </script>
 <script defer src="/pushdirect-core.js"></script>
+<script>
+/* ═══ SUBNAV HOVER REVEAL + SCROLL HIDE ═══ */
+(function(){
+  var subnavEl=document.getElementById('subnav');
+  var mainNavEl=document.getElementById('mainNav');
+  if(!subnavEl||!mainNavEl)return;
+  var subnavHovered=false;
+  function showSubnav(){subnavHovered=true;subnavEl.classList.remove('subnav--hidden')}
+  function hideSubnav(){subnavHovered=false;if(window.scrollY>10)subnavEl.classList.add('subnav--hidden')}
+  mainNavEl.addEventListener('mouseenter',showSubnav);
+  mainNavEl.addEventListener('mouseleave',hideSubnav);
+  subnavEl.addEventListener('mouseenter',showSubnav);
+  subnavEl.addEventListener('mouseleave',hideSubnav);
+  window.addEventListener('scroll',function(){if(!subnavHovered)subnavEl.classList.toggle('subnav--hidden',window.scrollY>10)},{passive:true});
+})();
+</script>
+
 </body>
 </html>
 
