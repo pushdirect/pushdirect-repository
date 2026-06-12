@@ -305,6 +305,10 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 [data-theme="dark"] .offer-slot:hover{background:var(--surface2)}
 .slot-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-weight:600}
 .slot-dim{font-family:var(--fm);font-size:10px;color:var(--text3);opacity:.55}
+.offer-slot--img{border:none;background:transparent;padding:0}
+.offer-banner-link{display:block;width:100%;height:100%;line-height:0}
+.offer-banner-img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}
+.offer-banner-link:hover .offer-banner-img{opacity:.92;transition:opacity .2s}
 
 /* ═══ MID CTA — brand dark section, matches index.html .mid-cta ═══ */
 .mid-cta{
@@ -660,21 +664,25 @@ footer{position:relative;z-index:1;padding-bottom:120px;
       </div>
     </div>
     <div class="offer-row">
-      <div class="offer-slot">
-        <div class="slot-label">Offer slot</div>
-        <div class="slot-dim">300 × 160</div>
+      <div class="offer-slot offer-slot--img">
+        <a href="#" class="offer-banner-link" aria-label="Get a $1000 Walmart Gift Card">
+          <img src="/images/offers/sweep-walmart.png" alt="Get a $1000 Walmart Gift Card" loading="lazy" class="offer-banner-img">
+        </a>
       </div>
-      <div class="offer-slot">
-        <div class="slot-label">Offer slot</div>
-        <div class="slot-dim">300 × 160</div>
+      <div class="offer-slot offer-slot--img">
+        <a href="#" class="offer-banner-link" aria-label="Claim Your Unclaimed Money">
+          <img src="/images/offers/sweep-unclaimed.png" alt="Claim Your Unclaimed Money" loading="lazy" class="offer-banner-img">
+        </a>
       </div>
-      <div class="offer-slot">
-        <div class="slot-label">Offer slot</div>
-        <div class="slot-dim">300 × 160</div>
+      <div class="offer-slot offer-slot--img">
+        <a href="#" class="offer-banner-link" aria-label="Get a $1000 Cash App Gift Card">
+          <img src="/images/offers/sweep-cashapp.png" alt="Get a $1000 Cash App Gift Card" loading="lazy" class="offer-banner-img">
+        </a>
       </div>
-      <div class="offer-slot">
-        <div class="slot-label">Offer slot</div>
-        <div class="slot-dim">300 × 160</div>
+      <div class="offer-slot offer-slot--img">
+        <a href="#" class="offer-banner-link" aria-label="Get a $1000 Visa Gift Card">
+          <img src="/images/offers/sweep-visa.png" alt="Get a $1000 Visa Gift Card" loading="lazy" class="offer-banner-img">
+        </a>
       </div>
     </div>
   </section>
