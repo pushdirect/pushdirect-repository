@@ -297,20 +297,26 @@ footer{position:relative;z-index:1;padding-bottom:120px;position:relative;z-inde
 <script>
 const nav=document.getElementById('mainNav');
 window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>10)},{passive:true});
-const themeBtn=document.getElementById('themeBtn');
-const html=document.documentElement;
-const savedTheme=localStorage.getItem('pd_theme')||'dark';
-html.setAttribute('data-theme',savedTheme);
-themeBtn.textContent=savedTheme==='dark'?'🌙':'☀️';
-themeBtn.addEventListener('click',()=>{
-  const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
-  html.setAttribute('data-theme',next);localStorage.setItem('pd_theme',next);
-  themeBtn.textContent=next==='dark'?'🌙':'☀️';
-});
+(function(){
+  const h=document.documentElement;
+  const saved=localStorage.getItem('pd_theme');
+  const preferred=saved||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  h.setAttribute('data-theme',preferred);
+  const btn=document.getElementById('themeBtn');
+  if(btn){
+    btn.textContent=preferred==='dark'?'☀️':'🌙';
+    btn.addEventListener('click',()=>{
+      const next=h.getAttribute('data-theme')==='dark'?'light':'dark';
+      h.setAttribute('data-theme',next);
+      localStorage.setItem('pd_theme',next);
+      btn.textContent=next==='dark'?'☀️':'🌙';
+    });
+  }
+})();
 const form=document.getElementById('dealsForm');
 const successPanel=document.getElementById('successPanel');
 const submitBtn=document.getElementById('submitBtn');
-form.addEventListener('submit',async(e)=>{
+if(form)form.addEventListener('submit',async(e)=>{
   e.preventDefault();
   if(form.querySelector('[name="botcheck"]').value)return;
   submitBtn.disabled=true;submitBtn.textContent='Sending…';
