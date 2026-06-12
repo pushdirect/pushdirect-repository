@@ -14,30 +14,56 @@ importScripts("https://push-sdk.com/f/sw.js")
 // if its remote import 404s, aborts SW installation — so it is intentionally omitted.
 
 // ── PWA: Cache (same-origin only, does not interfere with push/ads) ──
-const CACHE = 'pd-v1';
+// v2: HTML is network-first so nav/content changes go live immediately.
+//     Static assets stay cache-first for speed. Bumping the cache name
+//     purges the old pd-v1 cache that was serving stale HTML.
+const CACHE = 'pd-v2';
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/', '/index.html'])));
+  // Do NOT precache HTML — that is what caused stale pages to persist.
   self.skipWaiting();
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
-  const url = new URL(e.request.url);
-  // Only intercept same-origin GET — leave RollerAds/Monetag traffic alone
-  if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
+  const req = e.request;
+  const url = new URL(req.url);
+
+  // Only handle same-origin GET — leave RollerAds/Monetag traffic alone
+  if (req.method !== 'GET' || url.origin !== self.location.origin) return;
+
+  const isHTML = req.mode === 'navigate' ||
+                 (req.headers.get('accept') || '').includes('text/html');
+
+  if (isHTML) {
+    // Network-first: always try the live page, fall back to cache offline
+    e.respondWith(
+      fetch(req).then(res => {
+        if (res && res.status === 200 && res.type === 'basic') {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(req, copy));
+        }
+        return res;
+      }).catch(() =>
+        caches.match(req).then(c => c || caches.match('/'))
+      )
+    );
+    return;
+  }
+
+  // Cache-first for static assets (logo, icons, scripts, css)
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
+    caches.match(req).then(cached => cached || fetch(req).then(res => {
       if (res && res.status === 200 && res.type === 'basic') {
-        caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+        const copy = res.clone();
+        caches.open(CACHE).then(c => c.put(req, copy));
       }
       return res;
     }))
