@@ -63,16 +63,16 @@ const PD_VARIANT=(function(){
   /* CTA */
   --cta:#f97316;--cta-d:#ea6f0e;
   /* Backgrounds — light by default */
-  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;--bg-2:#faf9f7;--bg-3:#f4f2ef;--bg-4:#ede8e0;
+  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;--bg2:#faf9f7;--bg3:#f4f2ef;--bg-4:#ede8e0;
   /* Text */
   --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
   /* Hyphenated aliases (used in landing page CSS rules) */
-  --text-1:#1a1916;--text-2:#5a5248;--text-3:#9a8f7e;
-  --cream-light:#f2e6cb;--cream-dark:#c9aa82;
+  --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
+  --cream-l:#f2e6cb;--cream-d:#c9aa82;
   /* Borders */
-  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);--border-str:rgba(26,25,22,.2);
+  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);--border-s:rgba(26,25,22,.2);
   /* Surfaces */
-  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);--surface-2:rgba(26,25,22,.08);
+  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);--surface2:rgba(26,25,22,.08);
   /* Status */
   --success:#9a8f7e;--danger:#e07b6a;
   /* Elevation */
@@ -85,13 +85,13 @@ const PD_VARIANT=(function(){
   --radius:12px;--ease:cubic-bezier(0.16,1,0.3,1);
 }
 [data-theme="dark"]{
-  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;--bg-2:#121009;--bg-3:#1a1814;--bg-4:#221f1a;
+  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;--bg2:#121009;--bg3:#1a1814;--bg-4:#221f1a;
   --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
-  --text-1:#f5f0e8;--text-2:#9a8f7e;--text-3:#5a5248;
+  --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
   --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
-  --cream-light:#f2e6cb;--cream-dark:#c9aa82;
-  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);--border-str:rgba(232,213,176,.16);
-  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);--surface-2:rgba(232,213,176,.08);
+  --cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);--border-s:rgba(232,213,176,.16);
+  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);--surface2:rgba(232,213,176,.08);
   --sh-xs:0 1px 4px rgba(0,0,0,.5);
   --sh-sm:0 2px 16px rgba(0,0,0,.55);
   --sh:0 6px 28px rgba(0,0,0,.65);
@@ -210,7 +210,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 
 .coins-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:40px}
 .coin-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:border-color .2s}
-.coin-card:hover{border-color:var(--border-str)}
+.coin-card:hover{border-color:var(--border-s)}
 .coin-sym{font-family:var(--fm);font-size:12px;color:var(--cream-d);letter-spacing:.1em;margin-bottom:8px}
 .coin-name{font-family:var(--fd);font-weight:800;font-size:20px;margin-bottom:8px}
 .coin-desc{font-size:13px;color:var(--text2);line-height:1.6}
@@ -223,7 +223,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 
 .guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px}
 .guide-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;transition:border-color .2s,background .2s}
-.guide-card:hover{border-color:var(--border-str);background:var(--surface2)}
+.guide-card:hover{border-color:var(--border-s);background:var(--surface2)}
 .guide-icon{font-size:28px;margin-bottom:14px;display:block}
 .guide-title{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.01em;margin-bottom:8px;color:var(--text1)}
 .guide-desc{font-size:14px;color:var(--text2);line-height:1.65}
@@ -248,7 +248,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .faq-a{padding:0 24px;max-height:0;overflow:hidden;font-size:15px;color:var(--text2);line-height:1.7;transition:max-height .4s var(--ease),padding .3s}
 .faq-item.open .faq-a{max-height:200px;padding:0 24px 20px}
 
-.cta-banner{background:linear-gradient(135deg,rgba(232,213,176,.07),rgba(154,143,126,.04));border:1px solid var(--border-str);border-radius:20px;padding:56px 40px;text-align:center;margin-top:80px}
+.cta-banner{background:linear-gradient(135deg,rgba(232,213,176,.07),rgba(154,143,126,.04));border:1px solid var(--border-s);border-radius:20px;padding:56px 40px;text-align:center;margin-top:80px}
 .cta-banner h2{font-family:var(--fd);font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.03em;margin-bottom:16px}
 .cta-banner p{color:var(--text2);font-size:17px;margin-bottom:36px}
 
@@ -297,7 +297,7 @@ footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;
 .d-num{width:22px;height:22px;border-radius:50%;background:rgba(224,123,106,.12);border:1px solid rgba(224,123,106,.28);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--danger);margin-top:1px;font-weight:700}
 .btn-ov-primary{width:100%;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:15px;border-radius:50px;border:none;cursor:pointer;transition:opacity .2s;box-shadow:0 4px 16px rgba(249,115,22,.25)}
 .btn-ov-primary:hover{opacity:.9}
-.btn-ov-sec{width:100%;background:none;border:1px solid var(--border-str);color:var(--text2);font-size:14px;padding:12px;border-radius:50px;cursor:pointer;transition:all .2s;font-family:var(--fb);margin-top:8px}
+.btn-ov-sec{width:100%;background:none;border:1px solid var(--border-s);color:var(--text2);font-size:14px;padding:12px;border-radius:50px;cursor:pointer;transition:all .2s;font-family:var(--fb);margin-top:8px}
 .btn-ov-sec:hover{color:var(--text1)}
 
 /* EXIT INTENT */
@@ -335,7 +335,7 @@ to{opacity:1;transform:translateY(0)}}
 .feed-dot.live{background:#7ecb9a;box-shadow:0 0 8px rgba(126,203,154,.5)}
 .feed-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
 .feed-filter{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text3);cursor:pointer;transition:all .2s}
-.feed-filter:hover{border-color:var(--border-str);color:var(--text2)}
+.feed-filter:hover{border-color:var(--border-s);color:var(--text2)}
 .feed-filter.active{background:var(--cream-d);border-color:var(--cream-d);color:#0c0b09}
 .feed-list{display:flex;flex-direction:column;gap:10px;min-height:200px;position:relative}
 .feed-empty{text-align:center;padding:60px 24px;font-family:var(--fm);font-size:12px;color:var(--text3)}
