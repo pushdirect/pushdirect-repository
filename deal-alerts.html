@@ -63,16 +63,16 @@ const PD_VARIANT=(function(){
   /* CTA */
   --cta:#f97316;--cta-d:#ea6f0e;
   /* Backgrounds — light by default */
-  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;--bg-2:#faf9f7;--bg-3:#f4f2ef;--bg-4:#ede8e0;
+  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;--bg2:#faf9f7;--bg3:#f4f2ef;--bg-4:#ede8e0;
   /* Text */
   --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
   /* Hyphenated aliases (used in landing page CSS rules) */
-  --text-1:#1a1916;--text-2:#5a5248;--text-3:#9a8f7e;
-  --cream-light:#f2e6cb;--cream-dark:#c9aa82;
+  --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
+  --cream-l:#f2e6cb;--cream-d:#c9aa82;
   /* Borders */
-  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);--border-str:rgba(26,25,22,.2);
+  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);--border-s:rgba(26,25,22,.2);
   /* Surfaces */
-  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);--surface-2:rgba(26,25,22,.08);
+  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);--surface2:rgba(26,25,22,.08);
   /* Status */
   --success:#9a8f7e;--danger:#e07b6a;
   /* Elevation */
@@ -85,13 +85,13 @@ const PD_VARIANT=(function(){
   --radius:12px;--ease:cubic-bezier(0.16,1,0.3,1);
 }
 [data-theme="dark"]{
-  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;--bg-2:#121009;--bg-3:#1a1814;--bg-4:#221f1a;
+  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;--bg2:#121009;--bg3:#1a1814;--bg-4:#221f1a;
   --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
-  --text-1:#f5f0e8;--text-2:#9a8f7e;--text-3:#5a5248;
+  --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
   --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
-  --cream-light:#f2e6cb;--cream-dark:#c9aa82;
-  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);--border-str:rgba(232,213,176,.16);
-  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);--surface-2:rgba(232,213,176,.08);
+  --cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);--border-s:rgba(232,213,176,.16);
+  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);--surface2:rgba(232,213,176,.08);
   --sh-xs:0 1px 4px rgba(0,0,0,.5);
   --sh-sm:0 2px 16px rgba(0,0,0,.55);
   --sh:0 6px 28px rgba(0,0,0,.65);
@@ -215,7 +215,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 /* DEAL TYPES GRID */
 .deal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
 .deal-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:border-color .2s,background .2s}
-.deal-card:hover{border-color:var(--border-str);background:var(--surface2)}
+.deal-card:hover{border-color:var(--border-s);background:var(--surface2)}
 .deal-em{font-size:28px;margin-bottom:12px;display:block}
 .deal-title{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-.01em;margin-bottom:6px}
 .deal-desc{font-size:14px;color:var(--text2);line-height:1.6}
@@ -249,7 +249,7 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .article ul li{font-size:15px;color:var(--text2);line-height:1.65}
 
 /* CTA BANNER */
-.cta-banner{background:linear-gradient(135deg,rgba(232,213,176,.07),rgba(154,143,126,.04));border:1px solid var(--border-str);border-radius:20px;padding:56px 40px;text-align:center;margin-top:80px}
+.cta-banner{background:linear-gradient(135deg,rgba(232,213,176,.07),rgba(154,143,126,.04));border:1px solid var(--border-s);border-radius:20px;padding:56px 40px;text-align:center;margin-top:80px}
 .cta-banner h2{font-family:var(--fd);font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.03em;margin-bottom:16px}
 .cta-banner p{color:var(--text2);font-size:17px;margin-bottom:36px}
 
@@ -299,8 +299,8 @@ footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;
 .d-num{width:22px;height:22px;border-radius:50%;background:rgba(224,123,106,.12);border:1px solid rgba(224,123,106,.28);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--danger);margin-top:1px;font-weight:700}
 .btn-ov-primary{width:100%;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:15px;border-radius:50px;border:none;cursor:pointer;transition:opacity .2s;box-shadow:0 4px 16px rgba(249,115,22,.25)}
 .btn-ov-primary:hover{opacity:.9}
-.btn-ov-sec{width:100%;background:none;border:1px solid var(--border-str);color:var(--text2);font-size:14px;padding:12px;border-radius:50px;cursor:pointer;transition:all .2s;font-family:var(--fb);margin-top:8px}
-.btn-ov-sec:hover{border-color:var(--border-str);color:var(--text1)}
+.btn-ov-sec{width:100%;background:none;border:1px solid var(--border-s);color:var(--text2);font-size:14px;padding:12px;border-radius:50px;cursor:pointer;transition:all .2s;font-family:var(--fb);margin-top:8px}
+.btn-ov-sec:hover{border-color:var(--border-s);color:var(--text1)}
 
 /* EXIT INTENT */
 .exit-bg{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(12,11,9,.9);backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:opacity .4s;padding:24px}
