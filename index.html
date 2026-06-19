@@ -764,6 +764,9 @@ footer{position:relative;z-index:1;padding:44px 24px 120px;border-top:1px solid 
 .email-row input{flex:1;padding:10px 14px;border:1px solid var(--border-s,rgba(26,25,22,.2));border-radius:50px;font-size:13px;font-family:var(--fm,'Inter',sans-serif);background:var(--bg2,#faf9f7);color:var(--text1,#1a1916);outline:none;min-width:0}
 .email-row button{padding:10px 16px;border-radius:50px;background:var(--brand,#1a1916);color:#fff;border:none;cursor:pointer;font-family:var(--fd,'Poppins',sans-serif);font-weight:700;font-size:13px;white-space:nowrap}
 
+
+/* dedupe: suppress legacy duplicate sticky bar; canonical #pdStickyBar remains active */
+#stickyBar{display:none!important}
 </style>
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does it work?", "acceptedAnswer": {"@type": "Answer", "text": "When you tap \"Enable Direct Alerts\", your browser asks for permission to send you notifications. Once you allow, PushDirect delivers alerts directly to your device — no app to download, no account to create."}}, {"@type": "Question", "name": "Do you sell my data?", "acceptedAnswer": {"@type": "Answer", "text": "Never. PushDirect does not sell or share subscriber data. Your trust isn't a product we monetize."}}, {"@type": "Question", "name": "Can I turn it off?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, at any time. Click the site settings icon on the left side of your address bar, find Notifications, and set it to Block. Takes 5 seconds."}}, {"@type": "Question", "name": "Why can't I see the permission prompt?", "acceptedAnswer": {"@type": "Answer", "text": "If you previously dismissed or blocked notifications for this site, your browser may not show the dialog again. Click the site settings icon → Notifications → Allow, then refresh."}}]}
