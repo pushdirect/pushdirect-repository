@@ -1202,8 +1202,8 @@ function onScroll(){
   if(!subnavHovered)document.querySelector('.subnav').classList.toggle('subnav--hidden',sy>10);
   const sb=document.getElementById('stickyBar');
   const _granted='Notification' in window&&Notification.permission==='granted';
-  if(p>30&&!S.subscribed&&!_granted)sb.classList.add('visible');
-  else if(p<=30)sb.classList.remove('visible');
+  if(sb){if(p>30&&!S.subscribed&&!_granted)sb.classList.add('visible');
+  else if(p<=30)sb.classList.remove('visible');}
   if(p>=50&&!S._s50){S._s50=true;S.score+=20;track('scroll_50')}
   if(p>=60&&!S._s60){S._s60=true;S.score+=10;track('scroll_60')}
   if(p>=80&&!S._s80){S._s80=true;S.score+=20;track('scroll_80')}
@@ -1212,9 +1212,16 @@ function onScroll(){
   });
   raf=false;
 }
-setTimeout(()=>document.querySelectorAll('.rev').forEach(el=>{
-  if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add('in');
-}),100);
+(function(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rev').forEach(el=>io.observe(el));
+  // Fallback: add .in immediately to elements already in viewport
+  document.querySelectorAll('.rev').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in');
+  });
+})();
 
 /* ═══ SUBNAV HOVER REVEAL ═══ */
 let subnavHovered=false;
@@ -1793,4 +1800,6 @@ function pdSubmitEmail(e){
   fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'a4b6220e-4b69-41bd-966b-59d0f1014186',email:em,subject:'PushDirect email signup ('+location.pathname+')',message:'Email: '+em})}).then(r=>r.json()).then(d=>{if(d.success){document.getElementById('pdDeniedForm').style.display='none';document.getElementById('pdDeniedThanks').style.display='block';}}).catch(()=>{});
 }
 </script>
+
 </body>
+</html>
