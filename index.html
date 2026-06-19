@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<!-- build:2026-06-12T14:32:59Z -->
+<!-- build:2026-06-19T11:13:01Z -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUSHDIRECT — Promotion Network | pushdirect.network</title>
@@ -642,8 +642,9 @@ footer{position:relative;z-index:1;padding:44px 24px;border-top:1px solid var(--
 
 /* ═══ ANIMATIONS ═══ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.rev{opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
-.rev.in{opacity:1;transform:none}
+.rev{opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease);animation:revShow 0s 1.5s forwards}
+.rev.in{opacity:1;transform:none;animation:none}
+@keyframes revShow{to{opacity:1;transform:none}}
 
 /* ═══ PRE-PERMISSION MODAL ═══ */
 .preperm-bg{
@@ -1213,14 +1214,18 @@ function onScroll(){
   raf=false;
 }
 (function(){
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
-  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.rev').forEach(el=>io.observe(el));
-  // Fallback: add .in immediately to elements already in viewport
-  document.querySelectorAll('.rev').forEach(el=>{
-    if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in');
-  });
+  const revEls=document.querySelectorAll('.rev');
+  // Immediate check
+  revEls.forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*1.1)el.classList.add('in');});
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:0,rootMargin:'0px 0px 100px 0px'});
+    revEls.forEach(el=>{if(!el.classList.contains('in'))io.observe(el);});
+  } else {
+    // No IO support: just show everything
+    revEls.forEach(el=>el.classList.add('in'));
+  }
 })();
 
 /* ═══ SUBNAV HOVER REVEAL ═══ */
