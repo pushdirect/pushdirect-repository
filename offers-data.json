@@ -1,0 +1,65 @@
+{
+  "verticals": [
+    {
+      "id": "sweepstakes",
+      "label": "Sweepstakes",
+      "icon": "\ud83c\udf81",
+      "offers": [
+        {
+          "id": "sw1",
+          "label": "Get a $1000 Walmart Gift Card",
+          "url": "https://neoinweb.com/or/rrxa/ejprvw?source_id=offers",
+          "image": "/images/offers/sweep-walmart.png"
+        },
+        {
+          "id": "sw2",
+          "label": "Claim Your Unclaimed Money",
+          "url": "https://neoinweb.com/or/blaj/ejprvw?source_id=offers",
+          "image": "/images/offers/sweep-unclaimed.png"
+        },
+        {
+          "id": "sw3",
+          "label": "Get a $1000 Cash App Gift Card",
+          "url": "https://neoinweb.com/or/wqka/ejprvw?source_id=offers",
+          "image": "/images/offers/sweep-cashapp.png"
+        },
+        {
+          "id": "sw4",
+          "label": "Get a $1000 Visa Gift Card",
+          "url": "https://neoinweb.com/or/mbpl/ejprvw?source_id=offers",
+          "image": "/images/offers/sweep-visa.png"
+        }
+      ]
+    },
+    {
+      "id": "gaming",
+      "label": "Gaming",
+      "icon": "\ud83c\udfae",
+      "offers": []
+    },
+    {
+      "id": "nutra",
+      "label": "Nutra",
+      "icon": "\ud83d\udc8a",
+      "offers": []
+    },
+    {
+      "id": "utilities",
+      "label": "Utilities",
+      "icon": "\ud83d\udd27",
+      "offers": []
+    },
+    {
+      "id": "finance",
+      "label": "Finance",
+      "icon": "\ud83d\udcb0",
+      "offers": []
+    },
+    {
+      "id": "travel",
+      "label": "Travel",
+      "icon": "\u2708\ufe0f",
+      "offers": []
+    }
+  ]
+}
