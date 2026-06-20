@@ -592,33 +592,20 @@ footer{position:relative;z-index:1;padding:44px 24px 120px;border-top:1px solid 
 .btn-ov-sec:hover{border-color:rgba(201,170,130,.4);color:var(--text1);background:rgba(232,213,176,.1)}
 
 /* ═══ EXIT INTENT ═══ */
-.exit-bg{
-  position:fixed;inset:0;z-index:300;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(12,11,9,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  opacity:0;pointer-events:none;transition:opacity .4s;padding:24px;
-}
+.exit-bg{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(12,11,9,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;pointer-events:none;transition:opacity .4s;padding:24px}
 .exit-bg.open{opacity:1;pointer-events:all}
-.exit-card{
-  background:#fff;
-  border:1px solid rgba(201,170,130,.3);
-  border-radius:28px;padding:44px 32px;
-  max-width:440px;width:100%;text-align:center;position:relative;
-  box-shadow:var(--sh-lg);
-  transform:scale(.95) translateY(10px);transition:transform .5s var(--ease);
-}
-[data-theme="dark"] .exit-card{background:#1a1814;border-color:var(--border-s)}
+.exit-card{background:linear-gradient(160deg,var(--brand) 0%,var(--brand-mid) 100%);border:1px solid rgba(201,170,130,.22);border-radius:28px;padding:44px 32px;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.45);transform:scale(.94) translateY(14px);transition:transform .45s var(--ease)}
 .exit-bg.open .exit-card{transform:scale(1) translateY(0)}
-.exit-close{
-  position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;
-  background:var(--surface);border:1px solid var(--border);
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:11px;color:var(--text3);transition:all .2s;font-family:var(--fm);
-}
-.exit-close:hover{background:var(--surface2);color:var(--text1)}
-.exit-em{font-size:52px;margin-bottom:16px;display:block}
-.exit-h{font-family:var(--fd);font-weight:800;font-size:26px;margin-bottom:10px;letter-spacing:-.03em;color:var(--text1)}
-.exit-sub{font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.6}
+.exit-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);cursor:pointer;color:rgba(255,255,255,.6);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.exit-close:hover{background:rgba(255,255,255,.18);color:#fff}
+.exit-em{display:block;font-size:42px;margin-bottom:16px;animation:exitPop .5s var(--ease) .15s both}
+@keyframes exitPop{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
+.exit-h{font-family:var(--fd);font-weight:900;font-size:clamp(22px,3.5vw,28px);letter-spacing:-.03em;color:#fff;margin-bottom:10px;line-height:1.1}
+.exit-sub{font-size:14px;color:rgba(232,213,176,.75);margin-bottom:24px;line-height:1.6;max-width:320px;margin-left:auto;margin-right:auto}
+.exit-divider{height:1px;background:rgba(201,170,130,.18);margin:22px 0}
+.exit-also{font-family:var(--fm);font-size:12px;color:rgba(232,213,176,.55);margin-bottom:12px;letter-spacing:.04em}
+.btn-exit-secondary{display:inline-flex;align-items:center;gap:8px;color:rgba(232,213,176,.75);font-family:var(--fm);font-size:13px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(201,170,130,.25);padding:11px 24px;border-radius:50px;cursor:pointer;transition:all .2s;text-decoration:none;width:100%;justify-content:center}
+.btn-exit-secondary:hover{background:rgba(255,255,255,.12);color:rgba(232,213,176,.95);border-color:rgba(201,170,130,.45)}
 
 /* ═══ STICKY BAR ═══ */
 .sticky-bar{
@@ -1166,14 +1153,19 @@ footer{position:relative;z-index:1;padding:44px 24px 120px;border-top:1px solid 
 <!-- ═══ EXIT INTENT ═══ -->
 <div class="exit-bg" id="exitBg" onclick="handleExitBg(event)">
   <div class="exit-card">
-    <button class="exit-close" onclick="closeExit()">✕</button>
-    <span class="exit-em">⚡</span>
-    <h2 class="exit-h">Wait — you'll miss the next one.</h2>
-    <p class="exit-sub">Takes one tap. Alerts arrive before the window closes. Always first, never late.</p>
-    <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="pdRequestPush();closeExit()" style="width:100%;justify-content:center;font-size:16px;padding:16px;animation:none">
+    <button class="exit-close" onclick="closeExit()" aria-label="Close">✕</button>
+    <span class="exit-em">🔔</span>
+    <h2 class="exit-h">Wait — don't miss the next deal.</h2>
+    <p class="exit-sub">Enable alerts and PushDirect notifies you the instant a new exclusive drops — before it's public.</p>
+    <button class="btn-cta" aria-label="Enable deal alerts" onclick="pdRequestPush();closeExit()" style="width:100%;justify-content:center;font-size:16px;padding:16px;animation:none;margin-bottom:0">
       <img class="ico btn-plane" src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
       Enable Direct Alerts
     </button>
+    <div class="exit-divider"></div>
+    <div class="exit-also">Or check out our other offers</div>
+    <a href="https://rxt3c.ytrack10.com?kw={trafficSourceId}&s1={clickId}" class="btn-exit-secondary" target="_blank" rel="noopener" onclick="closeExit()">
+      Browse offers ↗
+    </a>
   </div>
 </div>
 
@@ -1268,12 +1260,16 @@ subnav.addEventListener('mouseenter',showSubnav);
 subnav.addEventListener('mouseleave',hideSubnav);
 
 /* ═══ EXIT INTENT ═══ */
-document.addEventListener('mouseleave',e=>{
-  const alreadyGranted='Notification' in window&&Notification.permission==='granted';
-  if(e.clientY<=0&&!S.exitShown&&!S.subscribed&&!alreadyGranted&&S.score>6){
+document.addEventListener('mouseleave',function(e){
+  var alreadyGranted='Notification' in window&&Notification.permission==='granted';
+  if(e.clientY<=0&&!S.exitShown){
     S.exitShown=true;
-    document.getElementById('exitBg').classList.add('open');
-    track('exit_intent');
+    if(!S.subscribed&&!alreadyGranted&&S.score>6){
+      // Not subscribed — show push popup
+      document.getElementById('exitBg').classList.add('open');
+      if(typeof track==='function')track('exit_intent',{type:'push'});
+    }
+    // Already subscribed — YExitIntent handles it (initialised below for granted users)
   }
 });
 function closeExit(){document.getElementById('exitBg').classList.remove('open')}
@@ -1834,5 +1830,18 @@ function pdSubmitEmail(e){
 }
 </script>
 
+
+<!-- ═══ YEXITINTENT — fires for already-subscribed users ═══ -->
+<script src="https://edgecdn.me/yei/script.js"></script>
+<script>
+(function(){
+  // Only init YExitIntent for users who already granted push permission
+  // Un-subscribed users get the standard push exit popup instead
+  var alreadyGranted='Notification' in window && Notification.permission==='granted';
+  if(alreadyGranted){
+    YExitIntent.init({url:'https://rxt3c.ytrack10.com?kw={trafficSourceId}&s1={clickId}'});
+  }
+})();
+</script>
 </body>
 </html>
