@@ -731,15 +731,82 @@ if('serviceWorker' in navigator){
   </div>
 </div>
 <script>
-/* ═══ DYNAMIC OFFERS ═══ */
+/* ═══ PAGE CORE: scroll, nav, reveal, theme, tabs ═══ */
+var io, tabObserver;
+(function(){
+  // Scroll progress + nav shadow
+  var raf=false;
+  function onScroll(){
+    var sy=window.scrollY;
+    var max=document.body.scrollHeight-window.innerHeight||1;
+    var sb=document.getElementById('scrollBar'); if(sb)sb.style.width=Math.round((sy/max)*100)+'%';
+    var nv=document.getElementById('mainNav'); if(nv)nv.classList.toggle('scrolled',sy>50);
+    raf=false;
+  }
+  window.addEventListener('scroll',function(){if(!raf){requestAnimationFrame(onScroll);raf=true;}},{passive:true});
+
+  // Subnav hover reveal
+  var subnavHovered=false;
+  var subnavEl=document.getElementById('subnav');
+  var mainNavEl=document.getElementById('mainNav');
+  var catTabsEl=document.getElementById('catTabs');
+  function showSubnav(){subnavHovered=true;if(subnavEl)subnavEl.classList.remove('subnav--hidden');if(catTabsEl)catTabsEl.classList.remove('subnav-collapsed');}
+  function hideSubnav(){subnavHovered=false;if(window.scrollY>10){if(subnavEl)subnavEl.classList.add('subnav--hidden');if(catTabsEl)catTabsEl.classList.add('subnav-collapsed');}}
+  if(mainNavEl){mainNavEl.addEventListener('mouseenter',showSubnav);mainNavEl.addEventListener('mouseleave',hideSubnav);}
+  if(subnavEl){subnavEl.addEventListener('mouseenter',showSubnav);subnavEl.addEventListener('mouseleave',hideSubnav);}
+  window.addEventListener('scroll',function(){
+    if(!subnavHovered){
+      var hide=window.scrollY>10;
+      if(subnavEl)subnavEl.classList.toggle('subnav--hidden',hide);
+      if(catTabsEl)catTabsEl.classList.toggle('subnav-collapsed',hide);
+    }
+  },{passive:true});
+
+  // Scroll reveal
+  io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.07,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.rev').forEach(function(el){io.observe(el);});
+
+  // Category tab active state
+  var tabs=document.querySelectorAll('.cat-tab');
+  tabObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var id=e.target.id;
+        tabs.forEach(function(t){t.classList.toggle('active',t.getAttribute('href')==='#'+id);});
+      }
+    });
+  },{threshold:.2,rootMargin:'-100px 0px -45% 0px'});
+  document.querySelectorAll('.cat-section, .featured-sec').forEach(function(s){tabObserver.observe(s);});
+
+  // Theme toggle
+  (function(){
+    var h=document.documentElement;
+    var saved=localStorage.getItem('pd_theme');
+    if(saved){h.setAttribute('data-theme',saved);}
+    var btn=document.getElementById('themeBtn');
+    if(btn){
+      btn.textContent=h.getAttribute('data-theme')==='dark'?'\u2600\uFE0F':'\uD83C\uDF19';
+      btn.addEventListener('click',function(){
+        var isDark=h.getAttribute('data-theme')==='dark';
+        h.setAttribute('data-theme',isDark?'light':'dark');
+        localStorage.setItem('pd_theme',isDark?'light':'dark');
+        btn.textContent=isDark?'\uD83C\uDF19':'\u2600\uFE0F';
+      });
+    }
+  })();
+})();
+
+/* ═══ DYNAMIC OFFERS — load from /offers-data.json ═══ */
 (function(){
   var FALLBACK={verticals:[
-    {id:'sweepstakes',label:'Sweepstakes',icon:'🎁',offers:[]},
-    {id:'gaming',label:'Gaming',icon:'🎮',offers:[]},
-    {id:'nutra',label:'Nutra',icon:'💊',offers:[]},
-    {id:'utilities',label:'Utilities',icon:'🔧',offers:[]},
-    {id:'finance',label:'Finance',icon:'💰',offers:[]},
-    {id:'travel',label:'Travel',icon:'✈️',offers:[]}
+    {id:'sweepstakes',label:'Sweepstakes',icon:'\uD83C\uDF81',offers:[]},
+    {id:'gaming',label:'Gaming',icon:'\uD83C\uDFAE',offers:[]},
+    {id:'nutra',label:'Nutra',icon:'\uD83D\uDC8A',offers:[]},
+    {id:'utilities',label:'Utilities',icon:'\uD83D\uDD27',offers:[]},
+    {id:'finance',label:'Finance',icon:'\uD83D\uDCB0',offers:[]},
+    {id:'travel',label:'Travel',icon:'\u2708\uFE0F',offers:[]}
   ]};
   function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function render(data){
@@ -765,8 +832,8 @@ if('serviceWorker' in navigator){
       out+='</div></section>';
     });
     el.innerHTML=out;
-    el.querySelectorAll('.rev').forEach(function(e){if(typeof io!=='undefined')io.observe(e);});
-    el.querySelectorAll('.cat-section').forEach(function(e){if(typeof tabObserver!=='undefined')tabObserver.observe(e);});
+    if(io) el.querySelectorAll('.rev').forEach(function(e){io.observe(e);});
+    if(tabObserver) el.querySelectorAll('.cat-section').forEach(function(e){tabObserver.observe(e);});
     try{
       var prefs=JSON.parse(localStorage.getItem('pd_prefs')||'[]');
       var map={deals:'sweepstakes',gift_cards:'sweepstakes',casino:'gaming',cashback:'finance',travel:'travel',insurance:'finance'};
