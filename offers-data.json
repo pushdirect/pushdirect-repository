@@ -60,6 +60,13 @@
       "label": "Travel",
       "icon": "\u2708\ufe0f",
       "offers": []
+    },
+    {
+      "id": "adult",
+      "label": "Adult",
+      "icon": "\ud83d\udd1e",
+      "adult": true,
+      "offers": []
     }
   ]
 }
