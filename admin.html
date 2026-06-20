@@ -145,6 +145,7 @@ body{background:var(--bg2);color:var(--text1);font-family:var(--fb);font-size:15
     </div>
     <div class="topbar-right">
       <a href="/offers" class="btn-sm" target="_blank">↗ View offers page</a>
+      <button class="btn-sm" id="vpnCfgBtn">🌐 Fallback VPN link</button>
       <button class="btn-sm danger" id="logoutBtn">Sign out</button>
     </div>
   </div>
@@ -183,6 +184,23 @@ body{background:var(--bg2);color:var(--text1);font-family:var(--fb);font-size:15
     <div class="modal-footer">
       <button class="btn-cancel" id="modalCancel">Cancel</button>
       <button class="btn-save" id="modalSave">Save offer</button>
+    </div>
+  </div>
+</div>
+
+<!-- VPN CONFIG MODAL -->
+<div class="modal-bg" id="vpnModalBg">
+  <div class="modal">
+    <h2 class="modal-h">Fallback VPN link</h2>
+    <p class="modal-sub">This is the affiliate URL used on the region-restricted fallback lander (<a href="/fallback" target="_blank" style="color:var(--cta)">/fallback</a>).</p>
+    <div class="form-row">
+      <label class="form-label" for="vpnUrl">VPN affiliate URL</label>
+      <input class="form-input" type="url" id="vpnUrl" placeholder="https://…">
+      <div class="form-hint">Full tracking URL. Paste your VPN offer link here.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="vpnCancel">Cancel</button>
+      <button class="btn-save" id="vpnSave">Save link</button>
     </div>
   </div>
 </div>
@@ -410,6 +428,39 @@ function showToast(msg,type){
   t.textContent=msg; t.className='toast show'+(type?' '+type:'');
   clearTimeout(toastTimer); toastTimer=setTimeout(function(){t.classList.remove('show');},3500);
 }
+
+// ── FALLBACK VPN CONFIG ──
+var CFG_FILE='fallback-config.json';
+var cfgSha=null;
+document.getElementById('vpnCfgBtn').addEventListener('click', async function(){
+  try {
+    var d=await ghGet(CFG_FILE);
+    cfgSha=d.sha;
+    var cfg=JSON.parse(atob(d.content.replace(/\n/g,'')));
+    document.getElementById('vpnUrl').value=cfg.vpn_url&&cfg.vpn_url!=='#'?cfg.vpn_url:'';
+  } catch(e){ document.getElementById('vpnUrl').value=''; }
+  document.getElementById('vpnModalBg').classList.add('open');
+  setTimeout(function(){document.getElementById('vpnUrl').focus();},100);
+});
+document.getElementById('vpnCancel').addEventListener('click', function(){
+  document.getElementById('vpnModalBg').classList.remove('open');
+});
+document.getElementById('vpnModalBg').addEventListener('click', function(e){
+  if(e.target===this) this.classList.remove('open');
+});
+document.getElementById('vpnSave').addEventListener('click', async function(){
+  var btn=this; var url=document.getElementById('vpnUrl').value.trim()||'#';
+  btn.disabled=true; btn.textContent='Saving…';
+  try {
+    var latest=await ghGet(CFG_FILE);
+    cfgSha=latest.sha;
+    await ghPut(CFG_FILE, JSON.stringify({vpn_url:url},null,2), cfgSha, 'feat: update fallback VPN affiliate link');
+    document.getElementById('vpnModalBg').classList.remove('open');
+    showToast('VPN link saved! Live in ~30 seconds.','success');
+  } catch(e){ showToast('Save failed: '+e.message,'error'); }
+  finally{ btn.disabled=false; btn.textContent='Save link'; }
+});
+
 </script>
 </body>
 </html>
