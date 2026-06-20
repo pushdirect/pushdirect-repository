@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Unavailable — PushDirect</title>
+<meta name="description" content="This offer isn't available in your region. Use a VPN to unlock access to exclusive offers.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1a1916">
+<link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'Offer Unavailable',send_page_view:true});</script>
+
+<style>
+:root{
+  --brand:#1a1916;--brand-mid:#2d2b27;--brand-soft:#5a5248;
+  --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --taupe:#9a8f7e;--taupe-l:#b8a88a;--taupe-d:#6e6358;
+  --cta:#f97316;--cta-d:#ea6f0e;
+  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;
+  --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
+  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);
+  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);
+  --danger:#e07b6a;
+  --fd:'Poppins',sans-serif;--fb:'Inter',sans-serif;--fm:'Inter',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sh-sm:0 2px 12px rgba(0,0,0,.07);
+  --sh:0 6px 28px rgba(0,0,0,.1);
+  --sh-lg:0 16px 56px rgba(0,0,0,.16);
+}
+[data-theme="dark"]{
+  --bg:#0c0b09;--bg2:#131109;--bg3:#1a1814;
+  --text1:#f5f0e8;--text2:#9a8f7e;--text3:#5a5248;
+  --border:rgba(232,213,176,.09);--border-s:rgba(232,213,176,.18);
+  --surface:rgba(232,213,176,.05);--surface2:rgba(232,213,176,.09);
+  --sh-sm:0 2px 16px rgba(0,0,0,.55);
+  --sh:0 6px 28px rgba(0,0,0,.65);
+  --sh-lg:0 16px 56px rgba(0,0,0,.75);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text1);font-family:var(--fb);font-size:16px;line-height:1.6;min-height:100svh;display:flex;flex-direction:column;overflow-x:hidden}
+::selection{background:var(--cream-l);color:var(--brand)}
+
+.orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(232,213,176,.18),transparent 70%);top:-200px;right:-150px}
+.orb2{width:520px;height:520px;background:radial-gradient(circle,rgba(249,115,22,.09),transparent 70%);bottom:-180px;left:-160px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+[data-theme="dark"] nav{background:rgba(12,11,9,.96);border-color:var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-text{font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--text1);line-height:1}
+.logo-sub{font-family:var(--fm);font-size:9px;letter-spacing:.16em;color:var(--taupe);text-transform:uppercase;display:block;margin-top:2px;font-weight:500}
+.nav-r{display:flex;align-items:center;gap:10px}
+.btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s;color:var(--text2)}
+.btn-theme:hover{background:var(--surface2)}
+
+/* MAIN */
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 60px;position:relative;z-index:1}
+.card{max-width:520px;width:100%;text-align:center;animation:fadeUp .7s var(--ease) both}
+.geo-ring{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--cream-l),var(--cream-d));display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 28px;box-shadow:0 0 48px rgba(232,213,176,.35);animation:popIn .6s var(--ease) .15s both}
+.kicker{font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--taupe);margin-bottom:14px;font-weight:600}
+.h1{font-family:var(--fd);font-size:clamp(30px,5vw,46px);font-weight:900;line-height:1.04;letter-spacing:-.03em;color:var(--text1);margin-bottom:16px}
+.h1 .gold{background:linear-gradient(135deg,var(--cta),var(--cream-d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-size:16px;color:var(--text2);max-width:420px;margin:0 auto 36px;line-height:1.65}
+
+.vpn-box{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px 28px;box-shadow:var(--sh-sm);margin-bottom:20px}
+[data-theme="dark"] .vpn-box{background:var(--surface)}
+.vpn-icon{width:52px;height:52px;border-radius:14px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px}
+.vpn-h{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--text1);margin-bottom:8px}
+.vpn-p{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:22px;max-width:360px;margin-left:auto;margin-right:auto}
+.btn-cta{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:17px;padding:16px 40px;border-radius:50px;border:none;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s;box-shadow:0 8px 32px rgba(249,115,22,.28),0 2px 8px rgba(0,0,0,.1);text-decoration:none}
+.btn-cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 48px rgba(249,115,22,.38),0 4px 16px rgba(0,0,0,.12)}
+.btn-cta .ico{transition:transform .3s var(--ease)}
+.btn-cta:hover .ico{transform:translateY(2px)}
+.vpn-note{font-size:12px;color:var(--text3);margin-top:14px;font-family:var(--fm)}
+
+.steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:24px}
+.step-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:12px;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:7px 14px;border-radius:20px}
+.step-num{width:18px;height:18px;border-radius:50%;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:var(--cta);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+.back-link{display:inline-block;margin-top:28px;font-family:var(--fm);font-size:13px;font-weight:600;color:var(--text3);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--text1)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;padding:32px 24px;border-top:1px solid var(--border);background:var(--bg2);text-align:center}
+.foot-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}
+.foot-logo-text{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;color:var(--text1)}
+.foot-copy{font-family:var(--fm);font-size:12px;color:var(--text3);line-height:1.7}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+
+@media(max-width:600px){
+  .main{padding:100px 20px 48px}
+  .vpn-box{padding:26px 20px}
+  .btn-cta{font-size:16px;padding:15px 32px;width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="/icons/logo.png" width="36" height="25" alt="PushDirect" style="display:block;object-fit:contain">
+    <div>
+      <div class="logo-text">PUSHDIRECT</div>
+      <span class="logo-sub">Promotion Network</span>
+    </div>
+  </a>
+  <div class="nav-r">
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">&#127769;</button>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="card">
+    <div class="geo-ring">&#127758;</div>
+    <div class="kicker">Region restricted</div>
+    <h1 class="h1">Sorry, this offer isn't<br><span class="gold">available in your region</span></h1>
+    <p class="sub">The promotion you're looking for is limited to certain countries. You can still unlock it by connecting through a supported region with a VPN.</p>
+
+    <div class="vpn-box">
+      <div class="vpn-icon">&#128274;</div>
+      <div class="vpn-h">Unlock with a VPN</div>
+      <p class="vpn-p">Download a trusted VPN, connect to a supported country, then reload the offer. It takes under a minute.</p>
+      <a href="#" class="btn-cta" id="vpnBtn" target="_blank" rel="noopener" aria-label="Download VPN">
+        <span>Download VPN</span>
+        <span class="ico">&#8595;</span>
+      </a>
+      <div class="vpn-note">Free to start &middot; Works on mobile &amp; desktop</div>
+    </div>
+
+    <div class="steps">
+      <span class="step-chip"><span class="step-num">1</span> Install the VPN</span>
+      <span class="step-chip"><span class="step-num">2</span> Connect to a supported region</span>
+      <span class="step-chip"><span class="step-num">3</span> Reload the offer</span>
+    </div>
+
+    <a href="/offers" class="back-link">&larr; Back to all offers</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">
+    <img src="/icons/logo.png" width="28" height="20" alt="PushDirect" style="display:block;object-fit:contain">
+    <span class="foot-logo-text">PUSHDIRECT</span>
+  </div>
+  <p class="foot-copy">&copy; 2026 PushDirect Promotion Network. All rights reserved.</p>
+</footer>
+
+<script>
+/* VPN affiliate link — loaded from /fallback-config.json so you can change it in the admin without editing this file */
+(function(){
+  var DEFAULT_VPN='#';
+  fetch('/fallback-config.json?_='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(c){
+      var url=(c&&c.vpn_url)?c.vpn_url:DEFAULT_VPN;
+      var btn=document.getElementById('vpnBtn');
+      if(btn){
+        btn.href=url;
+        btn.addEventListener('click',function(){
+          if(typeof gtag!=='undefined')gtag('event','vpn_click',{pd_page:'fallback'});
+        });
+      }
+    })
+    .catch(function(){});
+})();
+
+/* Theme toggle */
+(function(){
+  var h=document.documentElement;
+  var saved=localStorage.getItem('pd_theme');
+  if(saved){h.setAttribute('data-theme',saved);}
+  var btn=document.getElementById('themeBtn');
+  btn.textContent=h.getAttribute('data-theme')==='dark'?'\u2600\uFE0F':'\uD83C\uDF19';
+  btn.addEventListener('click',function(){
+    var isDark=h.getAttribute('data-theme')==='dark';
+    h.setAttribute('data-theme',isDark?'light':'dark');
+    localStorage.setItem('pd_theme',isDark?'light':'dark');
+    btn.textContent=isDark?'\uD83C\uDF19':'\u2600\uFE0F';
+  });
+})();
+</script>
+</body>
+</html>
