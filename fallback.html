@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Offer Unavailable — PushDirect</title>
-<meta name="description" content="This offer isn't available in your region. Use a VPN to unlock access to exclusive offers.">
+<title>Content Locked — PushDirect</title>
+<meta name="description" content="This content isn't available in your region. Unlock it with a VPN.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1a1916">
 <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'Offer Unavailable',send_page_view:true});</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'Content Locked',send_page_view:true});</script>
 
 <style>
 :root{
@@ -50,7 +50,6 @@ body{background:var(--bg);color:var(--text1);font-family:var(--fb);font-size:16p
 .orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(232,213,176,.18),transparent 70%);top:-200px;right:-150px}
 .orb2{width:520px;height:520px;background:radial-gradient(circle,rgba(249,115,22,.09),transparent 70%);bottom:-180px;left:-160px}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 [data-theme="dark"] nav{background:rgba(12,11,9,.96);border-color:var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -60,46 +59,61 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background
 .btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s;color:var(--text2)}
 .btn-theme:hover{background:var(--surface2)}
 
-/* MAIN */
-.main{flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 60px;position:relative;z-index:1}
-.card{max-width:520px;width:100%;text-align:center;animation:fadeUp .7s var(--ease) both}
-.geo-ring{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--cream-l),var(--cream-d));display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 28px;box-shadow:0 0 48px rgba(232,213,176,.35);animation:popIn .6s var(--ease) .15s both}
-.kicker{font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--taupe);margin-bottom:14px;font-weight:600}
-.h1{font-family:var(--fd);font-size:clamp(30px,5vw,46px);font-weight:900;line-height:1.04;letter-spacing:-.03em;color:var(--text1);margin-bottom:16px}
-.h1 .gold{background:linear-gradient(135deg,var(--cta),var(--cream-d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sub{font-size:16px;color:var(--text2);max-width:420px;margin:0 auto 36px;line-height:1.65}
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:104px 24px 56px;position:relative;z-index:1}
+.locker{max-width:560px;width:100%;animation:fadeUp .6s var(--ease) both}
 
-.vpn-box{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px 28px;box-shadow:var(--sh-sm);margin-bottom:20px}
-[data-theme="dark"] .vpn-box{background:var(--surface)}
-.vpn-icon{width:52px;height:52px;border-radius:14px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px}
-.vpn-h{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--text1);margin-bottom:8px}
-.vpn-p{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:22px;max-width:360px;margin-left:auto;margin-right:auto}
-.btn-cta{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:17px;padding:16px 40px;border-radius:50px;border:none;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s;box-shadow:0 8px 32px rgba(249,115,22,.28),0 2px 8px rgba(0,0,0,.1);text-decoration:none}
-.btn-cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 48px rgba(249,115,22,.38),0 4px 16px rgba(0,0,0,.12)}
-.btn-cta .ico{transition:transform .3s var(--ease)}
-.btn-cta:hover .ico{transform:translateY(2px)}
-.vpn-note{font-size:12px;color:var(--text3);margin-top:14px;font-family:var(--fm)}
+/* ── REGION BANNER ── */
+.region-banner{display:flex;align-items:center;gap:12px;background:rgba(224,123,106,.08);border:1px solid rgba(224,123,106,.25);border-radius:14px;padding:14px 18px;margin-bottom:22px}
+.region-banner-icon{font-size:22px;flex-shrink:0}
+.region-banner-text{font-family:var(--fm);font-size:14px;color:var(--text2);line-height:1.5}
+.region-banner-text strong{color:var(--text1);font-weight:700}
 
-.steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:24px}
-.step-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:12px;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:7px 14px;border-radius:20px}
+/* ── LOCKED CONTENT PREVIEW ── */
+.content-frame{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:24px}
+.content-preview{padding:28px;background:var(--bg2);filter:blur(7px);pointer-events:none;user-select:none}
+[data-theme="dark"] .content-preview{background:var(--surface)}
+.cp-title{height:24px;width:62%;border-radius:7px;background:linear-gradient(90deg,var(--cream-d),var(--taupe-l));margin-bottom:16px;opacity:.7}
+.cp-line{height:13px;border-radius:6px;background:var(--surface2);margin-bottom:11px}
+.cp-line.w90{width:90%}.cp-line.w100{width:100%}.cp-line.w75{width:75%}.cp-line.w85{width:85%}
+.cp-media{height:140px;border-radius:12px;background:linear-gradient(135deg,var(--cream-l),var(--cream-d));margin:18px 0;opacity:.55}
+.cp-chips{display:flex;gap:10px;margin-top:18px}
+.cp-chip{height:34px;width:110px;border-radius:50px;background:linear-gradient(135deg,var(--cta),var(--cta-d));opacity:.6}
+.cp-chip.alt{background:var(--surface2);width:90px}
+
+/* ── LOCK OVERLAY ── */
+.lock-overlay{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(26,25,22,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);padding:32px 24px}
+[data-theme="dark"] .lock-overlay{background:rgba(12,11,9,.5)}
+.lock-ring{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--cta),var(--cta-d));display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:18px;box-shadow:0 0 44px rgba(249,115,22,.45);animation:lockPulse 2.4s ease-in-out infinite}
+@keyframes lockPulse{0%,100%{box-shadow:0 0 44px rgba(249,115,22,.4)}50%{box-shadow:0 0 60px rgba(249,115,22,.65)}}
+.lock-h{font-family:var(--fd);font-weight:900;font-size:clamp(22px,4vw,30px);letter-spacing:-.03em;color:#fff;margin-bottom:8px;line-height:1.1;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.lock-p{font-size:14px;color:rgba(255,255,255,.82);max-width:340px;line-height:1.55;margin-bottom:22px}
+.btn-unlock{display:inline-flex;align-items:center;gap:11px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:17px;padding:16px 38px;border-radius:50px;border:none;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s;box-shadow:0 8px 36px rgba(249,115,22,.45),0 2px 8px rgba(0,0,0,.18);text-decoration:none}
+.btn-unlock:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 52px rgba(249,115,22,.55)}
+.btn-unlock .ico{transition:transform .3s var(--ease)}
+.btn-unlock:hover .ico{transform:rotate(-12deg)}
+.lock-note{font-family:var(--fm);font-size:12px;color:rgba(255,255,255,.65);margin-top:14px}
+
+/* ── STEPS ── */
+.steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.step-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:12px;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:8px 15px;border-radius:20px}
 .step-num{width:18px;height:18px;border-radius:50%;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:var(--cta);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-.back-link{display:inline-block;margin-top:28px;font-family:var(--fm);font-size:13px;font-weight:600;color:var(--text3);text-decoration:none;transition:color .2s}
-.back-link:hover{color:var(--text1)}
+.trust-row{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin-top:6px}
+.trust-item{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:12px;color:var(--text3);font-weight:500}
 
-/* FOOTER */
-footer{position:relative;z-index:1;padding:32px 24px;border-top:1px solid var(--border);background:var(--bg2);text-align:center}
-.foot-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}
-.foot-logo-text{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;color:var(--text1)}
+footer{position:relative;z-index:1;padding:28px 24px;border-top:1px solid var(--border);background:var(--bg2);text-align:center}
+.foot-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.foot-logo-text{font-family:var(--fd);font-weight:800;font-size:16px;letter-spacing:-.02em;color:var(--text1)}
 .foot-copy{font-family:var(--fm);font-size:12px;color:var(--text3);line-height:1.7}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
 
 @media(max-width:600px){
-  .main{padding:100px 20px 48px}
-  .vpn-box{padding:26px 20px}
-  .btn-cta{font-size:16px;padding:15px 32px;width:100%;justify-content:center}
+  .main{padding:92px 18px 44px}
+  .content-preview{padding:20px}
+  .cp-media{height:110px}
+  .btn-unlock{font-size:16px;padding:15px 30px;width:100%;justify-content:center}
+  .lock-overlay{padding:24px 18px}
 }
 </style>
 </head>
@@ -121,30 +135,51 @@ footer{position:relative;z-index:1;padding:32px 24px;border-top:1px solid var(--
 </nav>
 
 <div class="main">
-  <div class="card">
-    <div class="geo-ring">&#127758;</div>
-    <div class="kicker">Region restricted</div>
-    <h1 class="h1">Sorry, this offer isn't<br><span class="gold">available in your region</span></h1>
-    <p class="sub">The promotion you're looking for is limited to certain countries. You can still unlock it by connecting through a supported region with a VPN.</p>
+  <div class="locker">
 
-    <div class="vpn-box">
-      <div class="vpn-icon">&#128274;</div>
-      <div class="vpn-h">Unlock with a VPN</div>
-      <p class="vpn-p">Download a trusted VPN, connect to a supported country, then reload the offer. It takes under a minute.</p>
-      <a href="#" class="btn-cta" id="vpnBtn" target="_blank" rel="noopener" aria-label="Download VPN">
-        <span>Download VPN</span>
-        <span class="ico">&#8595;</span>
-      </a>
-      <div class="vpn-note">Works on mobile &amp; desktop</div>
+    <div class="region-banner">
+      <span class="region-banner-icon">&#127758;</span>
+      <span class="region-banner-text"><strong>This content is not available in your region.</strong> Unlock it by connecting through a supported location.</span>
+    </div>
+
+    <div class="content-frame">
+      <div class="content-preview" aria-hidden="true">
+        <div class="cp-title"></div>
+        <div class="cp-line w100"></div>
+        <div class="cp-line w90"></div>
+        <div class="cp-media"></div>
+        <div class="cp-line w100"></div>
+        <div class="cp-line w85"></div>
+        <div class="cp-line w75"></div>
+        <div class="cp-chips">
+          <div class="cp-chip"></div>
+          <div class="cp-chip alt"></div>
+        </div>
+      </div>
+      <div class="lock-overlay">
+        <div class="lock-ring">&#128274;</div>
+        <div class="lock-h">Content Locked</div>
+        <div class="lock-p">This content is restricted in your region. Install a VPN, connect to a supported country, and it unlocks instantly.</div>
+        <a href="#" class="btn-unlock" id="vpnBtn" target="_blank" rel="noopener" aria-label="Unlock content with VPN">
+          <span class="ico">&#128273;</span>
+          <span>Unlock Content With VPN</span>
+        </a>
+        <div class="lock-note">Takes under a minute &middot; Works on any device</div>
+      </div>
     </div>
 
     <div class="steps">
       <span class="step-chip"><span class="step-num">1</span> Install the VPN</span>
       <span class="step-chip"><span class="step-num">2</span> Connect to a supported region</span>
-      <span class="step-chip"><span class="step-num">3</span> Reload the offer</span>
+      <span class="step-chip"><span class="step-num">3</span> Content unlocks automatically</span>
     </div>
 
-    <a href="/offers" class="back-link">&larr; Back to all offers</a>
+    <div class="trust-row">
+      <span class="trust-item">&#128274; Encrypted connection</span>
+      <span class="trust-item">&#9889; Instant access</span>
+      <span class="trust-item">&#128241; Mobile &amp; desktop</span>
+    </div>
+
   </div>
 </div>
 
@@ -157,13 +192,12 @@ footer{position:relative;z-index:1;padding:32px 24px;border-top:1px solid var(--
 </footer>
 
 <script>
-/* VPN affiliate link — loaded from /fallback-config.json so you can change it in the admin without editing this file */
+/* VPN affiliate link — from /fallback-config.json (editable in admin) */
 (function(){
-  var DEFAULT_VPN='#';
   fetch('/fallback-config.json?_='+Date.now())
     .then(function(r){return r.json();})
     .then(function(c){
-      var url=(c&&c.vpn_url)?c.vpn_url:DEFAULT_VPN;
+      var url=(c&&c.vpn_url)?c.vpn_url:'#';
       var btn=document.getElementById('vpnBtn');
       if(btn){
         btn.href=url;
