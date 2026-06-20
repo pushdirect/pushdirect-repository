@@ -47,8 +47,8 @@ body{background:var(--bg);color:var(--text1);font-family:var(--fb);font-size:16p
 ::selection{background:var(--cream-l);color:var(--brand)}
 
 .orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
-.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(232,213,176,.18),transparent 70%);top:-200px;right:-150px}
-.orb2{width:520px;height:520px;background:radial-gradient(circle,rgba(249,115,22,.09),transparent 70%);bottom:-180px;left:-160px}
+.orb1{width:700px;height:700px;background:radial-gradient(circle,rgba(232,213,176,.18),transparent 70%);top:-220px;right:-180px}
+.orb2{width:600px;height:600px;background:radial-gradient(circle,rgba(249,115,22,.09),transparent 70%);bottom:-200px;left:-180px}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 [data-theme="dark"] nav{background:rgba(12,11,9,.96);border-color:var(--border)}
@@ -59,47 +59,65 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background
 .btn-theme{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s;color:var(--text2)}
 .btn-theme:hover{background:var(--surface2)}
 
-.main{flex:1;display:flex;align-items:center;justify-content:center;padding:104px 24px 56px;position:relative;z-index:1}
-.locker{max-width:560px;width:100%;animation:fadeUp .6s var(--ease) both}
+.main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:96px 24px 56px;position:relative;z-index:1}
+.locker{max-width:1080px;width:100%;animation:fadeUp .6s var(--ease) both}
 
 /* ── REGION BANNER ── */
-.region-banner{display:flex;align-items:center;gap:12px;background:rgba(224,123,106,.08);border:1px solid rgba(224,123,106,.25);border-radius:14px;padding:14px 18px;margin-bottom:22px}
+.region-banner{display:flex;align-items:center;gap:12px;background:rgba(224,123,106,.08);border:1px solid rgba(224,123,106,.25);border-radius:14px;padding:14px 20px;margin-bottom:22px;max-width:760px;margin-left:auto;margin-right:auto}
 .region-banner-icon{font-size:22px;flex-shrink:0}
 .region-banner-text{font-family:var(--fm);font-size:14px;color:var(--text2);line-height:1.5}
 .region-banner-text strong{color:var(--text1);font-weight:700}
 
-/* ── LOCKED CONTENT PREVIEW ── */
-.content-frame{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:24px}
-.content-preview{padding:28px;background:var(--bg2);filter:blur(7px);pointer-events:none;user-select:none}
-[data-theme="dark"] .content-preview{background:var(--surface)}
-.cp-title{height:24px;width:62%;border-radius:7px;background:linear-gradient(90deg,var(--cream-d),var(--taupe-l));margin-bottom:16px;opacity:.7}
-.cp-line{height:13px;border-radius:6px;background:var(--surface2);margin-bottom:11px}
-.cp-line.w90{width:90%}.cp-line.w100{width:100%}.cp-line.w75{width:75%}.cp-line.w85{width:85%}
-.cp-media{height:140px;border-radius:12px;background:linear-gradient(135deg,var(--cream-l),var(--cream-d));margin:18px 0;opacity:.55}
-.cp-chips{display:flex;gap:10px;margin-top:18px}
-.cp-chip{height:34px;width:110px;border-radius:50px;background:linear-gradient(135deg,var(--cta),var(--cta-d));opacity:.6}
-.cp-chip.alt{background:var(--surface2);width:90px}
+/* ── CONTENT FRAME ── */
+.content-frame{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh-lg)}
+
+/* the fake content — realistic media/article layout */
+.content-preview{filter:blur(8px);pointer-events:none;user-select:none;background:var(--bg)}
+.cp-topbar{display:flex;align-items:center;gap:14px;padding:18px 26px;border-bottom:1px solid var(--border);background:var(--bg2)}
+.cp-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--cream-l),var(--cream-d));flex-shrink:0}
+.cp-meta{flex:1}
+.cp-meta-l1{height:13px;width:160px;border-radius:6px;background:var(--surface2);margin-bottom:8px}
+.cp-meta-l2{height:10px;width:100px;border-radius:6px;background:var(--surface)}
+.cp-pill{height:30px;width:96px;border-radius:50px;background:linear-gradient(135deg,var(--cta),var(--cta-d));opacity:.7}
+
+.cp-body{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;padding:26px}
+.cp-hero{height:300px;border-radius:14px;background:linear-gradient(135deg,var(--cream-l),var(--cream-d));position:relative;overflow:hidden;opacity:.62}
+.cp-hero::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:0;height:0;border-left:34px solid rgba(255,255,255,.85);border-top:22px solid transparent;border-bottom:22px solid transparent}
+.cp-hero-dur{position:absolute;right:12px;bottom:12px;height:22px;width:54px;border-radius:5px;background:rgba(26,25,22,.55)}
+.cp-side{display:flex;flex-direction:column;gap:14px}
+.cp-side-title{height:22px;width:80%;border-radius:7px;background:linear-gradient(90deg,var(--cream-d),var(--taupe-l));opacity:.7;margin-bottom:4px}
+.cp-line{height:13px;border-radius:6px;background:var(--surface2)}
+.cp-line.s{height:11px;background:var(--surface)}
+.cp-line.w95{width:95%}.cp-line.w100{width:100%}.cp-line.w80{width:80%}.cp-line.w70{width:70%}.cp-line.w60{width:60%}.cp-line.w90{width:90%}
+.cp-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+.cp-thumb{aspect-ratio:1;border-radius:10px;background:linear-gradient(135deg,var(--cream-l),var(--cream-d));opacity:.5}
+.cp-stats{display:flex;gap:18px;margin-top:6px}
+.cp-stat{height:12px;width:60px;border-radius:6px;background:var(--surface2)}
+.cp-cta{height:44px;border-radius:50px;background:linear-gradient(135deg,var(--cta),var(--cta-d));opacity:.6;margin-top:6px}
+
+.cp-paras{padding:0 26px 28px;display:flex;flex-direction:column;gap:11px}
 
 /* ── LOCK OVERLAY ── */
-.lock-overlay{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(26,25,22,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);padding:32px 24px}
-[data-theme="dark"] .lock-overlay{background:rgba(12,11,9,.5)}
-.lock-ring{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--cta),var(--cta-d));display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:18px;box-shadow:0 0 44px rgba(249,115,22,.45);animation:lockPulse 2.4s ease-in-out infinite}
-@keyframes lockPulse{0%,100%{box-shadow:0 0 44px rgba(249,115,22,.4)}50%{box-shadow:0 0 60px rgba(249,115,22,.65)}}
-.lock-h{font-family:var(--fd);font-weight:900;font-size:clamp(22px,4vw,30px);letter-spacing:-.03em;color:#fff;margin-bottom:8px;line-height:1.1;text-shadow:0 2px 12px rgba(0,0,0,.3)}
-.lock-p{font-size:14px;color:rgba(255,255,255,.82);max-width:340px;line-height:1.55;margin-bottom:22px}
-.btn-unlock{display:inline-flex;align-items:center;gap:11px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:17px;padding:16px 38px;border-radius:50px;border:none;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s;box-shadow:0 8px 36px rgba(249,115,22,.45),0 2px 8px rgba(0,0,0,.18);text-decoration:none}
-.btn-unlock:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 52px rgba(249,115,22,.55)}
+.lock-overlay{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at center,rgba(26,25,22,.32),rgba(26,25,22,.52));backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);padding:40px 28px}
+[data-theme="dark"] .lock-overlay{background:radial-gradient(ellipse at center,rgba(12,11,9,.42),rgba(12,11,9,.62))}
+.lock-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:38px 36px;max-width:440px;width:100%;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.lock-ring{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--cta),var(--cta-d));display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 20px;box-shadow:0 0 48px rgba(249,115,22,.5);animation:lockPulse 2.4s ease-in-out infinite}
+@keyframes lockPulse{0%,100%{box-shadow:0 0 44px rgba(249,115,22,.42)}50%{box-shadow:0 0 64px rgba(249,115,22,.7)}}
+.lock-h{font-family:var(--fd);font-weight:900;font-size:clamp(24px,3.2vw,32px);letter-spacing:-.03em;color:#fff;margin-bottom:10px;line-height:1.08;text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.lock-p{font-size:15px;color:rgba(255,255,255,.85);max-width:360px;line-height:1.6;margin:0 auto 24px}
+.btn-unlock{display:inline-flex;align-items:center;gap:11px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:17px;padding:17px 40px;border-radius:50px;border:none;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s;box-shadow:0 8px 36px rgba(249,115,22,.5),0 2px 8px rgba(0,0,0,.2);text-decoration:none}
+.btn-unlock:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 56px rgba(249,115,22,.62)}
 .btn-unlock .ico{transition:transform .3s var(--ease)}
 .btn-unlock:hover .ico{transform:rotate(-12deg)}
-.lock-note{font-family:var(--fm);font-size:12px;color:rgba(255,255,255,.65);margin-top:14px}
+.lock-note{font-family:var(--fm);font-size:12px;color:rgba(255,255,255,.68);margin-top:16px}
 
-/* ── STEPS ── */
-.steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.step-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:12px;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:8px 15px;border-radius:20px}
+/* ── BELOW FRAME ── */
+.below{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:26px}
+.steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.step-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:12.5px;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:8px 16px;border-radius:20px}
 .step-num{width:18px;height:18px;border-radius:50%;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:var(--cta);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-.trust-row{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin-top:6px}
-.trust-item{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:12px;color:var(--text3);font-weight:500}
+.trust-row{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap}
+.trust-item{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:12.5px;color:var(--text3);font-weight:500}
 
 footer{position:relative;z-index:1;padding:28px 24px;border-top:1px solid var(--border);background:var(--bg2);text-align:center}
 .foot-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
@@ -108,12 +126,20 @@ footer{position:relative;z-index:1;padding:28px 24px;border-top:1px solid var(--
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
+/* ── RESPONSIVE ── */
+@media(max-width:820px){
+  .cp-body{grid-template-columns:1fr;gap:18px}
+  .cp-hero{height:200px}
+}
 @media(max-width:600px){
-  .main{padding:92px 18px 44px}
-  .content-preview{padding:20px}
-  .cp-media{height:110px}
-  .btn-unlock{font-size:16px;padding:15px 30px;width:100%;justify-content:center}
-  .lock-overlay{padding:24px 18px}
+  .main{padding:88px 16px 44px}
+  .cp-topbar{padding:14px 18px}
+  .cp-body{padding:18px}
+  .cp-paras{padding:0 18px 22px}
+  .cp-hero{height:170px}
+  .cp-thumbs{grid-template-columns:repeat(3,1fr)}
+  .lock-card{padding:30px 22px}
+  .btn-unlock{font-size:16px;padding:16px 30px;width:100%;justify-content:center}
 }
 </style>
 </head>
@@ -143,41 +169,74 @@ footer{position:relative;z-index:1;padding:28px 24px;border-top:1px solid var(--
     </div>
 
     <div class="content-frame">
+      <!-- fake but believable content behind the blur -->
       <div class="content-preview" aria-hidden="true">
-        <div class="cp-title"></div>
-        <div class="cp-line w100"></div>
-        <div class="cp-line w90"></div>
-        <div class="cp-media"></div>
-        <div class="cp-line w100"></div>
-        <div class="cp-line w85"></div>
-        <div class="cp-line w75"></div>
-        <div class="cp-chips">
-          <div class="cp-chip"></div>
-          <div class="cp-chip alt"></div>
+        <div class="cp-topbar">
+          <div class="cp-avatar"></div>
+          <div class="cp-meta">
+            <div class="cp-meta-l1"></div>
+            <div class="cp-meta-l2"></div>
+          </div>
+          <div class="cp-pill"></div>
+        </div>
+        <div class="cp-body">
+          <div class="cp-main">
+            <div class="cp-hero"><div class="cp-hero-dur"></div></div>
+          </div>
+          <div class="cp-side">
+            <div class="cp-side-title"></div>
+            <div class="cp-line w100"></div>
+            <div class="cp-line w95"></div>
+            <div class="cp-line s w80"></div>
+            <div class="cp-stats">
+              <div class="cp-stat"></div>
+              <div class="cp-stat"></div>
+              <div class="cp-stat"></div>
+            </div>
+            <div class="cp-thumbs">
+              <div class="cp-thumb"></div>
+              <div class="cp-thumb"></div>
+              <div class="cp-thumb"></div>
+            </div>
+            <div class="cp-cta"></div>
+          </div>
+        </div>
+        <div class="cp-paras">
+          <div class="cp-line w100"></div>
+          <div class="cp-line w95"></div>
+          <div class="cp-line w100"></div>
+          <div class="cp-line w90"></div>
+          <div class="cp-line w70"></div>
+          <div class="cp-line s w60"></div>
         </div>
       </div>
+
+      <!-- lock overlay -->
       <div class="lock-overlay">
-        <div class="lock-ring">&#128274;</div>
-        <div class="lock-h">Content Locked</div>
-        <div class="lock-p">This content is restricted in your region. Install a VPN, connect to a supported country, and it unlocks instantly.</div>
-        <a href="#" class="btn-unlock" id="vpnBtn" target="_blank" rel="noopener" aria-label="Unlock content with VPN">
-          <span class="ico">&#128273;</span>
-          <span>Unlock Content With VPN</span>
-        </a>
-        <div class="lock-note">Takes under a minute &middot; Works on any device</div>
+        <div class="lock-card">
+          <div class="lock-ring">&#128274;</div>
+          <div class="lock-h">Content Locked</div>
+          <div class="lock-p">This content is restricted in your region. Install a VPN, connect to a supported country, and it unlocks instantly.</div>
+          <a href="#" class="btn-unlock" id="vpnBtn" target="_blank" rel="noopener" aria-label="Unlock content with VPN">
+            <span class="ico">&#128273;</span>
+            <span>Unlock Content With VPN</span>
+          </a>
+          <div class="lock-note">Takes under a minute &middot; Works on any device</div>
+        </div>
       </div>
     </div>
 
-    <div class="steps">
-      <span class="step-chip"><span class="step-num">1</span> Install the VPN</span>
-      <span class="step-chip"><span class="step-num">2</span> Connect to a supported region</span>
-      <span class="step-chip"><span class="step-num">3</span> Content unlocks automatically</span>
-    </div>
-
-    <div class="trust-row">
-      <span class="trust-item">&#128274; Encrypted connection</span>
-      <span class="trust-item">&#9889; Instant access</span>
-      <span class="trust-item">&#128241; Mobile &amp; desktop</span>
+    <div class="below">
+      <div class="steps">
+        <span class="step-chip"><span class="step-num">1</span> Install the VPN</span>
+        <span class="step-chip"><span class="step-num">2</span> Connect to a supported region</span>
+        <span class="step-chip"><span class="step-num">3</span> Content unlocks automatically</span>
+      </div>
+      <div class="trust-row">
+        <span class="trust-item">&#128274; Encrypted connection</span>
+        <span class="trust-item">&#9889; Instant access</span>
+        <span class="trust-item">&#128241; Mobile &amp; desktop</span>
+      </div>
     </div>
 
   </div>
@@ -192,7 +251,6 @@ footer{position:relative;z-index:1;padding:28px 24px;border-top:1px solid var(--
 </footer>
 
 <script>
-/* VPN affiliate link — from /fallback-config.json (editable in admin) */
 (function(){
   fetch('/fallback-config.json?_='+Date.now())
     .then(function(r){return r.json();})
@@ -208,8 +266,6 @@ footer{position:relative;z-index:1;padding:28px 24px;border-top:1px solid var(--
     })
     .catch(function(){});
 })();
-
-/* Theme toggle */
 (function(){
   var h=document.documentElement;
   var saved=localStorage.getItem('pd_theme');
