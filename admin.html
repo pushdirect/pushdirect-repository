@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offers Admin — PushDirect</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#1a1916;--brand-mid:#2d2b27;
+  --cream:#e8d5b0;--cream-l:#f2e6cb;--cream-d:#c9aa82;
+  --taupe:#9a8f7e;
+  --cta:#f97316;--cta-d:#ea6f0e;
+  --bg:#ffffff;--bg2:#faf9f7;--bg3:#f4f2ef;
+  --text1:#1a1916;--text2:#5a5248;--text3:#9a8f7e;
+  --border:rgba(26,25,22,.1);--border-s:rgba(26,25,22,.2);
+  --surface:rgba(26,25,22,.04);--surface2:rgba(26,25,22,.08);
+  --success:#2d9e5f;--danger:#e07b6a;
+  --fd:'Poppins',sans-serif;--fb:'Inter',sans-serif;--fm:'Inter',sans-serif;
+  --sh-sm:0 2px 12px rgba(0,0,0,.07);
+  --sh:0 6px 28px rgba(0,0,0,.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg2);color:var(--text1);font-family:var(--fb);font-size:15px;line-height:1.6;min-height:100svh}
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100svh;padding:24px;}
+.login-card{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:48px 40px;max-width:400px;width:100%;text-align:center;box-shadow:var(--sh);}
+.login-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px}
+.login-logo-text{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--text1)}
+.login-h{font-family:var(--fd);font-weight:700;font-size:22px;margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--text3);margin-bottom:28px}
+.form-label{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;display:block;text-align:left}
+.login-input{width:100%;padding:13px 16px;border:1px solid var(--border-s);border-radius:12px;font-size:14px;font-family:var(--fb);background:var(--bg2);color:var(--text1);outline:none;margin-bottom:12px;transition:border-color .2s;}
+.login-input:focus{border-color:var(--cta)}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:14px;border-radius:12px;border:none;cursor:pointer;transition:opacity .2s;margin-top:4px;}
+.login-btn:hover{opacity:.9}
+.login-err{font-size:13px;color:var(--danger);margin-top:10px;display:none}
+.login-hint{font-size:11px;color:var(--text3);margin-top:16px;line-height:1.5}
+#app{display:none}
+.topbar{background:var(--bg);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--sh-sm);}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.topbar-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.topbar-logo-text{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;color:var(--text1)}
+.topbar-badge{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe);background:var(--bg3);border:1px solid var(--border);padding:3px 8px;border-radius:6px;}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.btn-sm{font-family:var(--fm);font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;border:1px solid var(--border-s);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-sm:hover{background:var(--surface2);color:var(--text1)}
+.btn-sm.danger{border-color:rgba(224,123,106,.3);color:var(--danger);background:rgba(224,123,106,.06)}
+.btn-sm.danger:hover{background:rgba(224,123,106,.12)}
+.layout{display:flex;min-height:calc(100svh - 57px)}
+.sidebar{width:220px;flex-shrink:0;background:var(--bg);border-right:1px solid var(--border);padding:20px 0;position:sticky;top:57px;height:calc(100svh - 57px);overflow-y:auto;}
+.sidebar-section{padding:0 14px;margin-bottom:6px}
+.sidebar-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:0 8px;margin-bottom:6px;display:block;}
+.sidebar-link{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-family:var(--fm);font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;border:none;background:none;width:100%;text-align:left;}
+.sidebar-link:hover{background:var(--surface2);color:var(--text1)}
+.sidebar-link.active{background:var(--surface2);color:var(--text1);font-weight:600}
+.sidebar-link .icon{font-size:16px;width:20px;text-align:center;flex-shrink:0}
+.sidebar-count{margin-left:auto;font-size:11px;font-weight:600;background:var(--bg3);border:1px solid var(--border);padding:1px 6px;border-radius:10px;color:var(--text3);}
+.main{flex:1;padding:32px;max-width:900px}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.sec-title{font-family:var(--fd);font-weight:800;font-size:24px;letter-spacing:-.02em;color:var(--text1)}
+.sec-sub{font-size:13px;color:var(--text3);margin-top:3px}
+.btn-add{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:13px;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;transition:opacity .2s;box-shadow:0 4px 14px rgba(249,115,22,.25);}
+.btn-add:hover{opacity:.9}
+.offers-grid{display:flex;flex-direction:column;gap:12px}
+.offer-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;gap:16px;padding:14px 16px;transition:box-shadow .2s;}
+.offer-card:hover{box-shadow:var(--sh-sm)}
+.offer-thumb{width:90px;height:54px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--bg3);border:1px solid var(--border);}
+.offer-thumb-ph{width:90px;height:54px;border-radius:8px;flex-shrink:0;background:var(--bg3);border:1px dashed var(--border-s);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.offer-info{flex:1;min-width:0}
+.offer-label{font-family:var(--fm);font-weight:600;font-size:14px;color:var(--text1);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.offer-url{font-size:12px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--fm)}
+.offer-actions{display:flex;gap:6px;flex-shrink:0}
+.btn-icon{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;}
+.btn-icon:hover{background:var(--surface2)}
+.btn-icon.del:hover{background:rgba(224,123,106,.12);border-color:rgba(224,123,106,.3)}
+.empty-state{background:var(--bg);border:1px dashed var(--border-s);border-radius:14px;padding:40px;text-align:center;}
+.empty-icon{font-size:32px;margin-bottom:12px}
+.empty-h{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:6px;color:var(--text2)}
+.empty-sub{font-size:13px;color:var(--text3)}
+.modal-bg{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:rgba(12,11,9,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .3s;padding:20px;}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg);border-radius:20px;padding:32px;max-width:520px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.2);transform:scale(.94);transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.modal-bg.open .modal{transform:scale(1)}
+.modal-h{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-.02em;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--text3);margin-bottom:24px}
+.form-row{margin-bottom:16px}
+.form-input{width:100%;padding:11px 14px;border:1px solid var(--border-s);border-radius:10px;font-size:14px;font-family:var(--fb);background:var(--bg2);color:var(--text1);outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--cta)}
+.form-select{width:100%;padding:11px 14px;border:1px solid var(--border-s);border-radius:10px;font-size:14px;font-family:var(--fb);background:var(--bg2);color:var(--text1);outline:none;cursor:pointer;-webkit-appearance:none;}
+.form-hint{font-size:12px;color:var(--text3);margin-top:5px}
+.modal-footer{display:flex;gap:10px;margin-top:24px;justify-content:flex-end}
+.btn-cancel{font-family:var(--fm);font-size:14px;font-weight:600;padding:11px 20px;border-radius:10px;border:1px solid var(--border-s);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .2s;}
+.btn-cancel:hover{background:var(--surface2)}
+.btn-save{font-family:var(--fd);font-weight:700;font-size:14px;padding:11px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;cursor:pointer;transition:opacity .2s;box-shadow:0 4px 12px rgba(249,115,22,.22);}
+.btn-save:hover{opacity:.9}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
+.toast{position:fixed;bottom:28px;right:28px;z-index:999;background:var(--brand);color:#fff;font-family:var(--fm);font-size:13px;font-weight:500;padding:12px 20px;border-radius:12px;box-shadow:var(--sh);transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+.drag-handle{cursor:grab;color:var(--text3);font-size:16px;padding:0 4px;user-select:none}
+.offer-card.dragging{opacity:.4}
+.offer-card.drag-over{border-color:var(--cta);box-shadow:0 0 0 2px rgba(249,115,22,.2)}
+.save-bar{position:fixed;bottom:0;left:0;right:0;z-index:80;background:var(--brand);color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);}
+.save-bar.visible{transform:translateY(0)}
+.save-bar-msg{font-family:var(--fm);font-size:13px;font-weight:500;opacity:.85}
+.save-bar-btn{background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:14px;padding:10px 24px;border-radius:10px;border:none;cursor:pointer;transition:opacity .2s;}
+.save-bar-btn:hover{opacity:.9}
+.save-bar-btn:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:640px){.sidebar{display:none}.main{padding:20px}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="/icons/logo.png" width="32" height="22" alt="PushDirect" style="display:block;object-fit:contain">
+      <span class="login-logo-text">PUSHDIRECT</span>
+    </div>
+    <h1 class="login-h">Offers Admin</h1>
+    <p class="login-sub">Sign in to manage offer placements.</p>
+    <label class="form-label" for="pwInput">Password</label>
+    <input class="login-input" type="password" id="pwInput" placeholder="Admin password" autocomplete="current-password">
+    <label class="form-label" for="tokenInput" style="margin-top:4px">GitHub Token</label>
+    <input class="login-input" type="password" id="tokenInput" placeholder="GitHub personal access token" autocomplete="off">
+    <button class="login-btn" id="loginBtn">Sign in</button>
+    <div class="login-err" id="loginErr">Incorrect password.</div>
+    <p class="login-hint">The GitHub token is stored in your browser session only and never sent anywhere except GitHub's API.</p>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="/" class="topbar-logo">
+        <img src="/icons/logo.png" width="28" height="20" alt="PushDirect" style="display:block;object-fit:contain">
+        <span class="topbar-logo-text">PUSHDIRECT</span>
+      </a>
+      <span class="topbar-badge">Offers Admin</span>
+    </div>
+    <div class="topbar-right">
+      <a href="/offers" class="btn-sm" target="_blank">↗ View offers page</a>
+      <button class="btn-sm danger" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main" id="main">
+      <div style="display:flex;align-items:center;justify-content:center;height:200px">
+        <div style="font-family:var(--fm);color:var(--text3)">Loading offers…</div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2 class="modal-h" id="modalTitle">Add offer</h2>
+    <p class="modal-sub" id="modalSub">Fill in the offer details below.</p>
+    <div class="form-row">
+      <label class="form-label" for="fVertical">Vertical</label>
+      <select class="form-select" id="fVertical"></select>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="fLabel">Label</label>
+      <input class="form-input" type="text" id="fLabel" placeholder="e.g. Get a $1000 Walmart Gift Card">
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="fUrl">Offer URL</label>
+      <input class="form-input" type="url" id="fUrl" placeholder="https://neoinweb.com/or/…">
+      <div class="form-hint">Full tracking URL including any ?source_id= params.</div>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="fImage">Banner image path</label>
+      <input class="form-input" type="text" id="fImage" placeholder="/images/offers/banner.png">
+      <div class="form-hint">300×160px recommended. Upload the image to GitHub first.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="modalCancel">Cancel</button>
+      <button class="btn-save" id="modalSave">Save offer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="save-bar" id="saveBar">
+  <span class="save-bar-msg">You have unsaved changes.</span>
+  <button class="save-bar-btn" id="saveBarBtn">Save &amp; publish</button>
+</div>
+
+<script>
+const GH_REPO   = 'pushdirect/pushdirect-repository';
+const DATA_FILE = 'offers-data.json';
+const PASSWORD  = 'pushdirect';
+const SESSION_KEY = 'pd_admin_auth';
+
+let GH_TOKEN = sessionStorage.getItem('pd_admin_token') || '';
+let authed = sessionStorage.getItem(SESSION_KEY) === '1';
+let data = null, currentVertical = null, dirty = false, editingOffer = null, fileSha = null, dragIdx = null;
+
+// Auth
+document.getElementById('loginBtn').addEventListener('click', tryLogin);
+['pwInput','tokenInput'].forEach(function(id){
+  document.getElementById(id).addEventListener('keydown', function(e){ if(e.key==='Enter') tryLogin(); });
+});
+document.getElementById('logoutBtn').addEventListener('click', function(){
+  sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem('pd_admin_token');
+  location.reload();
+});
+
+function tryLogin() {
+  var pw = document.getElementById('pwInput').value;
+  var tok = document.getElementById('tokenInput').value.trim();
+  if(pw === PASSWORD && tok) {
+    GH_TOKEN = tok;
+    sessionStorage.setItem(SESSION_KEY, '1');
+    sessionStorage.setItem('pd_admin_token', tok);
+    authed = true;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('loginErr').textContent = !tok ? 'GitHub token is required.' : 'Incorrect password.';
+    document.getElementById('pwInput').value = '';
+  }
+}
+
+if(authed && GH_TOKEN) {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// GitHub API
+async function ghGet(path) {
+  var r = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+path, {
+    headers: {'Authorization':'token '+GH_TOKEN, 'Accept':'application/vnd.github.v3+json'}
+  });
+  if(!r.ok) throw new Error('GitHub GET '+path+': '+r.status);
+  return r.json();
+}
+
+async function ghPut(path, contentStr, sha, msg) {
+  var encoded = btoa(unescape(encodeURIComponent(contentStr)));
+  var body = {message: msg, content: encoded};
+  if(sha) body.sha = sha;
+  var r = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+path, {
+    method: 'PUT',
+    headers: {'Authorization':'token '+GH_TOKEN, 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  });
+  if(!r.ok) { var e=await r.json(); throw new Error(e.message||'PUT failed'); }
+  return r.json();
+}
+
+async function init() {
+  try {
+    var d = await ghGet(DATA_FILE);
+    fileSha = d.sha;
+    data = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    currentVertical = data.verticals[0].id;
+    renderSidebar();
+    renderMain();
+  } catch(e) { showToast('Failed to load: '+e.message,'error'); }
+}
+
+if(authed && GH_TOKEN) init();
+
+function renderSidebar() {
+  document.getElementById('sidebar').innerHTML =
+    '<div class="sidebar-section"><span class="sidebar-label">Verticals</span>' +
+    data.verticals.map(function(v){
+      return '<button class="sidebar-link'+(v.id===currentVertical?' active':'')+'" onclick="switchVertical(\''+v.id+'\')">' +
+        '<span class="icon">'+v.icon+'</span>'+v.label+
+        '<span class="sidebar-count">'+v.offers.length+'</span></button>';
+    }).join('') + '</div>';
+}
+
+function switchVertical(id) { currentVertical=id; renderSidebar(); renderMain(); }
+
+function renderMain() {
+  var v = data.verticals.find(function(x){return x.id===currentVertical;});
+  var html = '<div class="sec-hdr"><div class="sec-hdr-left"><div class="sec-title">'+v.icon+' '+v.label+'</div>' +
+    '<div class="sec-sub">'+v.offers.length+' offer'+(v.offers.length!==1?'s':'')+' &middot; Drag to reorder</div></div>' +
+    '<button class="btn-add" onclick="openModal()">+ Add offer</button></div>' +
+    '<div class="offers-grid" id="offersGrid">';
+  if(!v.offers.length) {
+    html += '<div class="empty-state"><div class="empty-icon">'+v.icon+'</div>' +
+      '<div class="empty-h">No offers yet</div>' +
+      '<div class="empty-sub">Click "Add offer" to add the first placement.</div></div>';
+  } else {
+    v.offers.forEach(function(o,i){
+      html += '<div class="offer-card" draggable="true" data-idx="'+i+'" data-id="'+o.id+'" ' +
+        'ondragstart="onDragStart(event)" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragend="onDragEnd(event)">' +
+        '<span class="drag-handle" title="Drag to reorder">&#10783;</span>';
+      if(o.image) {
+        html += '<img class="offer-thumb" src="'+o.image+'" alt="'+o.label+'" ' +
+          'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">';
+        html += '<div class="offer-thumb-ph" style="display:none">&#128444;&#65039;</div>';
+      } else {
+        html += '<div class="offer-thumb-ph">&#128444;&#65039;</div>';
+      }
+      html += '<div class="offer-info"><div class="offer-label">'+(o.label||'(no label)')+'</div>' +
+        '<div class="offer-url">'+(o.url||'(no URL)')+'</div></div>' +
+        '<div class="offer-actions">' +
+        '<button class="btn-icon" title="Edit" onclick="openModal(\''+o.id+'\')">&#9998;&#65039;</button>' +
+        '<button class="btn-icon del" title="Delete" onclick="deleteOffer(\''+o.id+'\')">&#128465;&#65039;</button>' +
+        '</div></div>';
+    });
+  }
+  html += '</div><div style="height:80px"></div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function openModal(offerId) {
+  var v = data.verticals.find(function(x){return x.id===currentVertical;});
+  var sel = document.getElementById('fVertical');
+  sel.innerHTML = data.verticals.map(function(vt){
+    return '<option value="'+vt.id+'"'+(vt.id===currentVertical?' selected':'')+'>'+vt.icon+' '+vt.label+'</option>';
+  }).join('');
+  if(offerId) {
+    editingOffer = {verticalId:currentVertical, offerId:offerId};
+    var o = v.offers.find(function(x){return x.id===offerId;});
+    document.getElementById('modalTitle').textContent = 'Edit offer';
+    document.getElementById('modalSub').textContent = 'Update the offer details below.';
+    document.getElementById('fLabel').value = o.label||'';
+    document.getElementById('fUrl').value = o.url||'';
+    document.getElementById('fImage').value = o.image||'';
+  } else {
+    editingOffer = null;
+    document.getElementById('modalTitle').textContent = 'Add offer';
+    document.getElementById('modalSub').textContent = 'Fill in the offer details below.';
+    document.getElementById('fLabel').value=''; document.getElementById('fUrl').value=''; document.getElementById('fImage').value='';
+  }
+  document.getElementById('modalBg').classList.add('open');
+  setTimeout(function(){document.getElementById('fLabel').focus();},100);
+}
+
+document.getElementById('modalCancel').addEventListener('click', closeModal);
+document.getElementById('modalBg').addEventListener('click', function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown', function(e){if(e.key==='Escape')closeModal();});
+function closeModal(){document.getElementById('modalBg').classList.remove('open');editingOffer=null;}
+
+document.getElementById('modalSave').addEventListener('click', function(){
+  var label = document.getElementById('fLabel').value.trim();
+  var url   = document.getElementById('fUrl').value.trim();
+  var image = document.getElementById('fImage').value.trim();
+  var vId   = document.getElementById('fVertical').value;
+  if(!url){showToast('URL is required','error');return;}
+  var v = data.verticals.find(function(x){return x.id===vId;});
+  if(editingOffer) {
+    var srcV = data.verticals.find(function(x){return x.id===editingOffer.verticalId;});
+    var idx = srcV.offers.findIndex(function(x){return x.id===editingOffer.offerId;});
+    var offer = srcV.offers[idx];
+    if(vId!==editingOffer.verticalId){srcV.offers.splice(idx,1);v.offers.push(Object.assign({},offer,{label:label,url:url,image:image}));}
+    else{srcV.offers[idx]=Object.assign({},offer,{label:label,url:url,image:image});}
+  } else {
+    v.offers.push({id:'o'+Date.now(),label:label,url:url,image:image});
+    if(vId!==currentVertical) currentVertical=vId;
+  }
+  setDirty(); closeModal(); renderSidebar(); renderMain();
+});
+
+function deleteOffer(id){
+  if(!confirm('Delete this offer?'))return;
+  var v=data.verticals.find(function(x){return x.id===currentVertical;});
+  var idx=v.offers.findIndex(function(x){return x.id===id;});
+  if(idx!==-1)v.offers.splice(idx,1);
+  setDirty(); renderSidebar(); renderMain();
+}
+
+function onDragStart(e){dragIdx=parseInt(e.currentTarget.dataset.idx);e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
+function onDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';document.querySelectorAll('.offer-card').forEach(function(c){c.classList.remove('drag-over');});e.currentTarget.classList.add('drag-over');}
+function onDrop(e){
+  e.preventDefault();
+  var dropIdx=parseInt(e.currentTarget.dataset.idx);
+  if(dragIdx===null||dragIdx===dropIdx)return;
+  var v=data.verticals.find(function(x){return x.id===currentVertical;});
+  var moved=v.offers.splice(dragIdx,1)[0];
+  v.offers.splice(dropIdx,0,moved);
+  setDirty(); renderMain();
+}
+function onDragEnd(){document.querySelectorAll('.offer-card').forEach(function(c){c.classList.remove('dragging','drag-over');});dragIdx=null;}
+
+function setDirty(){dirty=true;document.getElementById('saveBar').classList.add('visible');}
+
+document.getElementById('saveBarBtn').addEventListener('click', async function(){
+  var btn=this; btn.disabled=true; btn.textContent='Saving…';
+  try {
+    var latest=await ghGet(DATA_FILE);
+    fileSha=latest.sha;
+    var result=await ghPut(DATA_FILE, JSON.stringify(data,null,2), fileSha, 'feat(offers): update placements via admin panel');
+    fileSha=result.content.sha;
+    dirty=false;
+    document.getElementById('saveBar').classList.remove('visible');
+    showToast('Published! Live in ~30 seconds.','success');
+  } catch(e){showToast('Save failed: '+e.message,'error');}
+  finally{btn.disabled=false;btn.textContent='Save & publish';}
+});
+
+var toastTimer;
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show'+(type?' '+type:'');
+  clearTimeout(toastTimer); toastTimer=setTimeout(function(){t.classList.remove('show');},3500);
+}
+</script>
+</body>
+</html>
