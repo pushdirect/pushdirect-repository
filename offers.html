@@ -446,6 +446,37 @@ footer{position:relative;z-index:1;padding:44px 24px 120px;border-top:1px solid 
 
 /* dedupe: suppress legacy duplicate sticky bar; canonical #pdStickyBar remains active */
 #stickyBar{display:none!important}
+
+/* ═══ ADULT SECTION (age-gated) ═══ */
+.adult-sec{position:relative;z-index:1;padding:56px 0 0;border-top:1px solid var(--border);margin-top:24px}
+.adult-sec .wrap{position:relative}
+.adult-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.adult-icon-box{width:40px;height:40px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+[data-theme="dark"] .adult-icon-box{background:var(--surface);border-color:var(--border)}
+.adult-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:2px;font-weight:600}
+.adult-title{font-family:var(--fd);font-size:clamp(20px,2.5vw,28px);font-weight:800;letter-spacing:-.02em;color:var(--text1);line-height:1}
+.adult-disclaimer{font-size:13px;color:var(--text3);margin-bottom:24px;max-width:560px;line-height:1.6}
+.adult-body{position:relative;border-radius:14px;overflow:hidden}
+.adult-body .offer-row{transition:filter .4s ease}
+.adult-body.locked .offer-row{filter:blur(22px);pointer-events:none;user-select:none}
+.age-gate{
+  position:absolute;inset:0;z-index:5;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  background:rgba(26,25,22,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-radius:14px;border:1px solid var(--border-s);padding:32px 24px;gap:8px;
+  transition:opacity .35s ease;
+}
+[data-theme="dark"] .age-gate{background:rgba(12,11,9,.6)}
+.age-gate.hidden{opacity:0;pointer-events:none}
+.age-gate-icon{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--cta),var(--cta-d));display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:6px;box-shadow:0 0 32px rgba(249,115,22,.3)}
+.age-gate-h{font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:-.02em;color:#fff;margin-bottom:4px}
+.age-gate-p{font-size:13px;color:rgba(255,255,255,.78);max-width:380px;line-height:1.6;margin-bottom:14px}
+.age-gate-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn-age-yes{background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;font-family:var(--fd);font-weight:700;font-size:15px;padding:13px 30px;border-radius:50px;border:none;cursor:pointer;transition:opacity .2s;box-shadow:0 4px 16px rgba(249,115,22,.3)}
+.btn-age-yes:hover{opacity:.9}
+.btn-age-no{background:rgba(255,255,255,.1);color:#fff;font-family:var(--fm);font-weight:600;font-size:14px;padding:13px 24px;border-radius:50px;border:1px solid rgba(255,255,255,.25);cursor:pointer;transition:all .2s}
+.btn-age-no:hover{background:rgba(255,255,255,.18)}
+.adult-legal{font-size:11px;color:var(--text3);margin-top:16px;line-height:1.5;max-width:560px}
 </style>
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://pushdirect.network/#organization", "name": "PushDirect Promotion Network", "url": "https://pushdirect.network"}, {"@type": "WebSite", "@id": "https://pushdirect.network/#website", "url": "https://pushdirect.network", "name": "PushDirect Promotion Network", "publisher": {"@id": "https://pushdirect.network/#organization"}}, {"@type": "WebPage", "@id": "https://pushdirect.network/offers#webpage", "url": "https://pushdirect.network/offers", "name": "Offers — PushDirect Promotion Network", "description": "Browse curated affiliate offers across sweepstakes, gaming, nutra, utilities, finance, and travel.", "isPartOf": {"@id": "https://pushdirect.network/#website"}}]}
@@ -605,6 +636,34 @@ footer{position:relative;z-index:1;padding:44px 24px 120px;border-top:1px solid 
 
 </div><!-- /wrap -->
 </div><!-- /content -->
+
+<!-- ═══ ADULT SECTION (age-gated, not in nav/tabs) ═══ -->
+<div class="adult-sec rev" id="adultSection" style="display:none">
+  <div class="wrap">
+    <div class="adult-head">
+      <div class="adult-icon-box">🔞</div>
+      <div>
+        <div class="adult-eyebrow">18+ Vertical</div>
+        <div class="adult-title">Adult</div>
+      </div>
+    </div>
+    <p class="adult-disclaimer">This section contains advertising intended for adults aged 18 and over. Content is hidden until you confirm your age.</p>
+    <div class="adult-body locked" id="adultBody">
+      <div class="offer-row" id="adultOffers"></div>
+      <div class="age-gate" id="ageGate">
+        <div class="age-gate-icon">🔞</div>
+        <div class="age-gate-h">Are you 18 or older?</div>
+        <div class="age-gate-p">The offers below are intended for adults only. By continuing you confirm you are at least 18 years of age (or the age of majority in your jurisdiction).</div>
+        <div class="age-gate-btns">
+          <button class="btn-age-yes" id="ageYes">Yes, I am 18+</button>
+          <button class="btn-age-no" id="ageNo">No, take me back</button>
+        </div>
+      </div>
+    </div>
+    <p class="adult-legal">PushDirect does not produce any of the advertised content. All adult offers are supplied by third-party advertising partners. By viewing this section you acknowledge that adult-oriented advertising may be displayed.</p>
+  </div>
+</div>
+
 
 <!-- CROSS-LINK → DEAL ALERTS -->
 <div class="wrap">
@@ -813,7 +872,9 @@ var io, tabObserver;
     var el=document.getElementById('dynOffers');
     if(!el)return;
     var out='';
+    var adultVerticals=[];
     (data.verticals||[]).forEach(function(v){
+      if(v.adult){adultVerticals.push(v);return;}
       out+='<section class="cat-section rev" id="'+esc(v.id)+'">';
       out+='<div class="cat-header"><div class="cat-icon-box">'+v.icon+'</div>';
       out+='<div class="cat-title-wrap"><div class="cat-eyebrow">Vertical</div>';
@@ -832,6 +893,7 @@ var io, tabObserver;
       out+='</div></section>';
     });
     el.innerHTML=out;
+    renderAdult(adultVerticals);
     if(io) el.querySelectorAll('.rev').forEach(function(e){io.observe(e);});
     if(tabObserver) el.querySelectorAll('.cat-section').forEach(function(e){tabObserver.observe(e);});
     try{
@@ -839,6 +901,54 @@ var io, tabObserver;
       var map={deals:'sweepstakes',gift_cards:'sweepstakes',casino:'gaming',cashback:'finance',travel:'travel',insurance:'finance'};
       prefs.forEach(function(p){var id=map[p];if(id){var s=document.getElementById(id);if(s)s.classList.add('pref-match');}});
     }catch(e){}
+  }
+  function renderAdult(verticals){
+    var section=document.getElementById('adultSection');
+    var row=document.getElementById('adultOffers');
+    if(!section||!row)return;
+    // Combine all adult-flagged verticals' offers (normally just one)
+    var offers=[];
+    verticals.forEach(function(v){if(v.offers)offers=offers.concat(v.offers);});
+    if(!offers.length){
+      // Show placeholder slots
+      var ph='';
+      for(var i=0;i<4;i++) ph+='<div class="offer-slot"><div class="slot-label">Offer slot</div><div class="slot-dim">300 x 160</div></div>';
+      row.innerHTML=ph;
+    } else {
+      var out='';
+      offers.forEach(function(o){
+        out+='<div class="offer-slot offer-slot--img">';
+        out+='<a href="'+esc(o.url)+'" class="offer-banner-link" aria-label="'+esc(o.label)+'" target="_blank" rel="noopener">';
+        out+='<img src="'+esc(o.image)+'" alt="'+esc(o.label)+'" loading="lazy" class="offer-banner-img">';
+        out+='</a></div>';
+      });
+      row.innerHTML=out;
+    }
+    section.style.display='block';
+    if(io)io.observe(section);
+    wireAgeGate();
+  }
+  function wireAgeGate(){
+    var body=document.getElementById('adultBody');
+    var gate=document.getElementById('ageGate');
+    var yes=document.getElementById('ageYes');
+    var no=document.getElementById('ageNo');
+    if(!body||!gate)return;
+    // Already confirmed?
+    if(localStorage.getItem('pd_age_ok')==='1'){
+      body.classList.remove('locked');
+      gate.classList.add('hidden');
+      return;
+    }
+    if(yes)yes.onclick=function(){
+      localStorage.setItem('pd_age_ok','1');
+      body.classList.remove('locked');
+      gate.classList.add('hidden');
+      if(typeof gtag!=='undefined')gtag('event','age_confirmed',{pd_page:'offers'});
+    };
+    if(no)no.onclick=function(){
+      window.location.href='/';
+    };
   }
   fetch('/offers-data.json?_='+Date.now()).then(function(r){return r.json();}).then(render).catch(function(){render(FALLBACK);});
 })();
