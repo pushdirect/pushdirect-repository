@@ -35,38 +35,188 @@
       "id": "gaming",
       "label": "Gaming",
       "icon": "\ud83c\udfae",
-      "offers": []
+      "offers": [
+        {
+          "id": "gaming1",
+          "label": "Gaming Offer 1",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming1",
+          "image": ""
+        },
+        {
+          "id": "gaming2",
+          "label": "Gaming Offer 2",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming2",
+          "image": ""
+        },
+        {
+          "id": "gaming3",
+          "label": "Gaming Offer 3",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming3",
+          "image": ""
+        },
+        {
+          "id": "gaming4",
+          "label": "Gaming Offer 4",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming4",
+          "image": ""
+        }
+      ]
     },
     {
       "id": "nutra",
       "label": "Nutra",
       "icon": "\ud83d\udc8a",
-      "offers": []
+      "offers": [
+        {
+          "id": "nutra1",
+          "label": "Nutra Offer 1",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra1",
+          "image": ""
+        },
+        {
+          "id": "nutra2",
+          "label": "Nutra Offer 2",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra2",
+          "image": ""
+        },
+        {
+          "id": "nutra3",
+          "label": "Nutra Offer 3",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra3",
+          "image": ""
+        },
+        {
+          "id": "nutra4",
+          "label": "Nutra Offer 4",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra4",
+          "image": ""
+        }
+      ]
     },
     {
       "id": "utilities",
       "label": "Utilities",
       "icon": "\ud83d\udd27",
-      "offers": []
+      "offers": [
+        {
+          "id": "utilities1",
+          "label": "Utility Offer 1",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-utility1",
+          "image": ""
+        },
+        {
+          "id": "utilities2",
+          "label": "Utility Offer 2",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-utility2",
+          "image": ""
+        },
+        {
+          "id": "utilities3",
+          "label": "Utility Offer 3",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-utility3",
+          "image": ""
+        },
+        {
+          "id": "utilities4",
+          "label": "Utility Offer 4",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-utility4",
+          "image": ""
+        }
+      ]
     },
     {
       "id": "finance",
       "label": "Finance",
       "icon": "\ud83d\udcb0",
-      "offers": []
+      "offers": [
+        {
+          "id": "finance1",
+          "label": "Finance Offer 1",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-finance1",
+          "image": ""
+        },
+        {
+          "id": "finance2",
+          "label": "Finance Offer 2",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-finance2",
+          "image": ""
+        },
+        {
+          "id": "finance3",
+          "label": "Finance Offer 3",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-finance3",
+          "image": ""
+        },
+        {
+          "id": "finance4",
+          "label": "Finance Offer 4",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-finance4",
+          "image": ""
+        }
+      ]
     },
     {
       "id": "travel",
       "label": "Travel",
       "icon": "\u2708\ufe0f",
-      "offers": []
+      "offers": [
+        {
+          "id": "travel1",
+          "label": "Travel Offer 1",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-travel1",
+          "image": ""
+        },
+        {
+          "id": "travel2",
+          "label": "Travel Offer 2",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-travel2",
+          "image": ""
+        },
+        {
+          "id": "travel3",
+          "label": "Travel Offer 3",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-travel3",
+          "image": ""
+        },
+        {
+          "id": "travel4",
+          "label": "Travel Offer 4",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-travel4",
+          "image": ""
+        }
+      ]
     },
     {
       "id": "adult",
       "label": "Adult",
       "icon": "\ud83d\udd1e",
       "adult": true,
-      "offers": []
+      "offers": [
+        {
+          "id": "adult1",
+          "label": "Adult Offer 1",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-adult1",
+          "image": ""
+        },
+        {
+          "id": "adult2",
+          "label": "Adult Offer 2",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-adult2",
+          "image": ""
+        },
+        {
+          "id": "adult3",
+          "label": "Adult Offer 3",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-adult3",
+          "image": ""
+        },
+        {
+          "id": "adult4",
+          "label": "Adult Offer 4",
+          "url": "https://go.extiance.com/ts4359-displayclicks-us-adult4",
+          "image": ""
+        }
+      ]
     }
   ]
 }
