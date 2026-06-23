@@ -1482,9 +1482,9 @@ function pdSubmitEmail(e){
 </div>
 <script>
 (function(){
-  var shown=false,clicked=null;
+  var shown=false,clicked=null,both=false;
   function openExit(){
-    if(shown)return;
+    if(shown||both)return;
     shown=true;
     // Show only the button the user hasn't clicked yet; both if first time
     var c=document.getElementById('exitBtnCasino');
@@ -1502,7 +1502,7 @@ function pdSubmitEmail(e){
     lastY=y;
   },{passive:true});
   window.exitClicked=function(cta){
-    clicked=cta;
+    if(clicked&&clicked!==cta){both=true;}else{clicked=cta;}
     shown=false; // allow re-trigger after they return
     if(typeof pdTrack==='function')pdTrack('exit_click',{cta:cta});
     document.getElementById('exitBg').classList.remove('open');
