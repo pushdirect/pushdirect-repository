@@ -1107,5 +1107,19 @@ function pdSubmitEmail(e){
   },{passive:true});
 })();
 </script>
+<!-- ═══ EXIT INTENT ═══ -->
+<div class="pd-exit-bg" id="pdExitBg" onclick="pdExitBgClick(event)">
+  <div class="pd-exit-card">
+    <button class="pd-exit-close" onclick="pdExitClose()" aria-label="Close">✕</button>
+    <span class="pd-exit-em">🎁</span>
+    <h2 class="pd-exit-h">Before you go — grab a deal.</h2>
+    <p class="pd-exit-sub">Exclusive offers available right now. No sign-up required.</p>
+    <div class="pd-exit-btns">
+      <a href="SWEEPSTAKES_SMARTLINK" class="pd-exit-btn pd-exit-btn-sweep" target="_blank" rel="noopener" onclick="pdExitClose()">🏆 Win Prizes — Sweepstakes</a>
+      <a href="GAMBLING_SMARTLINK" class="pd-exit-btn pd-exit-btn-gamble" target="_blank" rel="noopener" onclick="pdExitClose()">🎰 Casino &amp; Gambling Offers</a>
+    </div>
+    <span class="pd-exit-skip" onclick="pdExitClose()">No thanks, I'll pass</span>
+  </div>
+</div>
 </body>
 </html>
