@@ -36,6 +36,21 @@ const PD_VARIANT=(function(){
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-08QR9KY980"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-08QR9KY980',{page_title:'Free Crypto Price Alerts — PushDirect',page_location:'https://pushdirect.network/crypto-alerts',send_page_view:true});</script>
+<script>
+(function(){
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS||isMacSafari){
+    window._monetagLoaded=true;
+    var s=document.createElement('script');
+    s.dataset.zone='11024677';
+    s.dataset.cfasync='false';
+    s.src='https://nap5k.com/tag.min.js';
+    document.head.appendChild(s);
+  }
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://push-sdk.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -83,7 +98,7 @@ const PD_VARIANT=(function(){
   --sh-lg:0 16px 56px rgba(0,0,0,.75);
 }
 [data-theme="dark"] nav.scrolled{background:rgba(12,11,9,.92)}
-[data-theme="dark"] .preperm-card,[data-theme="dark"] .overlay-card{background:#1a1814;border-color:rgba(232,213,176,.15)}
+[data-theme="dark"] .preperm-card,[data-theme="dark"] .overlay-card,[data-theme="dark"] .exit-card{background:#1a1814;border-color:rgba(232,213,176,.15)}
 [data-theme="dark"] .preperm-benefits,[data-theme="dark"] .ov-preview,[data-theme="dark"] .denied-steps{background:rgba(232,213,176,.04);border-color:rgba(232,213,176,.09)}
 [data-theme="dark"] .sticky-bar{background:linear-gradient(to top,rgba(12,11,9,1) 65%,transparent)}
 [data-theme="dark"] .coin-card,[data-theme="dark"] .deal-card,[data-theme="dark"] .signal,[data-theme="dark"] .faq-item{background:rgba(232,213,176,.05);border-color:rgba(232,213,176,.09)}
@@ -285,6 +300,21 @@ footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;
 .btn-ov-sec{width:100%;background:none;border:1px solid var(--border-s);color:var(--text2);font-size:14px;padding:12px;border-radius:50px;cursor:pointer;transition:all .2s;font-family:var(--fb);margin-top:8px}
 .btn-ov-sec:hover{color:var(--text1)}
 
+/* EXIT INTENT */
+.exit-bg{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(12,11,9,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;pointer-events:none;transition:opacity .4s;padding:24px}
+.exit-bg.open{opacity:1;pointer-events:all}
+.exit-card{background:linear-gradient(160deg,var(--brand) 0%,var(--brand-mid) 100%);border:1px solid rgba(201,170,130,.22);border-radius:28px;padding:44px 32px;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.45);transform:scale(.94) translateY(14px);transition:transform .45s var(--ease)}
+.exit-bg.open .exit-card{transform:scale(1) translateY(0)}
+.exit-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);cursor:pointer;color:rgba(255,255,255,.6);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.exit-close:hover{background:rgba(255,255,255,.18);color:#fff}
+.exit-em{display:block;font-size:42px;margin-bottom:16px;animation:exitPop .5s var(--ease) .15s both}
+@keyframes exitPop{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
+.exit-h{font-family:var(--fd);font-weight:900;font-size:clamp(22px,3.5vw,28px);letter-spacing:-.03em;color:#fff;margin-bottom:10px;line-height:1.1}
+.exit-sub{font-size:14px;color:rgba(232,213,176,.75);margin-bottom:24px;line-height:1.6;max-width:320px;margin-left:auto;margin-right:auto}
+.exit-divider{height:1px;background:rgba(201,170,130,.18);margin:22px 0}
+.exit-also{font-family:var(--fm);font-size:12px;color:rgba(232,213,176,.55);margin-bottom:12px;letter-spacing:.04em}
+.btn-exit-secondary{display:inline-flex;align-items:center;gap:8px;color:rgba(232,213,176,.75);font-family:var(--fm);font-size:13px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(201,170,130,.25);padding:11px 24px;border-radius:50px;cursor:pointer;transition:all .2s;text-decoration:none;width:100%;justify-content:center}
+.btn-exit-secondary:hover{background:rgba(255,255,255,.12);color:rgba(232,213,176,.95);border-color:rgba(201,170,130,.45)}
 
 /* ═══ LIVE ALERT FEED ═══ */
 .feed-section{padding:52px 0 80px;}
@@ -384,7 +414,7 @@ footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;
 
 
 [data-theme="light"] nav.scrolled{background:rgba(255,255,255,.96)}
-[data-theme="light"] .preperm-card,[data-theme="light"] .overlay-card{background:#fff;border-color:rgba(26,25,22,.12)}
+[data-theme="light"] .preperm-card,[data-theme="light"] .overlay-card,[data-theme="light"] .exit-card{background:#fff;border-color:rgba(26,25,22,.12)}
 [data-theme="light"] .preperm-benefits,[data-theme="light"] .ov-preview,[data-theme="light"] .denied-steps{background:rgba(26,25,22,.03);border-color:rgba(26,25,22,.08)}
 [data-theme="light"] .sticky-bar{background:linear-gradient(to top,rgba(255,255,255,1) 65%,transparent)}
 [data-theme="light"] .coin-card,[data-theme="light"] .deal-card,[data-theme="light"] .signal,[data-theme="light"] .faq-item,[data-theme="light"] .step{background:rgba(26,25,22,.03);border-color:rgba(26,25,22,.08)}
@@ -466,6 +496,734 @@ footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;
 /* dedupe: suppress legacy duplicate sticky bar; canonical #pdStickyBar remains active */
 #stickyBar{display:none!important}
 
+/* ═══ EXIT INTENT ═══ */
+.exit-bg{position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;background:rgba(12,11,9,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);opacity:0;pointer-events:none;transition:opacity .35s;padding:24px;}
+.exit-bg.open{opacity:1;pointer-events:all}
+.exit-card{background:#fff;border-radius:28px;padding:36px 28px 28px;max-width:420px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.28);border:1px solid rgba(201,170,130,.25);transform:scale(.93) translateY(12px);transition:transform .45s var(--ease);}
+[data-theme="dark"] .exit-card{background:#1a1814;border-color:rgba(232,213,176,.15)}
+.exit-bg.open .exit-card{transform:scale(1) translateY(0)}
+.exit-icon{font-size:44px;margin-bottom:12px;display:block;line-height:1}
+.exit-h{font-family:var(--fd);font-weight:800;font-size:21px;letter-spacing:-.03em;color:var(--text1);margin-bottom:6px}
+.exit-sub{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:22px}
+.exit-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.exit-btn{width:100%;padding:15px;border-radius:50px;border:none;cursor:pointer;font-family:var(--fd);font-weight:700;font-size:15px;transition:opacity .2s,transform .2s;text-decoration:none;display:block;}
+.exit-btn-casino{background:linear-gradient(135deg,var(--cta),var(--cta-d));color:#fff;box-shadow:0 4px 16px rgba(249,115,22,.28);}
+.exit-btn-sweeps{background:linear-gradient(135deg,var(--cream-d),var(--taupe));color:#fff;box-shadow:0 4px 16px rgba(154,143,126,.25);}
+.exit-btn:hover{opacity:.92;transform:translateY(-1px)}
+.exit-no{width:100%;background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;padding:8px;transition:color .2s;font-family:var(--fb);}
+.exit-no:hover{color:var(--text2)}
+</style>
+</head>
+<body>
+<a href="#main-content" class="sr-skip">Skip to content</a>
+<div class="scroll-bar" id="scrollBar"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- SUBNAV -->
+<nav class="subnav" aria-label="Site navigation" id="subnav">
+  <a href="https://pushdirect.network" class="subnav-link">Home</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/offers" class="subnav-link">Offers</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/deal-alerts" class="subnav-link">Deal Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/crypto-alerts" class="subnav-link active">Crypto Alerts</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/blog" class="subnav-link">Blog</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/subscription" class="subnav-link">Subscribe</a>
+  <span class="subnav-sep">|</span>
+  <a href="https://pushdirect.network/faq" class="subnav-link">FAQ</a>
+</nav>
+
+<!-- MAIN NAV -->
+<nav id="mainNav">
+  <a href="https://pushdirect.network" class="nav-logo">
+    <img src="/icons/logo.png" width="36" height="25" alt="PushDirect" style="display:block;object-fit:contain">
+    <div>
+      <div class="logo-text">PUSHDIRECT</div>
+      <span class="logo-sub">Promotion Network</span>
+    </div>
+  </a>
+  <div class="nav-r">
+    <a href="/" class="nav-back">← Home</a>
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
+  </div>
+</nav>
+
+<div id="main-content" class="page-header">
+  <div class="wrap">
+    <div class="ph-kicker">Crypto Signals · Free · Instant · No Email</div>
+    <h1 class="ph-h1">BTC alerts in <span class="gold">0.4 seconds</span> flat</h1>
+    <p class="ph-sub">PushDirect fires a push notification the instant Bitcoin, Ethereum or any tracked asset crosses a key level. <strong>8 minutes ahead of Twitter. Faster than your trading app.</strong></p>
+    <div class="ph-cta-row">
+      <button class="btn-cta" aria-label="Enable crypto alerts from PushDirect" onclick="pdRequestPush()">
+        <img class="ico btn-plane" src="/icons/logo.png" width="18" height="13" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
+        Enable Free Crypto Alerts
+      </button>
+      <div class="trust">Free forever &nbsp;·&nbsp; Zero spam &nbsp;·&nbsp; 1-tap unsubscribe</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICE TICKER STRIP -->
+<div class="price-strip" id="priceStrip">
+  <div class="price-scroll" id="priceScroll">
+    <div class="price-item"><span class="price-sym">BTC</span><span class="price-val" id="tick-BTC">—</span><span class="price-chg flat" id="chg-BTC">—</span></div>
+    <div class="price-item"><span class="price-sym">ETH</span><span class="price-val" id="tick-ETH">—</span><span class="price-chg flat" id="chg-ETH">—</span></div>
+    <div class="price-item"><span class="price-sym">SOL</span><span class="price-val" id="tick-SOL">—</span><span class="price-chg flat" id="chg-SOL">—</span></div>
+    <div class="price-item"><span class="price-sym">BNB</span><span class="price-val" id="tick-BNB">—</span><span class="price-chg flat" id="chg-BNB">—</span></div>
+    <div class="price-item"><span class="price-sym">XRP</span><span class="price-val" id="tick-XRP">—</span><span class="price-chg flat" id="chg-XRP">—</span></div>
+    <div class="price-item"><span class="price-sym">ADA</span><span class="price-val" id="tick-ADA">—</span><span class="price-chg flat" id="chg-ADA">—</span></div>
+    <div class="price-item"><span class="price-sym">AVAX</span><span class="price-val" id="tick-AVAX">—</span><span class="price-chg flat" id="chg-AVAX">—</span></div>
+    <div class="price-item"><span class="price-sym">DOGE</span><span class="price-val" id="tick-DOGE">—</span><span class="price-chg flat" id="chg-DOGE">—</span></div>
+    <div class="price-item"><span class="price-sym">LINK</span><span class="price-val" id="tick-LINK">—</span><span class="price-chg flat" id="chg-LINK">—</span></div>
+    <div class="price-item"><span class="price-sym">DOT</span><span class="price-val" id="tick-DOT">—</span><span class="price-chg flat" id="chg-DOT">—</span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="price-item"><span class="price-sym">BTC</span><span class="price-val" id="tick-BTC2">—</span><span class="price-chg flat" id="chg-BTC2">—</span></div>
+    <div class="price-item"><span class="price-sym">ETH</span><span class="price-val" id="tick-ETH2">—</span><span class="price-chg flat" id="chg-ETH2">—</span></div>
+    <div class="price-item"><span class="price-sym">SOL</span><span class="price-val" id="tick-SOL2">—</span><span class="price-chg flat" id="chg-SOL2">—</span></div>
+    <div class="price-item"><span class="price-sym">BNB</span><span class="price-val" id="tick-BNB2">—</span><span class="price-chg flat" id="chg-BNB2">—</span></div>
+    <div class="price-item"><span class="price-sym">XRP</span><span class="price-val" id="tick-XRP2">—</span><span class="price-chg flat" id="chg-XRP2">—</span></div>
+    <div class="price-item"><span class="price-sym">ADA</span><span class="price-val" id="tick-ADA2">—</span><span class="price-chg flat" id="chg-ADA2">—</span></div>
+    <div class="price-item"><span class="price-sym">AVAX</span><span class="price-val" id="tick-AVAX2">—</span><span class="price-chg flat" id="chg-AVAX2">—</span></div>
+    <div class="price-item"><span class="price-sym">DOGE</span><span class="price-val" id="tick-DOGE2">—</span><span class="price-chg flat" id="chg-DOGE2">—</span></div>
+    <div class="price-item"><span class="price-sym">LINK</span><span class="price-val" id="tick-LINK2">—</span><span class="price-chg flat" id="chg-LINK2">—</span></div>
+    <div class="price-item"><span class="price-sym">DOT</span><span class="price-val" id="tick-DOT2">—</span><span class="price-chg flat" id="chg-DOT2">—</span></div>
+  </div>
+</div>
+
+<!-- LIVE ALERT FEED -->
+<section class="feed-section">
+  <div class="wrap">
+    <div class="rev">
+      <div class="sec-tag">Live intelligence</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:12px">
+        <h2 class="sec-h" style="margin-bottom:0">Real-time alert feed</h2>
+        <div class="feed-status">
+          <span class="feed-dot" id="feedDot"></span>
+          <span id="feedStatusText">Connecting...</span>
+        </div>
+      </div>
+      <p class="sec-sub">Every alert is generated from live market data — price breakouts, volume spikes, volatility events and trending assets as they happen.</p>
+    </div>
+
+    <div class="feed-filters rev">
+      <button class="feed-filter active" data-filter="all" onclick="setFilter('all',this)">All</button>
+      <button class="feed-filter" data-filter="price_breakout" onclick="setFilter('price_breakout',this)">Price</button>
+      <button class="feed-filter" data-filter="volume_spike" onclick="setFilter('volume_spike',this)">Volume</button>
+      <button class="feed-filter" data-filter="volatility_spike" onclick="setFilter('volatility_spike',this)">Volatility</button>
+      <button class="feed-filter" data-filter="trending" onclick="setFilter('trending',this)">Trending</button>
+    </div>
+
+    <div class="feed-list rev" id="alertFeed">
+      <div class="feed-connecting" id="feedPlaceholder">
+        <div class="live-dot" style="margin:0 auto 12px"></div>
+        Connecting to live feed...
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:24px">
+      <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="pdRequestPush()" style="animation:none;margin:0 auto;font-size:15px;padding:14px 36px">
+        <img class="ico btn-plane" src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
+        Get push notifications for every alert
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-tag rev">Assets tracked</div>
+    <h2 class="sec-h rev">Every major crypto.<br>Every key signal.</h2>
+    <p class="sec-sub rev">PushDirect monitors price action, volume anomalies, and breakout patterns across all major assets 24/7.</p>
+    <div class="coins-grid rev">
+      <div class="coin-card"><div class="coin-sym">BTC</div><div class="coin-name">Bitcoin</div><div class="coin-desc">Breakouts, key levels, volume spikes, halving windows, institutional moves.</div></div>
+      <div class="coin-card"><div class="coin-sym">ETH</div><div class="coin-name">Ethereum</div><div class="coin-desc">Network upgrades, gas anomalies, ETF flows, major protocol events.</div></div>
+      <div class="coin-card"><div class="coin-sym">SOL</div><div class="coin-name">Solana</div><div class="coin-desc">Ecosystem launches, DEX volume spikes, validator events, token drops.</div></div>
+      <div class="coin-card"><div class="coin-sym">ALT</div><div class="coin-name">Altcoins</div><div class="coin-desc">Unusual volume alerts across 200+ assets. Early signal before it trends.</div></div>
+      <div class="coin-card"><div class="coin-sym">DeFi</div><div class="coin-name">DeFi Signals</div><div class="coin-desc">TVL moves, protocol exploits, yield opportunities, governance votes.</div></div>
+      <div class="coin-card"><div class="coin-sym">NFT</div><div class="coin-name">NFT Drops</div><div class="coin-desc">Mint windows, floor collapses, notable sales. Timed for the action window.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-tag rev">Signal types</div>
+    <h2 class="sec-h rev">What triggers an alert</h2>
+    <div class="signal-list rev">
+      <div class="signal"><div class="signal-icon">📈</div><div><div class="signal-t">Price breakouts</div><div class="signal-d">Asset crosses a key resistance or support level with confirmed volume. Sent within 0.4s of verification.</div></div></div>
+      <div class="signal"><div class="signal-icon">⚡</div><div><div class="signal-t">Volume spikes</div><div class="signal-d">Trading volume exceeds 3× the 24h average — a reliable early signal before price moves.</div></div></div>
+      <div class="signal"><div class="signal-icon">🐋</div><div><div class="signal-t">Whale moves</div><div class="signal-d">Large wallet transfers, exchange inflows/outflows, and on-chain anomalies flagged in real time.</div></div></div>
+      <div class="signal"><div class="signal-icon">📰</div><div><div class="signal-t">Market-moving news</div><div class="signal-d">ETF approvals, regulatory decisions, exchange listings, protocol hacks — before it hits social media.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-tag rev">Why PushDirect</div>
+    <h2 class="sec-h rev">Intelligence alerts,<br>not just price alerts.</h2>
+    <p class="sec-sub rev">Most crypto apps make you guess price levels in advance. PushDirect watches for pattern-based signals — so you get alerted to moves you never would have predicted.</p>
+    <div class="guide-grid rev">
+      <div class="guide-card">
+        <div class="guide-icon">⚡</div>
+        <div class="guide-title">0.4s delivery</div>
+        <div class="guide-desc">From signal verification to your screen in under half a second — faster than any trading app or social feed.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🧠</div>
+        <div class="guide-title">Pattern-based triggers</div>
+        <div class="guide-desc">Volume anomalies, volatility spikes, breakout confirmations — not just simple price levels you set manually.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">📱</div>
+        <div class="guide-title">No app, no email</div>
+        <div class="guide-desc">Works in your existing browser. One tap to enable, one tap to stop. No account, no signup, free forever.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🔕</div>
+        <div class="guide-title">Zero noise policy</div>
+        <div class="guide-desc">Every signal passes a quality filter before it ships. Minor fluctuations and rumour-driven moves never reach you.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🌍</div>
+        <div class="guide-title">24/7 market coverage</div>
+        <div class="guide-desc">Crypto never sleeps. PushDirect monitors 200+ assets continuously — alerts fire whether you're awake or not.</div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-icon">🔗</div>
+        <div class="guide-title">Also need deal alerts?</div>
+        <div class="guide-desc">Same platform, same one-tap subscribe. <a href="/deal-alerts">Free deal alerts</a> for flash sales, gift cards and cashback.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap" style="max-width:700px">
+    <div class="sec-tag rev">Questions</div>
+    <h2 class="sec-h rev">Crypto alerts FAQ</h2>
+    <div class="faq-list rev">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How fast are the crypto alerts? <span class="faq-arr">▼</span></div><div class="faq-a">Average delivery is 0.4 seconds from signal verification to your screen. In practice, PushDirect subscribers receive BTC breakout alerts 4–8 minutes before the same event trends on Twitter or Reddit.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is this financial advice? <span class="faq-arr">▼</span></div><div class="faq-a">No. PushDirect delivers market intelligence signals — verified data points about price action, volume, and on-chain activity. We don't recommend trades. All investment decisions are yours alone.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How many crypto alerts per day? <span class="faq-arr">▼</span></div><div class="faq-a">On average 1–3 crypto alerts per day. Our quality engine is strict — we'd rather send one high-signal alert than five mediocre ones. If market activity is low, you might get zero. That's intentional.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I get alerts for specific coins only? <span class="faq-arr">▼</span></div><div class="faq-a">Currently PushDirect sends alerts across our monitored asset universe. Asset-specific filtering is on our roadmap. For now, all crypto subscribers receive signals across BTC, ETH, SOL, and major altcoins.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="cta-banner rev">
+    <h2>The next BTC move<br>is already forming.</h2>
+    <p>PushDirect subscribers will know first. Enable free crypto alerts — 15 seconds, free forever.</p>
+    <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="pdRequestPush()" style="margin:0 auto;animation:none">
+      <img class="ico btn-plane" src="/icons/logo.png" width="18" height="13" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
+      Enable Free Crypto Alerts
+    </button>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-links">
+    <a href="/">Home</a>
+    <a href="/deal-alerts">Deal Alerts</a>
+    <a href="/crypto-alerts">Crypto Alerts</a>
+    <a href="/subscription">Subscribe</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <p class="foot-copy">© 2026 PushDirect Promotion Network · pushdirect.network · Free crypto alerts, always.</p>
+</footer>
+
+<!-- PRE-PERMISSION MODAL -->
+<div class="preperm-bg" id="prepermBg" onclick="handlePrepermBg(event)">
+  <div class="preperm-card">
+    <span class="preperm-icon">📈</span>
+    <div class="preperm-title">Get crypto alerts before the move?</div>
+    <p class="preperm-sub">PushDirect fires the moment BTC, ETH or any tracked asset crosses a key level — before it trends.</p>
+    <div class="preperm-benefits">
+      <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>BTC & ETH breakouts in 0.4 seconds</div>
+      <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>Whale moves, volume spikes, market news</div>
+      <div class="preperm-benefit"><span class="preperm-benefit-dot"></span>8 min ahead of Twitter · Free forever</div>
+    </div>
+    <button class="preperm-yes" onclick="confirmPermission()">Yes — enable crypto alerts</button>
+    <button class="preperm-no" onclick="closePreperm()">No thanks, I'll watch manually</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="overlay-bg" role="dialog" aria-modal="true" id="successBg">
+  <div class="overlay-card success">
+    <div class="ring success">✓</div>
+    <h2 class="ov-title">Crypto alerts active. 📈</h2>
+    <p class="ov-sub">PushDirect is live on your device. You'll know about BTC moves before they trend.</p>
+    <div class="ov-preview">
+      <img src="/icons/logo.png" width="26" height="18" alt="PushDirect" style="display:block;object-fit:contain">
+      <div class="ov-preview-text"><strong>PUSHDIRECT is active</strong>Monitoring BTC, ETH, SOL and 200+ assets 24/7.</div>
+    </div>
+    <button class="btn-ov-primary" onclick="closeSuccess()">See today's offers →</button>
+  </div>
+</div>
+
+<!-- ALREADY SUBSCRIBED -->
+<div class="overlay-bg" role="dialog" aria-modal="true" id="alreadyBg">
+  <div class="overlay-card already">
+    <div class="ring already">⚡</div>
+    <h2 class="ov-title">You're already in.</h2>
+    <p class="ov-sub">This device is already receiving PushDirect alerts. You're ahead of the market every time.</p>
+    <div class="ov-preview" style="border:1px solid rgba(232,213,176,.2)">
+      <div class="live-dot" style="flex-shrink:0;margin-top:4px"></div>
+      <div class="ov-preview-text"><strong>PUSHDIRECT is active</strong>Crypto alerts are live on this device.</div>
+    </div>
+    <button class="btn-ov-primary" onclick="closeAlready()">Browse today's offers →</button>
+  </div>
+</div>
+
+<!-- DENIED -->
+<div class="overlay-bg" role="dialog" aria-modal="true" id="deniedBg">
+  <div class="overlay-card denied">
+    <div class="ring denied">🔔</div>
+    <h2 class="ov-title">Notifications blocked</h2>
+    <p class="ov-sub">Your browser is blocking notifications for this site. Re-enable in 3 steps:</p>
+    <div class="denied-steps">
+      <div class="d-step"><div class="d-num">1</div><span>Click the <strong>site settings icon</strong> on the left side of your address bar</span></div>
+      <div class="d-step"><div class="d-num">2</div><span>Find <strong>Notifications</strong> and change it to <strong>Allow</strong></span></div>
+      <div class="d-step"><div class="d-num">3</div><span><strong>Refresh the page</strong> and tap the button again</span></div>
+    </div>
+    
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+      <p style="font-size:13px;color:var(--text3);margin-bottom:8px;font-family:var(--fm)">Or get alerts by email:</p>
+      <form id="deniedEmailForm" onsubmit="submitDeniedEmail(event)" style="display:flex;gap:8px">
+        <input id="deniedEmailInput" type="email" placeholder="your@email.com" required style="flex:1;padding:10px 14px;border:1px solid var(--border-s);border-radius:50px;font-size:13px;font-family:var(--fb);background:var(--bg2);color:var(--text1);outline:none;min-width:0">
+        <button type="submit" style="padding:10px 16px;border-radius:50px;background:var(--brand);color:#fff;border:none;cursor:pointer;font-family:var(--fd);font-weight:700;font-size:13px;white-space:nowrap">Subscribe</button>
+      </form>
+      <div id="deniedEmailThanks" style="display:none;font-size:13px;color:var(--taupe);margin-top:8px;text-align:center">✓ Done — check your inbox.</div>
+    </div>
+    <button class="btn-ov-sec" onclick="closeDenied()">Got it</button>
+  </div>
+</div>
+
+<!-- EXIT INTENT -->
+<div class="exit-bg" id="exitBg" onclick="handleExitBg(event)">
+  <div class="exit-card">
+    <button class="exit-close" onclick="closeExit()">✕</button>
+    <span class="exit-em">₿</span>
+    <h2 class="exit-h">The next BTC move won't wait.</h2>
+    <p class="exit-sub">One tap. Alerts in 0.4 seconds. 8 minutes ahead of Twitter. Free forever.</p>
+    <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="pdRequestPush();closeExit()" style="width:100%;justify-content:center;font-size:16px;padding:16px;animation:none">
+      <img class="ico btn-plane" src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
+      Enable Free Crypto Alerts
+    </button>
+  </div>
+</div>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="pdRequestPush()">
+    <img class="ico btn-plane" src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
+    Enable Free Crypto Alerts
+  </button>
+  <div class="sticky-tag">Free alerts · Cancel anytime</div>
+</div>
+
+<script>
+const S={subscribed:false,exitShown:false,score:0,t0:Date.now()};
+
+function track(ev,p={}){
+  if(typeof gtag!=='undefined')gtag('event',ev,{event_category:'engagement',...p});
+}
+track('page_view_crypto_alerts');
+
+let raf=false;
+window.addEventListener('scroll',()=>{if(!raf){requestAnimationFrame(onScroll);raf=true}},{passive:true});
+function onScroll(){
+  const sy=window.scrollY;
+  const max=document.body.scrollHeight-window.innerHeight||1;
+  const p=Math.round((sy/max)*100);
+  document.getElementById('scrollBar').style.width=p+'%';
+  document.getElementById('mainNav').classList.toggle('scrolled',sy>50);
+  const sb=document.getElementById('stickyBar');
+  const granted='Notification' in window&&Notification.permission==='granted';
+  if(p>30&&!S.subscribed&&!granted)sb.classList.add('visible');
+  else if(p<=30)sb.classList.remove('visible');
+  if(p>=50&&!S._s50){S._s50=true;S.score+=20;track('scroll_50_crypto')}
+  if(p>=80&&!S._s80){S._s80=true;S.score+=20;track('scroll_80_crypto')}
+  document.querySelectorAll('.rev').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight*.9)el.classList.add('in');
+  });
+  raf=false;
+}
+/* ═══ SUBNAV HOVER REVEAL ═══ */
+let subnavHovered=false;
+const subnavEl=document.getElementById('subnav');
+const mainNavEl=document.getElementById('mainNav');
+const priceStripEl=document.getElementById('priceStrip');
+function showSubnav(){
+  subnavHovered=true;
+  subnavEl.classList.remove('subnav--hidden');
+  if(priceStripEl)priceStripEl.classList.remove('subnav-collapsed');
+}
+function hideSubnav(){
+  subnavHovered=false;
+  if(window.scrollY>10){
+    subnavEl.classList.add('subnav--hidden');
+    if(priceStripEl)priceStripEl.classList.add('subnav-collapsed');
+  }
+}
+mainNavEl.addEventListener('mouseenter',showSubnav);
+mainNavEl.addEventListener('mouseleave',hideSubnav);
+subnavEl.addEventListener('mouseenter',showSubnav);
+subnavEl.addEventListener('mouseleave',hideSubnav);
+window.addEventListener('scroll',()=>{
+  if(!subnavHovered){
+    const hide=window.scrollY>10;
+    subnavEl.classList.toggle('subnav--hidden',hide);
+    if(priceStripEl)priceStripEl.classList.toggle('subnav-collapsed',hide);
+  }
+},{passive:true});
+setTimeout(()=>document.querySelectorAll('.rev').forEach(el=>{
+  if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add('in');
+}),100);
+
+document.addEventListener('mouseleave',e=>{
+  const granted='Notification' in window&&Notification.permission==='granted';
+  if(e.clientY<=0&&!S.exitShown&&!S.subscribed&&!granted&&S.score>6){
+    S.exitShown=true;
+    document.getElementById('exitBg').classList.add('open');
+    track('exit_intent_crypto');
+  }
+});
+function closeExit(){document.getElementById('exitBg').classList.remove('open')}
+function handleExitBg(e){if(e.target===document.getElementById('exitBg'))closeExit()}
+
+let _raLoaded=false;
+function loadRollerAds(){
+  if(_raLoaded)return;_raLoaded=true;
+  (function(){
+    const url=new URL(window.location.href);
+    const s=document.createElement('script');
+    s.dataset.cfasync='false';
+    window.raOptions={
+      zoneID:2822452,
+      extClickID:url.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'',
+      subID1:url.searchParams.get('source_id')||'',
+      actions:{
+        onPermissionGranted:function(){track('subscribed_crypto');fireBeMob();showSuccess()},
+        onPermissionDenied:function(){track('denied_crypto');showDeniedHelp()},
+        onAlreadySubscribed:function(){track('already_crypto');showAlready()},
+        onError:function(){
+          if('Notification' in window&&Notification.permission==='granted')showAlready();
+          else if('Notification' in window&&Notification.permission!=='denied')
+            Notification.requestPermission().then(p=>{if(p==='granted'){fireBeMob();showSuccess();}else showDeniedHelp();});
+          else showDeniedHelp();
+        }
+      }
+    };
+    s.src='https://push-sdk.com/f/sdk.js?z=2822452';
+    document.head.appendChild(s);
+  })();
+}
+
+function showPreperm(){document.getElementById('prepermBg').classList.add('open');track('preperm_shown_crypto')}
+function closePreperm(){document.getElementById('prepermBg').classList.remove('open');track('preperm_declined_crypto')}
+function handlePrepermBg(e){if(e.target===document.getElementById('prepermBg'))closePreperm()}
+function confirmPermission(){document.getElementById('prepermBg').classList.remove('open');track('preperm_confirmed_crypto');loadRollerAds()}
+
+function requestPushDirect(){
+  closeExit();
+  const ua=navigator.userAgent;
+  const isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  const isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome/.test(ua)&&!/Firefox/.test(ua)&&!/Edg/.test(ua);
+  if(isIOS){
+    const isPWA=!!navigator.standalone;
+    const iosVer=(function(){const m=ua.match(/OS (\d+)_(\d+)/);return m?parseFloat(m[1]+'.'+m[2]):0;})();
+    if(isPWA&&iosVer>=16.4){
+      // fall through to normal Web Push flow
+    } else if(isPWA&&iosVer>0&&iosVer<16.4){
+      track('ios_pwa_old_ver',{ver:iosVer});showIOSOld();return;
+    } else {
+      track('ios_browser_ipp');activateMonetag();showIOSBrowser();return;
+    }
+  }
+  if(isMacSafari){track('mac_safari_ipp');activateMonetag();showIOS();return;}
+  if(!('Notification' in window)){showNoAPI();return}
+  if(Notification.permission==='denied'){showDeniedHelp();return}
+  if(Notification.permission==='granted'){showAlready();loadRollerAds();return}
+  track('allow_click_crypto');
+  showPreperm();
+}
+
+function showSuccess(){S.subscribed=true;document.getElementById('successBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible');setTimeout(redirectToOffers,4000);}
+function closeSuccess(){document.getElementById('successBg').classList.remove('open');redirectToOffers();}
+function showAlready(){document.getElementById('alreadyBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible');setTimeout(redirectToOffers,3000);}
+function closeAlready(){document.getElementById('alreadyBg').classList.remove('open');redirectToOffers();}
+function redirectToOffers(){window.location.href='/offers';}
+function showDeniedHelp(){document.getElementById('deniedBg').classList.add('open')}
+function closeDenied(){document.getElementById('deniedBg').classList.remove('open')}
+
+function activateMonetag(){
+  if(window._monetagLoaded)return;window._monetagLoaded=true;
+  var s=document.createElement('script');s.src='https://nap5k.com/tag.min.js';s.dataset.zone='11024677';s.dataset.cfasync='false';s.async=true;document.body.appendChild(s);
+}
+function fireBeMob(){try{const c=sessionStorage.getItem('pd_click_id')||new URL(window.location.href).searchParams.get('click_id')||'';if(!c)return;const px=new Image();px.src='https://udlch.bemobtrcks.com/postback?cid='+encodeURIComponent(c);}catch(e){}}
+function showIOS(){S.subscribed=true;document.getElementById('iosBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible')}
+function showIOSBrowser(){
+  S.subscribed=true;
+  document.getElementById('iosBrowserBg').classList.add('open');
+  document.getElementById('stickyBar')&&document.getElementById('stickyBar').classList.remove('visible');
+}
+function closeIOSBrowser(){document.getElementById('iosBrowserBg').classList.remove('open');}
+function showIOSOld(){
+  document.getElementById('iosOldBg').classList.add('open');
+}
+function closeIOSOld(){document.getElementById('iosOldBg').classList.remove('open');}
+function closeIOS(){document.getElementById('iosBg').classList.remove('open')}
+function showNoAPI(){document.getElementById('noApiBg').classList.add('open')}
+function closeNoAPI(){document.getElementById('noApiBg').classList.remove('open')}
+
+let _proactiveFired=false,_timeOnPage=0;
+const _ti=setInterval(()=>{
+  _timeOnPage+=5;
+  if(_timeOnPage>=60&&S._s80&&!_proactiveFired&&!S.subscribed
+    &&'Notification' in window&&Notification.permission==='default'){
+    _proactiveFired=true;clearInterval(_ti);
+    track('proactive_trigger_crypto',{seconds:_timeOnPage});
+    showPreperm();
+  }
+},5000);
+
+function toggleFaq(el){const item=el.closest('.faq-item');const open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open')}
+
+window.addEventListener('scroll',()=>{S.score=Math.max(S.score,8)},{once:true,passive:true});
+(function(){const u=new URL(window.location.href);const c=u.searchParams.get('click_id');if(c)sessionStorage.setItem('pd_click_id',c);})();
+document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:true});
+
+/* ═══ LIVE ALERT FEED ═══ */
+const ALERT_API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:3001'
+  : 'https://insightful-enthusiasm-production-ecd5.up.railway.app';
+
+/* ═══ ASSET ICONS ═══ */
+const ASSET_ICONS = {
+  BTC:'₿', ETH:'Ξ', SOL:'◎', BNB:'⬡', XRP:'✕', ADA:'₳',
+  AVAX:'▲', DOGE:'Ð', LINK:'⬡', DOT:'●', MATIC:'⬟', LTC:'Ł',
+  UNI:'🦄', ATOM:'⚛', NEAR:'Ν', default:'◈'
+};
+
+/* ═══ SEVERITY CONFIG ═══ */
+const SEVERITY_CONFIG = {
+  low:      { color:'#9a8f7e', bg:'rgba(154,143,126,.1)',  border:'rgba(154,143,126,.2)',  label:'Signal'   },
+  medium:   { color:'#c9aa82', bg:'rgba(201,170,130,.1)',  border:'rgba(201,170,130,.2)',  label:'Alert'    },
+  high:     { color:'#f97316', bg:'rgba(249,115,22,.1)',   border:'rgba(249,115,22,.22)',  label:'Strong'   },
+  critical: { color:'#e07b6a', bg:'rgba(224,123,106,.12)', border:'rgba(224,123,106,.3)',  label:'Critical' },
+};
+
+/* ═══ TYPE CONFIG — icon + accent per signal type ═══ */
+const TYPE_CONFIG = {
+  price_breakout:   { icon:'📈', label:'Price Move',  accent:'#c9aa82' },
+  volume_spike:     { icon:'📊', label:'Vol Spike',   accent:'#9a8f7e' },
+  volatility_spike: { icon:'⚡', label:'Volatility',  accent:'#c9aa82' },
+  trending:         { icon:'🔥', label:'Trending',    accent:'#f97316' },
+};
+
+let currentFilter = 'all';
+let allAlerts = [];
+let feedConnected = false;
+let esObj = null;
+let reconnectDelay = 2000;
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.feed-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFeed();
+}
+
+function timeAgo(ts) {
+  const diff = Date.now() - new Date(ts).getTime();
+  if (diff < 60000) return Math.floor(diff/1000)+'s ago';
+  if (diff < 3600000) return Math.floor(diff/60000)+'m ago';
+  if (diff < 86400000) return Math.floor(diff/3600000)+'h ago';
+  return Math.floor(diff/86400000)+'d ago';
+}
+
+function formatPrice(p) {
+  if (!p) return '—';
+  if (p >= 1000) return '$'+p.toLocaleString('en-US',{maximumFractionDigits:0});
+  if (p >= 1)    return '$'+p.toLocaleString('en-US',{maximumFractionDigits:2});
+  return '$'+p.toLocaleString('en-US',{maximumFractionDigits:6});
+}
+
+function formatPct(n) {
+  if (n === undefined || n === null) return null;
+  const sign = n >= 0 ? '+' : '';
+  return sign + n.toFixed(2) + '%';
+}
+
+function renderAlert(alert) {
+  const sev  = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.medium;
+  const type = TYPE_CONFIG[alert.type] || { icon:'◈', label: alert.type, accent:'#9a8f7e' };
+  const d    = alert.data || {};
+
+  /* ── For trending: asset is a comma-joined string of coin names, not a single asset ── */
+  const isTrending = alert.type === 'trending';
+  const trendCoins = isTrending
+    ? (d.coins || alert.asset.split(',').map(s => s.trim()))
+    : null;
+
+  /* ── Asset display: single coin icon or trending fire ── */
+  const primaryAsset = isTrending ? (trendCoins[0] || 'TREND') : alert.asset;
+  const assetIcon    = isTrending ? '🔥' : (ASSET_ICONS[alert.asset] || ASSET_ICONS.default);
+  const assetLabel   = isTrending ? 'Trending Now' : alert.asset;
+
+  /* ── Direction badge for price breakouts ── */
+  let dirBadge = '';
+  if (alert.type === 'price_breakout' && d.pctChange !== undefined) {
+    const up = d.pctChange >= 0;
+    const window = d.window ? ` ${d.window}` : '';
+    dirBadge = `<span class="alert-dir ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(d.pctChange).toFixed(2)}%${window}</span>`;
+  }
+
+  /* ── Price chip ── */
+  const priceChip = d.price
+    ? `<span class="alert-price">${formatPrice(d.price)}</span>`
+    : '';
+
+  /* ── Volume chip ── */
+  const volChip = (alert.type === 'volume_spike' && d.multiplier)
+    ? `<span class="alert-vol">${d.multiplier.toFixed(1)}× avg vol</span>`
+    : '';
+
+  /* ── Volatility chip ── */
+  const rangeChip = (alert.type === 'volatility_spike' && d.rangePct)
+    ? `<span class="alert-vol">${d.rangePct.toFixed(1)}% candle range</span>`
+    : '';
+
+  /* ── Source chip ── */
+  const srcChip = alert.source
+    ? `<span class="alert-src">${alert.source}</span>`
+    : '';
+
+  /* ── Trending: show each coin as its own pill ── */
+  const trendChips = isTrending && trendCoins
+    ? trendCoins.slice(0,6).map(coin => {
+        const icon = ASSET_ICONS[coin] || '';
+        return `<span class="alert-coin">${icon ? icon+' ' : ''}${coin}</span>`;
+      }).join('')
+    : '';
+
+  /* ── Trending subtitle: explain what it means ── */
+  const trendSubtitle = isTrending
+    ? `<div class="alert-subtitle">CoinGecko trending — social volume spiking on these assets</div>`
+    : '';
+
+  return `<div class="alert-row" data-type="${alert.type}" style="border-color:${sev.border};background:${sev.bg}">
+    <div class="alert-sev" style="background:${sev.color}"></div>
+    <div class="alert-asset-icon" style="color:${sev.color};font-size:${isTrending?'18px':'16px'}">${assetIcon}</div>
+    <div class="alert-content">
+      <div class="alert-header">
+        <span class="alert-asset-name">${assetLabel}</span>
+        <span class="alert-type-badge" style="background:${type.accent}22;color:${type.accent};border-color:${type.accent}44">${type.icon} ${type.label}</span>
+        <span class="alert-time">${timeAgo(alert.ts)}</span>
+      </div>
+      <div class="alert-title">${alert.title}</div>
+      ${trendSubtitle}
+      <div class="alert-chips">
+        ${dirBadge}${priceChip}${volChip}${rangeChip}${trendChips}${srcChip}
+        <span class="alert-sev-badge" style="background:${sev.bg};color:${sev.color};border-color:${sev.border}">${sev.label}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderFeed() {
+  const feed = document.getElementById('alertFeed');
+  const filtered = currentFilter === 'all' ? allAlerts : allAlerts.filter(a => a.type === currentFilter);
+  if (filtered.length === 0) {
+    feed.innerHTML = `<div class="feed-empty">${feedConnected ? 'No alerts yet — watching markets...' : '<div class="live-dot" style="margin:0 auto 12px"></div>Connecting to live feed...'}</div>`;
+    return;
+  }
+  feed.innerHTML = filtered.slice(0,30).map(renderAlert).join('');
+}
+
+function updateTicker(state) {
+  for (const [asset, data] of Object.entries(state)) {
+    const price = formatPrice(data.price);
+    ['','2'].forEach(s => {
+      const p = document.getElementById(`tick-${asset}${s}`);
+      if (p) p.textContent = price;
+    });
+  }
+}
+
+function updateTickerFromAlert(alert) {
+  if (!alert.data?.price) return;
+  const price = formatPrice(alert.data.price);
+  ['','2'].forEach(s => {
+    const p = document.getElementById(`tick-${alert.asset}${s}`);
+    if (p) p.textContent = price;
+    const c = document.getElementById(`chg-${alert.asset}${s}`);
+    if (c && alert.data.pctChange !== undefined) {
+      const pct = alert.data.pctChange;
+      c.textContent = (pct > 0 ? '+' : '') + pct.toFixed(2) + '%';
+      c.className = `price-chg ${pct > 0.1 ? 'up' : pct < -0.1 ? 'down' : 'flat'}`;
+    }
+  });
+}
+
+function setFeedStatus(connected, text) {
+  feedConnected = connected;
+  const dot = document.getElementById('feedDot');
+  const st = document.getElementById('feedStatusText');
+  dot.className = 'feed-dot' + (connected ? ' live' : '');
+  st.textContent = text;
+}
+
+function connectFeed() {
+  if (esObj) { esObj.close(); esObj = null; }
+  if (ALERT_API.includes('YOUR-RAILWAY-URL')) {
+    setFeedStatus(false, 'Backend not yet deployed');
+    document.getElementById('alertFeed').innerHTML = '<div class="feed-empty">Live feed coming soon.</div>';
+    return;
+  }
+  esObj = new EventSource(`${ALERT_API}/stream`);
+  esObj.addEventListener('history', e => {
+    let data; try { data = JSON.parse(e.data); } catch (err) { return; }
+    allAlerts = Array.isArray(data) ? data : [];
+    setFeedStatus(true, `Live · ${allAlerts.length} alerts loaded`);
+    renderFeed();
+  });
+  esObj.addEventListener('state', e => { let d; try { d = JSON.parse(e.data); } catch (err) { return; } updateTicker(d); });
+  esObj.addEventListener('alert', e => {
+    let alert; try { alert = JSON.parse(e.data); } catch (err) { return; }
+    if (!alert) return;
+    allAlerts.unshift(alert);
+    if (allAlerts.length > 100) allAlerts.pop();
+    setFeedStatus(true, `Live · last alert ${timeAgo(alert.ts)}`);
+    updateTickerFromAlert(alert);
+    renderFeed();
+    if (['high','critical'].includes(alert.severity)
+      && 'Notification' in window && Notification.permission === 'default'
+      && !document.getElementById('prepermBg').classList.contains('open')) {
+      setTimeout(() => showPreperm(), 1500);
+    }
+  });
+  esObj.onopen = () => { reconnectDelay = 2000; setFeedStatus(true, 'Connected — watching markets'); };
+  esObj.onerror = () => {
+    setFeedStatus(false, 'Reconnecting...');
+    esObj.close();
+    setTimeout(() => connectFeed(), reconnectDelay);
+    reconnectDelay = Math.min(reconnectDelay * 2, 30000);
+  };
+}
+
+connectFeed();
+setInterval(() => { if (allAlerts.length > 0) renderFeed(); }, 30000);
+
 /* THEME TOGGLE */
 (function(){
   const saved = localStorage.getItem('pd_theme');
@@ -538,11 +1296,12 @@ if('serviceWorker' in navigator){
   }
   const mo=new MutationObserver(muts=>{
     muts.forEach(m=>{
-      m.target.querySelectorAll('.overlay-bg.open,.preperm-bg.open').forEach(modal=>{
+      m.target.querySelectorAll('.overlay-bg.open,.preperm-bg.open,.exit-bg.open').forEach(modal=>{
         if(!modal.dataset.a11yInit){
           modal.dataset.a11yInit='1';
           modal.setAttribute('role','dialog');
           modal.setAttribute('aria-modal','true');
+          const h=modal.querySelector('.ov-title,.preperm-title,.exit-h');
           if(h){if(!h.id)h.id='modal-title-'+Math.random().toString(36).slice(2,7);modal.setAttribute('aria-labelledby',h.id);}
           trapFocus(modal);
         }
@@ -708,5 +1467,54 @@ function pdSubmitEmail(e){
 <script defer src="/pushdirect-core.js"></script>
 
 
-
+<!-- ═══ YEXITINTENT — fires for already-subscribed users ═══ -->
+<script src="https://edgecdn.me/yei/script.js"></script>
 <script>
+(function(){
+  // Only init YExitIntent for users who already granted push permission
+  // Un-subscribed users get the standard push exit popup instead
+  var alreadyGranted='Notification' in window && Notification.permission==='granted';
+  if(alreadyGranted){
+    YExitIntent.init({url:'https://rxt3c.ytrack10.com?kw={trafficSourceId}&s1={clickId}'});
+  }
+})();
+</script>
+
+<!-- ═══ EXIT INTENT ═══ -->
+<div class="exit-bg" id="exitBg" onclick="handleExitBg(event)">
+  <div class="exit-card">
+    <span class="exit-icon">🎁</span>
+    <div class="exit-h">Wait — grab a deal before you go</div>
+    <p class="exit-sub">Top offers live right now. No sign-up required.</p>
+    <div class="exit-btns">
+      <a href="https://tefzk.ytrack10.com?kw=exit&s1={clickId}" class="exit-btn exit-btn-casino" target="_blank" rel="noopener" onclick="if(typeof pdTrack==='function')pdTrack('exit_click',{cta:'casino'});closeExit(false)">🎰 Casino Bonuses</a>
+      <a href="https://apr.ytrack10.com?kw=exit&s1={clickId}" class="exit-btn exit-btn-sweeps" target="_blank" rel="noopener" onclick="if(typeof pdTrack==='function')pdTrack('exit_click',{cta:'sweeps'});closeExit(false)">🎁 Win Gift Cards</a>
+    </div>
+    <button class="exit-no" onclick="if(typeof pdTrack==='function')pdTrack('exit_dismissed',{});closeExit(true)">No thanks</button>
+  </div>
+</div>
+<script>
+(function(){
+  var shown=false;
+  function openExit(){
+    if(shown)return;
+    shown=true;
+    document.getElementById('exitBg').classList.add('open');
+    if(typeof pdTrack==='function')pdTrack('exit_view',{});
+  }
+  document.addEventListener('mouseleave',function(e){if(e.clientY<=0)openExit();});
+  var lastY=window.scrollY,delta=0;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY,diff=lastY-y;
+    if(diff>0){delta+=diff;if(delta>80)openExit();}else{delta=0;}
+    lastY=y;
+  },{passive:true});
+  window.closeExit=function(redirect){
+    document.getElementById('exitBg').classList.remove('open');
+    if(redirect)window.location.href='/offers';
+  };
+  window.handleExitBg=function(e){if(e.target===document.getElementById('exitBg'))closeExit(true);};
+})();
+</script>
+</body>
+</html>
