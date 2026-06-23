@@ -452,7 +452,7 @@ if('serviceWorker' in navigator){
   }
   const mo=new MutationObserver(muts=>{
     muts.forEach(m=>{
-      m.target.querySelectorAll('.overlay-bg.open,.preperm-bg.open,.exit-bg.open').forEach(modal=>{
+      m.target.querySelectorAll('.overlay-bg.open,.preperm-bg.open').forEach(modal=>{
         if(!modal.dataset.a11yInit){
           modal.dataset.a11yInit='1';
           modal.setAttribute('role','dialog');
@@ -567,18 +567,6 @@ function pdSubmitEmail(e){
 </script>
 <script defer src="/pushdirect-core.js"></script>
 
-<!-- ═══ YEXITINTENT — fires for already-subscribed users ═══ -->
-<script src="https://edgecdn.me/yei/script.js"></script>
-<script>
-(function(){
-  // Only init YExitIntent for users who already granted push permission
-  // Un-subscribed users get the standard push exit popup instead
-  var alreadyGranted='Notification' in window && Notification.permission==='granted';
-  if(alreadyGranted){
-    YExitIntent.init({url:'https://rxt3c.ytrack10.com?kw={trafficSourceId}&s1={clickId}'});
-  }
-})();
-</script>
 </body>
 </html>
 
