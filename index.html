@@ -1389,20 +1389,25 @@ function pdSubmitEmail(e){
     <div class="exit-h">Wait — grab a deal before you go</div>
     <p class="exit-sub">Top offers live right now. No sign-up required.</p>
     <div class="exit-btns">
-      <a href="https://tefzk.ytrack10.com?kw=exit&s1={clickId}" class="exit-btn exit-btn-casino" target="_blank" rel="noopener" onclick="if(typeof pdTrack==='function')pdTrack('exit_click',{cta:'casino'});closeExit(false)">🎰 Casino Bonuses</a>
-      <a href="https://apr.ytrack10.com?kw=exit&s1={clickId}" class="exit-btn exit-btn-sweeps" target="_blank" rel="noopener" onclick="if(typeof pdTrack==='function')pdTrack('exit_click',{cta:'sweeps'});closeExit(false)">🎁 Win Gift Cards</a>
+      <a href="https://tefzk.ytrack10.com?kw=exit&s1={clickId}" class="exit-btn exit-btn-casino" id="exitBtnCasino" target="_blank" rel="noopener" onclick="exitClicked('casino')">🎰 Casino Bonuses</a>
+      <a href="https://apr.ytrack10.com?kw=exit&s1={clickId}" class="exit-btn exit-btn-sweeps" id="exitBtnSweeps" target="_blank" rel="noopener" onclick="exitClicked('sweeps')">🎁 Win Gift Cards</a>
     </div>
     <button class="exit-no" onclick="if(typeof pdTrack==='function')pdTrack('exit_dismissed',{});closeExit(true)">No thanks</button>
   </div>
 </div>
 <script>
 (function(){
-  var shown=false;
+  var shown=false,clicked=null;
   function openExit(){
     if(shown)return;
     shown=true;
+    // Show only the button the user hasn't clicked yet; both if first time
+    var c=document.getElementById('exitBtnCasino');
+    var s=document.getElementById('exitBtnSweeps');
+    c.style.display=clicked==='casino'?'none':'block';
+    s.style.display=clicked==='sweeps'?'none':'block';
     document.getElementById('exitBg').classList.add('open');
-    if(typeof pdTrack==='function')pdTrack('exit_view',{});
+    if(typeof pdTrack==='function')pdTrack('exit_view',{shown:clicked?2:1});
   }
   document.addEventListener('mouseleave',function(e){if(e.clientY<=0)openExit();});
   var lastY=window.scrollY,delta=0;
@@ -1411,6 +1416,12 @@ function pdSubmitEmail(e){
     if(diff>0){delta+=diff;if(delta>80)openExit();}else{delta=0;}
     lastY=y;
   },{passive:true});
+  window.exitClicked=function(cta){
+    clicked=cta;
+    shown=false; // allow re-trigger after they return
+    if(typeof pdTrack==='function')pdTrack('exit_click',{cta:cta});
+    document.getElementById('exitBg').classList.remove('open');
+  };
   window.closeExit=function(redirect){
     document.getElementById('exitBg').classList.remove('open');
     if(redirect)window.location.href='/offers';
