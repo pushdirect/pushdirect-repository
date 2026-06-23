@@ -1079,19 +1079,6 @@ function pdSubmitEmail(e){
 </script>
 
 
-<!-- ═══ YEXITINTENT — fires for already-subscribed users ═══ -->
-<script src="https://edgecdn.me/yei/script.js"></script>
-<script>
-(function(){
-  // Only init YExitIntent for users who already granted push permission
-  // Un-subscribed users get the standard push exit popup instead
-  var alreadyGranted='Notification' in window && Notification.permission==='granted';
-  if(alreadyGranted){
-    YExitIntent.init({url:'https://rxt3c.ytrack10.com?kw={trafficSourceId}&s1={clickId}'});
-  }
-})();
-</script>
-
 <!-- ═══ EXIT INTENT ═══ -->
 <div class="exit-bg" id="exitBg" onclick="handleExitBg(event)">
   <div class="exit-card">
