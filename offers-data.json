@@ -222,9 +222,9 @@
   "featuredBanners": [
     {
       "id": "fb1",
-      "label": "Featured Banner 1",
-      "url": "#",
-      "image": ""
+      "label": "MGM sportsbook",
+      "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming1",
+      "image": "/images/offers/mgm featured.png"
     },
     {
       "id": "fb2",
