@@ -3,7 +3,7 @@
     {
       "id": "sweepstakes",
       "label": "Sweepstakes",
-      "icon": "\ud83c\udf81",
+      "icon": "🎁",
       "offers": [
         {
           "id": "sw1",
@@ -34,7 +34,7 @@
     {
       "id": "gaming",
       "label": "Gaming",
-      "icon": "\ud83c\udfae",
+      "icon": "🎮",
       "offers": [
         {
           "id": "gaming1",
@@ -65,7 +65,7 @@
     {
       "id": "nutra",
       "label": "Nutra",
-      "icon": "\ud83d\udc8a",
+      "icon": "💊",
       "offers": [
         {
           "id": "nutra1",
@@ -96,7 +96,7 @@
     {
       "id": "utilities",
       "label": "Utilities",
-      "icon": "\ud83d\udd27",
+      "icon": "🔧",
       "offers": [
         {
           "id": "utilities1",
@@ -127,7 +127,7 @@
     {
       "id": "finance",
       "label": "Finance",
-      "icon": "\ud83d\udcb0",
+      "icon": "💰",
       "offers": [
         {
           "id": "finance1",
@@ -158,7 +158,7 @@
     {
       "id": "travel",
       "label": "Travel",
-      "icon": "\u2708\ufe0f",
+      "icon": "✈️",
       "offers": [
         {
           "id": "travel1",
@@ -189,7 +189,7 @@
     {
       "id": "adult",
       "label": "Adult",
-      "icon": "\ud83d\udd1e",
+      "icon": "🔞",
       "adult": true,
       "offers": [
         {
@@ -217,6 +217,44 @@
           "image": ""
         }
       ]
+    }
+  ],
+  "featuredBanners": [
+    {
+      "id": "fb1",
+      "label": "Featured Banner 1",
+      "url": "#",
+      "image": ""
+    },
+    {
+      "id": "fb2",
+      "label": "Featured Banner 2",
+      "url": "#",
+      "image": ""
+    },
+    {
+      "id": "fb3",
+      "label": "Featured Banner 3",
+      "url": "#",
+      "image": ""
+    },
+    {
+      "id": "fb4",
+      "label": "Featured Banner 4",
+      "url": "#",
+      "image": ""
+    },
+    {
+      "id": "fb5",
+      "label": "Featured Banner 5",
+      "url": "#",
+      "image": ""
+    },
+    {
+      "id": "fb6",
+      "label": "Featured Banner 6",
+      "url": "#",
+      "image": ""
     }
   ]
 }
