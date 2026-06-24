@@ -245,7 +245,22 @@ const SESSION_KEY = 'pd_admin_auth';
 
 let GH_TOKEN = sessionStorage.getItem('pd_admin_token') || '';
 let authed = sessionStorage.getItem(SESSION_KEY) === '1';
-let data = null, currentVertical = null, dirty = false, editingOffer = null, fileSha = null, dragIdx = null;
+let data = null, currentVertical = null, currentSection = 'verticals', dirty = false, editingOffer = null, fileSha = null, dragIdx = null;
+
+function showFeaturedSection() {
+  currentSection = 'featured';
+  renderSidebar();
+  renderFeaturedAdmin();
+  // Render featured panel into main
+  document.getElementById('main').innerHTML =
+    '<div class="sec-hdr">' +
+    '<div><div class="sec-title">\u2B50 Featured Banners</div>' +
+    '<div class="sec-sub">Up to 6 banner slots in the Featured section on the Offers page. Set image + link per slot.</div></div>' +
+    '<button class="btn-add" onclick="openFeaturedModal()">+ Add Banner</button>' +
+    '</div>' +
+    '<div class="offers-grid" id="featuredGrid"></div>';
+  renderFeaturedAdmin();
+}
 
 // Auth
 document.getElementById('loginBtn').addEventListener('click', tryLogin);
@@ -324,10 +339,15 @@ function renderSidebar() {
       return '<button class="sidebar-link'+(v.id===currentVertical?' active':'')+'" onclick="switchVertical(\''+v.id+'\')">' +
         '<span class="icon">'+v.icon+'</span>'+v.label+
         '<span class="sidebar-count">'+v.offers.length+'</span></button>';
-    }).join('') + '</div>';
+    }).join('') + '</div>' +
+    '<div class="sidebar-section"><span class="sidebar-label">Featured</span>' +
+    '<button class="sidebar-link'+(currentSection==='featured'?' active':'')+'" onclick="showFeaturedSection()">' +
+    '<span class="icon">\u2B50</span>Featured Banners' +
+    '<span class="sidebar-count" id="cnt-featured">'+(data.featuredBanners||[]).filter(function(b){return b.url&&b.url!=='#';}).length+'</span>' +
+    '</button></div>';
 }
 
-function switchVertical(id) { currentVertical=id; renderSidebar(); renderMain(); }
+function switchVertical(id) { currentSection='verticals'; currentVertical=id; renderSidebar(); renderMain(); }
 
 function renderMain() {
   var v = data.verticals.find(function(x){return x.id===currentVertical;});
@@ -464,7 +484,8 @@ function renderFeaturedAdmin(){
   var grid = document.getElementById('featuredGrid');
   if(!grid) return;
   var banners = (data.featuredBanners || []);
-  document.getElementById('cnt-featured').textContent = banners.filter(function(b){return b.url && b.url !== '#';}).length;
+  var cntEl = document.getElementById('cnt-featured');
+  if(cntEl) cntEl.textContent = banners.filter(function(b){return b.url && b.url !== '#';}).length;
   if(!banners.length){
     grid.innerHTML = '<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-h">No banners configured</div><div class="empty-sub">Click "Add / Edit Banner" to set up featured slots.</div></div>';
     return;
