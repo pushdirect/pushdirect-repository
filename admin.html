@@ -192,21 +192,22 @@ body{background:var(--bg2);color:var(--text1);font-family:var(--fb);font-size:15
 <!-- ═══ FEATURED BANNER MODAL ═══ -->
 <div class="modal-bg" id="featuredModalBg">
   <div class="modal">
-    <div class="modal-h">Edit Featured Banner</div>
-    <p class="modal-sub">Update the link and image for this banner slot.</p>
+    <h2 class="modal-h" id="featuredModalTitle">Add banner</h2>
+    <p class="modal-sub" id="featuredModalSub">Fill in the banner details below.</p>
     <input type="hidden" id="fBannerId">
     <div class="form-row">
-      <label class="form-label" for="fBannerLabel">Label (internal reference)</label>
+      <label class="form-label" for="fBannerLabel">Label</label>
       <input class="form-input" type="text" id="fBannerLabel" placeholder="e.g. Slot 1 — Walmart">
     </div>
     <div class="form-row">
       <label class="form-label" for="fBannerUrl">Destination URL</label>
       <input class="form-input" type="url" id="fBannerUrl" placeholder="https://neoinweb.com/or/…">
+      <div class="form-hint">Full tracking URL including any ?source_id= params.</div>
     </div>
     <div class="form-row">
       <label class="form-label" for="fBannerImage">Banner image path</label>
       <input class="form-input" type="text" id="fBannerImage" placeholder="/images/offers/banner.png">
-      <div class="form-hint">Upload image to /images/offers/ in the repo, then paste path here.</div>
+      <div class="form-hint">300×250px recommended. Upload the image to GitHub first.</div>
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" id="featuredCancel">Cancel</button>
@@ -524,6 +525,8 @@ function openFeaturedModal(bannerId){
     document.getElementById('fBannerUrl').value = '';
     document.getElementById('fBannerImage').value = '';
   }
+  document.getElementById('featuredModalTitle').textContent = bannerId ? 'Edit banner' : 'Add banner';
+  document.getElementById('featuredModalSub').textContent = bannerId ? 'Update the banner details below.' : 'Fill in the banner details below.';
   document.getElementById('featuredModalBg').classList.add('open');
   setTimeout(function(){document.getElementById('fBannerLabel').focus();}, 100);
 }
