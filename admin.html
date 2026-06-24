@@ -553,11 +553,15 @@ document.getElementById('featuredSave').addEventListener('click', async function
   }
   btn.disabled = true; btn.textContent = 'Saving…';
   try {
-    await save('feat: update featured banners');
+    var latest = await ghGet(DATA_FILE);
+    fileSha = latest.sha;
+    var result = await ghPut(DATA_FILE, JSON.stringify(data,null,2), fileSha, 'feat(offers): update featured banners via admin panel');
+    fileSha = result.content.sha;
+    showToast('Published! Live in ~30 seconds.', 'success');
     renderFeaturedAdmin();
     document.getElementById('featuredModalBg').classList.remove('open');
-  } catch(e){ alert('Save failed: '+e.message); }
-  btn.disabled = false; btn.textContent = 'Save banner';
+  } catch(e){ showToast('Save failed: '+e.message, 'error'); }
+  finally { btn.disabled = false; btn.textContent = 'Save banner'; }
 });
 
 var CFG_FILE='fallback-config.json';
