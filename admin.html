@@ -334,17 +334,17 @@ if(authed && GH_TOKEN) init();
 
 function renderSidebar() {
   document.getElementById('sidebar').innerHTML =
+    '<div class="sidebar-section"><span class="sidebar-label">Featured</span>' +
+    '<button class="sidebar-link'+(currentSection==='featured'?' active':'')+'" onclick="showFeaturedSection()">' +
+    '<span class="icon">\u2B50</span>Featured Banners' +
+    '<span class="sidebar-count" id="cnt-featured">'+(data.featuredBanners||[]).filter(function(b){return b.url&&b.url!=='#';}).length+'</span>' +
+    '</button></div>' +
     '<div class="sidebar-section"><span class="sidebar-label">Verticals</span>' +
     data.verticals.map(function(v){
       return '<button class="sidebar-link'+(v.id===currentVertical?' active':'')+'" onclick="switchVertical(\''+v.id+'\')">' +
         '<span class="icon">'+v.icon+'</span>'+v.label+
         '<span class="sidebar-count">'+v.offers.length+'</span></button>';
-    }).join('') + '</div>' +
-    '<div class="sidebar-section"><span class="sidebar-label">Featured</span>' +
-    '<button class="sidebar-link'+(currentSection==='featured'?' active':'')+'" onclick="showFeaturedSection()">' +
-    '<span class="icon">\u2B50</span>Featured Banners' +
-    '<span class="sidebar-count" id="cnt-featured">'+(data.featuredBanners||[]).filter(function(b){return b.url&&b.url!=='#';}).length+'</span>' +
-    '</button></div>';
+    }).join('') + '</div>';
 }
 
 function switchVertical(id) { currentSection='verticals'; currentVertical=id; renderSidebar(); renderMain(); }
