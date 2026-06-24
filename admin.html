@@ -322,7 +322,7 @@ async function init() {
   try {
     var d = await ghGet(DATA_FILE);
     fileSha = d.sha;
-    data = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    data = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));
     currentVertical = data.verticals[0].id;
     renderFeaturedAdmin();
     renderSidebar();
@@ -563,7 +563,7 @@ document.getElementById('vpnCfgBtn').addEventListener('click', async function(){
   try {
     var d=await ghGet(CFG_FILE);
     cfgSha=d.sha;
-    var cfg=JSON.parse(atob(d.content.replace(/\n/g,'')));
+    var cfg=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));
     document.getElementById('vpnUrl').value=cfg.vpn_url&&cfg.vpn_url!=='#'?cfg.vpn_url:'';
   } catch(e){ document.getElementById('vpnUrl').value=''; }
   document.getElementById('vpnModalBg').classList.add('open');
