@@ -1409,13 +1409,17 @@ function pdSubmitEmail(e){
     document.getElementById('exitBg').classList.add('open');
     if(typeof pdTrack==='function')pdTrack('exit_view',{shown:clicked?2:1});
   }
-  document.addEventListener('mouseleave',function(e){if(e.clientY<=0&&e.clientX>0&&e.clientX<window.innerWidth)openExit();});
-  var lastY=window.scrollY,delta=0;
-  window.addEventListener('scroll',function(){
-    var y=window.scrollY,diff=lastY-y;
-    if(diff>0){delta+=diff;if(delta>80)openExit();}else{delta=0;}
-    lastY=y;
-  },{passive:true});
+  var isMobile=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+  if(!isMobile){
+    document.addEventListener('mouseleave',function(e){if(e.clientY<=0&&e.clientX>0&&e.clientX<window.innerWidth)openExit();});
+  } else {
+    var lastY=window.scrollY,delta=0;
+    window.addEventListener('scroll',function(){
+      var y=window.scrollY,diff=lastY-y;
+      if(diff>0){delta+=diff;if(delta>80)openExit();}else{delta=0;}
+      lastY=y;
+    },{passive:true});
+  }
   window.exitClicked=function(cta){
     if(clicked&&clicked!==cta){both=true;}else{clicked=cta;}
     shown=false; // allow re-trigger after they return
