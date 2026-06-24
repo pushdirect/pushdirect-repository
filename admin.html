@@ -501,7 +501,7 @@ function renderFeaturedAdmin(){
       +'<div class="offer-url">'+(b.url && b.url !== '#' ? b.url : '— no URL set —')+'</div>'
       +'</div>'
       +'<div class="offer-actions">'
-      +'<button class="btn-icon" onclick="openFeaturedModal(''+b.id+'')" title="Edit">✏️</button>'
+      +'<button class="btn-icon" onclick="openFeaturedModal(\'' + b.id + '\')" title="Edit">✏️</button>'
       +'</div>'
       +'</div>';
   }).join('');
