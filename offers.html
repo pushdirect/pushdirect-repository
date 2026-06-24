@@ -840,6 +840,31 @@ var io, tabObserver;
     {id:'travel',label:'Travel',icon:'\u2708\uFE0F',offers:[]}
   ]};
   function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function renderFeatured(banners){
+    var grid=document.getElementById('featuredBannerGrid');
+    if(!grid)return;
+    if(!banners||!banners.length){
+      var ph='';
+      for(var i=1;i<=6;i++) ph+='<div class="banner-slot"><div class="banner-slot-icon">\uD83D\uDCE2</div><div class="banner-slot-label">Banner slot '+i+'</div><div class="banner-slot-dim">300 \xD7 250</div></div>';
+      grid.innerHTML=ph; return;
+    }
+    var out='';
+    banners.forEach(function(b){
+      if(b.image){
+        out+='<div class="banner-slot banner-slot--filled">';
+        out+='<a href="'+esc(b.url)+'" target="_blank" rel="noopener" class="banner-slot-link">';
+        out+='<img src="'+esc(b.image)+'" alt="'+esc(b.label)+'" loading="lazy" class="banner-slot-img">';
+        out+='</a></div>';
+      } else {
+        out+='<div class="banner-slot">';
+        out+='<div class="banner-slot-icon">\uD83D\uDCE2</div>';
+        out+='<div class="banner-slot-label">'+esc(b.label)+'</div>';
+        out+='<div class="banner-slot-dim">300 \xD7 250</div>';
+        out+='</div>';
+      }
+    });
+    grid.innerHTML=out;
+  }
   function render(data){
     renderFeatured(data.featuredBanners||[]);
     var el=document.getElementById('dynOffers');
