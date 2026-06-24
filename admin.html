@@ -189,6 +189,32 @@ body{background:var(--bg2);color:var(--text1);font-family:var(--fb);font-size:15
 </div>
 
 <!-- VPN CONFIG MODAL -->
+<!-- ═══ FEATURED BANNER MODAL ═══ -->
+<div class="modal-bg" id="featuredModalBg">
+  <div class="modal">
+    <div class="modal-h">Edit Featured Banner</div>
+    <p class="modal-sub">Update the link and image for this banner slot.</p>
+    <input type="hidden" id="fBannerId">
+    <div class="form-row">
+      <label class="form-label" for="fBannerLabel">Label (internal reference)</label>
+      <input class="form-input" type="text" id="fBannerLabel" placeholder="e.g. Slot 1 — Walmart">
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="fBannerUrl">Destination URL</label>
+      <input class="form-input" type="url" id="fBannerUrl" placeholder="https://neoinweb.com/or/…">
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="fBannerImage">Banner image path</label>
+      <input class="form-input" type="text" id="fBannerImage" placeholder="/images/offers/banner.png">
+      <div class="form-hint">Upload image to /images/offers/ in the repo, then paste path here.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="featuredCancel">Cancel</button>
+      <button class="btn-save" id="featuredSave">Save banner</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg" id="vpnModalBg">
   <div class="modal">
     <h2 class="modal-h">Fallback VPN link</h2>
@@ -283,6 +309,7 @@ async function init() {
     fileSha = d.sha;
     data = JSON.parse(atob(d.content.replace(/\n/g,'')));
     currentVertical = data.verticals[0].id;
+    renderFeaturedAdmin();
     renderSidebar();
     renderMain();
   } catch(e) { showToast('Failed to load: '+e.message,'error'); }
@@ -430,6 +457,85 @@ function showToast(msg,type){
 }
 
 // ── FALLBACK VPN CONFIG ──
+// ─── Featured Banners ────────────────────────────────────────────────────────
+var editingBannerId = null;
+
+function renderFeaturedAdmin(){
+  var grid = document.getElementById('featuredGrid');
+  if(!grid) return;
+  var banners = (data.featuredBanners || []);
+  document.getElementById('cnt-featured').textContent = banners.filter(function(b){return b.url && b.url !== '#';}).length;
+  if(!banners.length){
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-h">No banners configured</div><div class="empty-sub">Click "Add / Edit Banner" to set up featured slots.</div></div>';
+    return;
+  }
+  grid.innerHTML = banners.map(function(b){
+    var thumb = b.image
+      ? '<img class="offer-thumb" src="'+b.image+'" alt="'+b.label+'">'
+      : '<div class="offer-thumb-ph">📢</div>';
+    return '<div class="offer-card" data-bid="'+b.id+'">'
+      +thumb
+      +'<div class="offer-info">'
+      +'<div class="offer-label">'+b.label+'</div>'
+      +'<div class="offer-url">'+(b.url && b.url !== '#' ? b.url : '— no URL set —')+'</div>'
+      +'</div>'
+      +'<div class="offer-actions">'
+      +'<button class="btn-icon" onclick="openFeaturedModal(''+b.id+'')" title="Edit">✏️</button>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function openFeaturedModal(bannerId){
+  var banners = data.featuredBanners || [];
+  if(bannerId){
+    var b = banners.find(function(x){return x.id===bannerId;});
+    if(!b) return;
+    editingBannerId = bannerId;
+    document.getElementById('fBannerId').value = bannerId;
+    document.getElementById('fBannerLabel').value = b.label || '';
+    document.getElementById('fBannerUrl').value = b.url && b.url !== '#' ? b.url : '';
+    document.getElementById('fBannerImage').value = b.image || '';
+  } else {
+    editingBannerId = null;
+    document.getElementById('fBannerId').value = '';
+    document.getElementById('fBannerLabel').value = '';
+    document.getElementById('fBannerUrl').value = '';
+    document.getElementById('fBannerImage').value = '';
+  }
+  document.getElementById('featuredModalBg').classList.add('open');
+  setTimeout(function(){document.getElementById('fBannerLabel').focus();}, 100);
+}
+
+document.getElementById('featuredCancel').addEventListener('click', function(){
+  document.getElementById('featuredModalBg').classList.remove('open');
+});
+document.getElementById('featuredModalBg').addEventListener('click', function(e){
+  if(e.target === this) this.classList.remove('open');
+});
+document.getElementById('featuredSave').addEventListener('click', async function(){
+  var btn = this;
+  var id    = document.getElementById('fBannerId').value.trim();
+  var label = document.getElementById('fBannerLabel').value.trim() || ('Featured Banner ' + (id || '1'));
+  var url   = document.getElementById('fBannerUrl').value.trim() || '#';
+  var image = document.getElementById('fBannerImage').value.trim();
+  if(!data.featuredBanners) data.featuredBanners = [];
+  if(id){
+    var idx = data.featuredBanners.findIndex(function(x){return x.id===id;});
+    if(idx > -1) data.featuredBanners[idx] = {id:id, label:label, url:url, image:image};
+  } else {
+    var newId = 'fb'+(Date.now());
+    data.featuredBanners.push({id:newId, label:label, url:url, image:image});
+  }
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    await save('feat: update featured banners');
+    renderFeaturedAdmin();
+    document.getElementById('featuredModalBg').classList.remove('open');
+  } catch(e){ alert('Save failed: '+e.message); }
+  btn.disabled = false; btn.textContent = 'Save banner';
+});
+
 var CFG_FILE='fallback-config.json';
 var cfgSha=null;
 document.getElementById('vpnCfgBtn').addEventListener('click', async function(){
