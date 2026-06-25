@@ -69,21 +69,21 @@
       "offers": [
         {
           "id": "nutra1",
-          "label": "Nutra Offer 1",
+          "label": "TrimRX GLP-1",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra1",
-          "image": ""
+          "image": "/images/offers/trimrx-glp1.jpg"
         },
         {
           "id": "nutra2",
-          "label": "Nutra Offer 2",
+          "label": "Wellorithm GLP-1",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra2",
-          "image": ""
+          "image": "/images/offers/wellorithm-glp1.jpg"
         },
         {
           "id": "nutra3",
-          "label": "Nutra Offer 3",
+          "label": "Wellorithm NAD+",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra3",
-          "image": ""
+          "image": "/images/offers/wellorithm-nad.jpg"
         },
         {
           "id": "nutra4",
