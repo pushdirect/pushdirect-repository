@@ -38,21 +38,21 @@
       "offers": [
         {
           "id": "gaming1",
-          "label": "Gaming Offer 1",
+          "label": "SweepsUSA",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming1",
-          "image": ""
+          "image": "/images/offers/sweepsusa.jpg"
         },
         {
           "id": "gaming2",
-          "label": "Gaming Offer 2",
+          "label": "Baba Casino",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming2",
-          "image": ""
+          "image": "/images/offers/baba-casino.jpg"
         },
         {
           "id": "gaming3",
-          "label": "Gaming Offer 3",
+          "label": "BetMGM",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming3",
-          "image": ""
+          "image": "/images/offers/betmgm.jpg"
         },
         {
           "id": "gaming4",
