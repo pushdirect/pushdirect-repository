@@ -313,6 +313,16 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .offer-banner-link{display:block;width:100%;height:100%;line-height:0}
 .offer-banner-img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}
 .offer-banner-link:hover .offer-banner-img{opacity:.92;transition:opacity .2s}
+.offer-slot--soon{cursor:default;background:var(--bg2);border:1px dashed var(--border-s)}
+.offer-slot--soon:hover{background:var(--bg2);border-color:var(--border-s)}
+[data-theme="dark"] .offer-slot--soon{background:var(--surface)}
+[data-theme="dark"] .offer-slot--soon:hover{background:var(--surface);border-color:var(--border)}
+.soon-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 12px}
+.soon-badge{font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.03em;color:#fff;background:linear-gradient(135deg,var(--cta),var(--cream-d));padding:5px 15px;border-radius:999px;box-shadow:var(--sh-xs);white-space:nowrap}
+.soon-sub{font-family:var(--fm);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:600}
+.offer-slot--soon::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(201,170,130,.12) 50%,transparent 65%);transform:translateX(-100%);animation:soonSheen 3.4s ease-in-out infinite;pointer-events:none}
+@keyframes soonSheen{0%,55%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.offer-slot--soon::before{display:none}}
 
 /* ═══ MID CTA — brand dark section, matches index.html .mid-cta ═══ */
 .mid-cta{
@@ -859,15 +869,11 @@ var io, tabObserver;
             out+='<img src="'+esc(o.image)+'" alt="'+esc(o.label)+'" loading="lazy" class="offer-banner-img">';
             out+='</a></div>';
           } else {
-            out+='<div class="offer-slot">';
-            out+='<a href="'+esc(o.url)+'" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;gap:6px">';
-            out+='<div class="slot-label" style="color:var(--text2)">'+esc(o.label)+'</div>';
-            out+='<div class="slot-dim">Click to open ↗</div>';
-            out+='</a></div>';
+            out+='<div class="offer-slot offer-slot--soon" aria-label="Coming soon"><div class="soon-inner"><span class="soon-badge">Coming Soon</span><span class="soon-sub">New offer dropping</span></div></div>';
           }
         });
       } else {
-        for(var i=0;i<4;i++) out+='<div class="offer-slot"><div class="slot-label">Offer slot</div><div class="slot-dim">300 x 160</div></div>';
+        for(var i=0;i<4;i++) out+='<div class="offer-slot offer-slot--soon" aria-label="Coming soon"><div class="soon-inner"><span class="soon-badge">Coming Soon</span><span class="soon-sub">New offer dropping</span></div></div>';
       }
       out+='</div></section>';
     });
@@ -891,7 +897,7 @@ var io, tabObserver;
     if(!offers.length){
       // Show placeholder slots
       var ph='';
-      for(var i=0;i<4;i++) ph+='<div class="offer-slot"><div class="slot-label">Offer slot</div><div class="slot-dim">300 x 160</div></div>';
+      for(var i=0;i<4;i++) ph+='<div class="offer-slot offer-slot--soon" aria-label="Coming soon"><div class="soon-inner"><span class="soon-badge">Coming Soon</span><span class="soon-sub">New offer dropping</span></div></div>';
       row.innerHTML=ph;
     } else {
       var out='';
@@ -902,11 +908,7 @@ var io, tabObserver;
           out+='<img src="'+esc(o.image)+'" alt="'+esc(o.label)+'" loading="lazy" class="offer-banner-img">';
           out+='</a></div>';
         } else {
-          out+='<div class="offer-slot">';
-          out+='<a href="'+esc(o.url)+'" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;gap:6px">';
-          out+='<div class="slot-label" style="color:var(--text2)">'+esc(o.label)+'</div>';
-          out+='<div class="slot-dim">Click to open ↗</div>';
-          out+='</a></div>';
+          out+='<div class="offer-slot offer-slot--soon" aria-label="Coming soon"><div class="soon-inner"><span class="soon-badge">Coming Soon</span><span class="soon-sub">New offer dropping</span></div></div>';
         }
       });
       row.innerHTML=out;
