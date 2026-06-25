@@ -100,27 +100,27 @@
       "offers": [
         {
           "id": "utilities1",
-          "label": "Utility Offer 1",
+          "label": "Norton 360",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-utility1",
-          "image": ""
+          "image": "/images/offers/norton-360.jpg"
         },
         {
           "id": "utilities2",
-          "label": "Utility Offer 2",
+          "label": "McAfee",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-utility2",
-          "image": ""
+          "image": "/images/offers/mcafee.jpg"
         },
         {
           "id": "utilities3",
-          "label": "Utility Offer 3",
+          "label": "TotalAV",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-utility3",
-          "image": ""
+          "image": "/images/offers/totalav.jpg"
         },
         {
           "id": "utilities4",
-          "label": "Utility Offer 4",
+          "label": "PrimeDefender",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-utility4",
-          "image": ""
+          "image": "/images/offers/primedefender.jpg"
         }
       ]
     },
