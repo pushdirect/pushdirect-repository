@@ -322,7 +322,12 @@ nav.scrolled{box-shadow:var(--sh-sm)}
 .soon-sub{font-family:var(--fm);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:600}
 .offer-slot--soon::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(201,170,130,.12) 50%,transparent 65%);transform:translateX(-100%);animation:soonSheen 3.4s ease-in-out infinite;pointer-events:none}
 @keyframes soonSheen{0%,55%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-@media (prefers-reduced-motion:reduce){.offer-slot--soon::before{display:none}}
+.banner-slot--soon{cursor:default;background:var(--bg2);border:1px dashed var(--border-s)}
+.banner-slot--soon:hover{background:var(--bg2);border-color:var(--border-s)}
+[data-theme="dark"] .banner-slot--soon{background:var(--surface)}
+[data-theme="dark"] .banner-slot--soon:hover{background:var(--surface);border-color:var(--border)}
+.banner-slot--soon::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(201,170,130,.12) 50%,transparent 65%);transform:translateX(-100%);animation:soonSheen 3.4s ease-in-out infinite;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.offer-slot--soon::before,.banner-slot--soon::before{display:none}}
 
 /* ═══ MID CTA — brand dark section, matches index.html .mid-cta ═══ */
 .mid-cta{
@@ -828,7 +833,7 @@ var io, tabObserver;
     if(!grid)return;
     if(!banners||!banners.length){
       var ph='';
-      for(var i=1;i<=6;i++) ph+='<div class="banner-slot"><div class="banner-slot-icon">\uD83D\uDCE2</div><div class="banner-slot-label">Banner slot '+i+'</div><div class="banner-slot-dim">300 \xD7 250</div></div>';
+      for(var i=1;i<=6;i++) ph+='<div class="banner-slot banner-slot--soon" aria-label="Coming soon"><div class="soon-inner"><span class="soon-badge">Coming Soon</span><span class="soon-sub">New offer dropping</span></div></div>';
       grid.innerHTML=ph; return;
     }
     var out='';
@@ -839,11 +844,7 @@ var io, tabObserver;
         out+='<img src="'+esc(b.image)+'" alt="'+esc(b.label)+'" loading="lazy" class="banner-slot-img">';
         out+='</a></div>';
       } else {
-        out+='<div class="banner-slot">';
-        out+='<div class="banner-slot-icon">\uD83D\uDCE2</div>';
-        out+='<div class="banner-slot-label">'+esc(b.label)+'</div>';
-        out+='<div class="banner-slot-dim">300 \xD7 250</div>';
-        out+='</div>';
+        out+='<div class="banner-slot banner-slot--soon" aria-label="Coming soon"><div class="soon-inner"><span class="soon-badge">Coming Soon</span><span class="soon-sub">New offer dropping</span></div></div>';
       }
     });
     grid.innerHTML=out;
