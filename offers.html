@@ -734,33 +734,6 @@ if('serviceWorker' in navigator){
 })();
 </script>
 
-<!-- ═══ iOS BROWSER OVERLAY — Add to Home Screen ═══ -->
-<div class="overlay-bg" role="dialog" aria-modal="true" id="iosBrowserBg">
-  <div class="overlay-card already">
-    <div class="already-ring">📲</div>
-    <h2 class="ov-title">One step to unlock alerts</h2>
-    <p class="ov-sub">iOS only allows push notifications from installed apps. Add PushDirect to your Home Screen to enable instant deal alerts — it takes 5 seconds.</p>
-    <div class="ov-preview" style="border:1px solid rgba(232,213,176,.3);text-align:left;padding:12px 14px;border-radius:10px;margin:12px 0">
-      <div class="ov-preview-text" style="font-size:13px;line-height:1.6">
-        <strong>How to add:</strong><br>
-        1. Tap the <strong>Share</strong> button (□↑) at the bottom of Safari<br>
-        2. Scroll down and tap <strong>Add to Home Screen</strong><br>
-        3. Tap <strong>Add</strong> — then open the app and tap Enable
-      </div>
-    </div>
-    <button class="btn-ov-primary" onclick="closeIOSBrowser()">Got it</button>
-  </div>
-</div>
-
-<!-- ═══ iOS OLD VERSION OVERLAY ═══ -->
-<div class="overlay-bg" role="dialog" aria-modal="true" id="iosOldBg">
-  <div class="overlay-card already">
-    <div class="already-ring">⚙️</div>
-    <h2 class="ov-title">Update iOS to enable push</h2>
-    <p class="ov-sub">Push notifications for web apps require iOS 16.4 or later. Go to Settings → General → Software Update to upgrade, then return here to subscribe.</p>
-    <button class="btn-ov-primary" onclick="closeIOSOld()">Got it</button>
-  </div>
-</div>
 <script>
 /* ═══ PAGE CORE: scroll, nav, reveal, theme, tabs ═══ */
 var io, tabObserver;
