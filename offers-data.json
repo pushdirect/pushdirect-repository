@@ -38,9 +38,9 @@
       "offers": [
         {
           "id": "gaming1",
-          "label": "SweepsUSA",
+          "label": "BetMGM",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming1",
-          "image": "/images/offers/sweepsusa.jpg"
+          "image": "/images/offers/betmgm.jpg"
         },
         {
           "id": "gaming2",
@@ -50,9 +50,9 @@
         },
         {
           "id": "gaming3",
-          "label": "BetMGM",
+          "label": "SweepsUSA",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming3",
-          "image": "/images/offers/betmgm.jpg"
+          "image": "/images/offers/sweepsusa.jpg"
         },
         {
           "id": "gaming4",
