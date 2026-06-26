@@ -932,12 +932,9 @@ var io, tabObserver;
       teaser.style.display='flex';
       body.classList.add('collapsed');
     }
-    // Already confirmed this session/device?
-    if(localStorage.getItem('pd_age_ok')==='1'){
-      showOffers();
-    }
+    // Age gate re-shows on every load — no persistence, re-verify each visit
+    hideOffers();
     if(reveal)reveal.onclick=function(){
-      localStorage.setItem('pd_age_ok','1');
       showOffers();
       if(typeof gtag!=='undefined')gtag('event','age_confirmed',{pd_page:'offers'});
     };
