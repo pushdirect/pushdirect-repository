@@ -131,9 +131,9 @@
       "offers": [
         {
           "id": "finance1",
-          "label": "Finance Offer 1",
+          "label": "ZipRewards",
           "url": "https://go.extiance.com/ts4359-displayclicks-us-finance1",
-          "image": ""
+          "image": "/images/offers/ziprewards.jpg"
         },
         {
           "id": "finance2",
