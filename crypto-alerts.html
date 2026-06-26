@@ -387,6 +387,15 @@ footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;
   padding:2px 8px;border-radius:10px;border:1px solid;font-weight:600;margin-left:auto;
 }
 .alert-subtitle{font-size:12px;color:var(--text3);margin-bottom:6px;font-style:italic}
+.trend-list{display:flex;flex-direction:column;gap:4px;margin:2px 0 8px;width:100%}
+.trend-row{display:flex;align-items:center;gap:8px;font-family:var(--fm);font-size:11px;padding:4px 9px;border-radius:6px;background:var(--surface);border:1px solid var(--border)}
+.trend-row .tr-rank{color:var(--text3);font-size:10px;min-width:22px}
+.trend-row .tr-sym{font-weight:700;letter-spacing:.04em;color:var(--text1);min-width:52px}
+.trend-row .tr-price{font-family:var(--fd);font-weight:600;color:var(--text2)}
+.trend-row .tr-chg{font-weight:700;padding:1px 6px;border-radius:5px;font-size:10px}
+.trend-row .tr-chg.up{background:rgba(126,203,154,.15);color:#7ecb9a}
+.trend-row .tr-chg.down{background:rgba(224,123,106,.12);color:#e07b6a}
+.trend-row .tr-vol{margin-left:auto;color:var(--text3);font-size:10px;white-space:nowrap}
 .alert-src{
   font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--text3);background:var(--surface);padding:2px 7px;
@@ -1069,14 +1078,20 @@ function renderAlert(alert) {
   const type = TYPE_CONFIG[alert.type] || { icon:'◈', label: alert.type, accent:'#9a8f7e' };
   const d    = alert.data || {};
 
-  /* ── For trending: asset is a comma-joined string of coin names, not a single asset ── */
+  /* ── For trending: coins is an array of {symbol,price,change24h,volume,rank} objects ── */
   const isTrending = alert.type === 'trending';
-  const trendCoins = isTrending
-    ? (d.coins || alert.asset.split(',').map(s => s.trim()))
-    : null;
+  let trendCoins = null;
+  if (isTrending) {
+    const raw = (d.coins && d.coins.length)
+      ? d.coins
+      : alert.asset.split(',').map(s => s.trim());
+    trendCoins = raw
+      .map(c => (typeof c === 'string' ? { symbol: c } : c))
+      .filter(c => c && c.symbol);
+  }
 
   /* ── Asset display: single coin icon or trending fire ── */
-  const primaryAsset = isTrending ? (trendCoins[0] || 'TREND') : alert.asset;
+  const primaryAsset = isTrending ? ((trendCoins[0] && trendCoins[0].symbol) || 'TREND') : alert.asset;
   const assetIcon    = isTrending ? '🔥' : (ASSET_ICONS[alert.asset] || ASSET_ICONS.default);
   const assetLabel   = isTrending ? 'Trending Now' : alert.asset;
 
@@ -1108,17 +1123,29 @@ function renderAlert(alert) {
     ? `<span class="alert-src">${alert.source}</span>`
     : '';
 
-  /* ── Trending: show each coin as its own pill ── */
-  const trendChips = isTrending && trendCoins
-    ? trendCoins.slice(0,6).map(coin => {
-        const icon = ASSET_ICONS[coin] || '';
-        return `<span class="alert-coin">${icon ? icon+' ' : ''}${coin}</span>`;
-      }).join('')
+  /* ── Trending: render each coin as a row with price, 24h change, and volume ── */
+  const trendList = isTrending && trendCoins && trendCoins.length
+    ? `<div class="trend-list">${trendCoins.slice(0,7).map(coin => {
+        const icon = ASSET_ICONS[coin.symbol] || '';
+        const rank = (coin.rank != null)
+          ? `<span class="tr-rank">#${coin.rank}</span>`
+          : `<span class="tr-rank"></span>`;
+        const price = (typeof coin.price === 'number')
+          ? `<span class="tr-price">${formatPrice(coin.price)}</span>`
+          : '';
+        let chg = '';
+        if (typeof coin.change24h === 'number') {
+          const up = coin.change24h >= 0;
+          chg = `<span class="tr-chg ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(coin.change24h).toFixed(1)}%</span>`;
+        }
+        const vol = coin.volume ? `<span class="tr-vol">Vol ${coin.volume}</span>` : '';
+        return `<div class="trend-row">${rank}<span class="tr-sym">${icon?icon+' ':''}${coin.symbol}</span>${price}${chg}${vol}</div>`;
+      }).join('')}</div>`
     : '';
 
   /* ── Trending subtitle: explain what it means ── */
   const trendSubtitle = isTrending
-    ? `<div class="alert-subtitle">CoinGecko trending — social volume spiking on these assets</div>`
+    ? `<div class="alert-subtitle">Top assets by social &amp; search volume on CoinGecko · 24h price &amp; volume</div>`
     : '';
 
   return `<div class="alert-row" data-type="${alert.type}" style="border-color:${sev.border};background:${sev.bg}">
@@ -1132,8 +1159,9 @@ function renderAlert(alert) {
       </div>
       <div class="alert-title">${alert.title}</div>
       ${trendSubtitle}
+      ${trendList}
       <div class="alert-chips">
-        ${dirBadge}${priceChip}${volChip}${rangeChip}${trendChips}${srcChip}
+        ${dirBadge}${priceChip}${volChip}${rangeChip}${srcChip}
         <span class="alert-sev-badge" style="background:${sev.bg};color:${sev.color};border-color:${sev.border}">${sev.label}</span>
       </div>
     </div>
