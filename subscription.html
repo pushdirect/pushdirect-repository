@@ -939,6 +939,51 @@ function pdSubmitEmail(e){
   window.handleExitBg=function(e){if(e.target===document.getElementById('exitBg'))closeExit(true);};
 })();
 </script>
+<!-- ═══ DESKTOP SIDEBAR PROMPT (mobile uses #pdStickyBar) ═══ -->
+<style>
+.pd-sidep{position:fixed;right:22px;top:50%;transform:translateY(-50%) translateX(calc(100% + 34px));z-index:70;width:238px;background:var(--bg2,#faf9f7);border:1px solid var(--border-s,rgba(26,25,22,.2));border-radius:18px;padding:20px 18px 16px;box-shadow:var(--sh,0 6px 28px rgba(0,0,0,.12));transition:transform .55s var(--ease,cubic-bezier(.16,1,.3,1)),opacity .45s ease;opacity:0;font-family:var(--fb,'Inter',sans-serif)}
+.pd-sidep.visible{transform:translateY(-50%) translateX(0);opacity:1}
+.pd-sidep__tag{display:inline-block;font-family:var(--fm,'Inter',sans-serif);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--cta,#f97316),var(--cream-d,#c9aa82));padding:4px 10px;border-radius:50px;margin-bottom:12px}
+.pd-sidep__txt{font-family:var(--fd,'Poppins',sans-serif);font-size:15px;font-weight:700;line-height:1.32;letter-spacing:-.01em;color:var(--text1,#1a1916);margin-bottom:14px}
+.pd-sidep__btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,#f97316,#ea6f0e);color:#fff;font-family:var(--fd,'Poppins',sans-serif);font-weight:700;font-size:13px;letter-spacing:.02em;padding:11px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(249,115,22,.28);transition:transform .2s var(--ease,ease),box-shadow .2s}
+.pd-sidep__btn:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(249,115,22,.36)}
+.pd-sidep__sub{font-family:var(--fm,'Inter',sans-serif);font-size:10px;color:var(--text3,#9a8f7e);text-align:center;margin-top:8px}
+.pd-sidep__close{position:absolute;top:9px;right:9px;width:22px;height:22px;border-radius:50%;background:var(--surface,rgba(26,25,22,.06));border:none;cursor:pointer;color:var(--text3,#9a8f7e);font-size:11px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.pd-sidep__close:hover{background:var(--surface2,rgba(26,25,22,.1))}
+@media(max-width:767px){.pd-sidep{display:none!important}}
+@media(min-width:768px){#pdStickyBar{display:none!important}}
+@media(prefers-reduced-motion:reduce){.pd-sidep{transition:opacity .3s ease}}
+</style>
+<div class="pd-sidep" id="pdSidePrompt" role="complementary" aria-label="Subscribe to PushDirect alerts">
+  <button class="pd-sidep__close" onclick="pdSideClose()" aria-label="Dismiss">&#10005;</button>
+  <span class="pd-sidep__tag">Still reading?</span>
+  <div class="pd-sidep__txt">Your first alert could arrive in 60 seconds.</div>
+  <button class="pd-sidep__btn" onclick="pdSideJoin()">
+    <img src="/icons/logo.png" width="15" height="11" alt="" aria-hidden="true" style="object-fit:contain;filter:brightness(0) invert(1)">
+    Join Free
+  </button>
+  <div class="pd-sidep__sub">Free &middot; Cancel anytime</div>
+</div>
+<script>
+(function(){
+  var P=document.getElementById('pdSidePrompt');
+  if(!P)return;
+  var granted=('Notification' in window)&&Notification.permission==='granted';
+  if(granted){P.parentNode&&P.parentNode.removeChild(P);return;}
+  try{if(sessionStorage.getItem('pd_side_dismissed')==='1'){P.parentNode&&P.parentNode.removeChild(P);return;}}catch(e){}
+  var shown=false,raf=false;
+  function check(){
+    raf=false;if(shown)return;
+    if(!window.matchMedia('(min-width:768px)').matches)return;
+    var max=document.body.scrollHeight-window.innerHeight;
+    var p=max>0?(window.scrollY/max)*100:0;
+    if(p>50){shown=true;P.classList.add('visible');if(typeof gtag!=='undefined')gtag('event','sidebar_prompt_shown',{page:location.pathname});}
+  }
+  window.addEventListener('scroll',function(){if(!raf){raf=true;requestAnimationFrame(check);}},{passive:true});
+})();
+function pdSideJoin(){var p=document.getElementById('pdSidePrompt');if(p)p.classList.remove('visible');if(typeof gtag!=='undefined')gtag('event','sidebar_prompt_cta',{page:location.pathname});if(typeof pdRequestPush==='function'){pdRequestPush();}else{location.href='/subscription';}}
+function pdSideClose(){var p=document.getElementById('pdSidePrompt');if(p)p.classList.remove('visible');try{sessionStorage.setItem('pd_side_dismissed','1');}catch(e){}}
+</script>
 </body>
 </html>
 
