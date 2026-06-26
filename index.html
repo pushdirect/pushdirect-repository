@@ -1152,34 +1152,89 @@ footer{position:relative;z-index:1;padding:44px 24px 120px;border-top:1px solid 
   </div>
 </div>
 
-    track('returning',{visits:vc});
-  }
-  // Personalise CTA copy for default-permission returning visitors
-  if(isReturning&&'Notification' in window&&Notification.permission==='default'){
-    // Estimate missed alerts: avg 2 per day, cap display at 12
-    const missedBase=Math.min((vc-1)*2,12);
-    // Add a small random delta so it doesn't look computed
-    const missed=missedBase+Math.floor(Math.random()*3);
-    const label=`You've missed ${missed} alerts — catch up`;
-    document.querySelectorAll('.btn-cta').forEach(btn=>{
-      // Only update buttons that have the default "Enable Direct Alerts" text
-      if(btn.textContent.trim().includes('Enable Direct Alerts')){
-        // Preserve the SVG icon, replace the text node
-        const textNode=[...btn.childNodes].find(n=>n.nodeType===3&&n.textContent.trim().length>0);
-        if(textNode)textNode.textContent='\n      '+label+'\n    ';
-      }
+<script>
+/* ═══ PAGE LOGIC — restored (lost in exit-intent purge 06e8554); adapted to current pd-namespace + pdTrack ═══ */
+(function(){
+  /* FAQ accordion */
+  window.toggleFaq=function(el){
+    var item=el.closest('.faq-item');if(!item)return;
+    var open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
+    if(!open)item.classList.add('open');
+  };
+
+  /* Theme toggle (saved -> system -> light) */
+  (function(){
+    var h=document.documentElement,saved=null;try{saved=localStorage.getItem('pd_theme');}catch(e){}
+    var preferred=saved||((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');
+    h.setAttribute('data-theme',preferred);
+    var btn=document.getElementById('themeBtn');if(!btn)return;
+    btn.textContent=preferred==='dark'?'\u2600\ufe0f':'\ud83c\udf19';
+    btn.addEventListener('click',function(){
+      var next=h.getAttribute('data-theme')==='dark'?'light':'dark';
+      h.setAttribute('data-theme',next);try{localStorage.setItem('pd_theme',next);}catch(e){}
+      btn.textContent=next==='dark'?'\u2600\ufe0f':'\ud83c\udf19';
     });
-    // Also update sticky bar tag line
-    const stickyTag=document.querySelector('.sticky-tag');
-    if(stickyTag)stickyTag.textContent=`${missed} alerts since your last visit · Free`;
-    track('returning_cta_personalised',{visits:vc,missed});
-  }
+  })();
+
+  /* Scroll-reveal (.rev -> .in); CSS @keyframes revShow already covers the no-JS case */
+  (function(){
+    var els=document.querySelectorAll('.rev');if(!els.length)return;
+    if('IntersectionObserver' in window){
+      els.forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight*1.1)el.classList.add('in');});
+      var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0,rootMargin:'0px 0px 100px 0px'});
+      els.forEach(function(el){if(!el.classList.contains('in'))io.observe(el);});
+    } else els.forEach(function(el){el.classList.add('in');});
+  })();
+
+  /* iPhone mockup clock */
+  (function(){
+    var clk=document.getElementById('iphoneClock'),tm=document.getElementById('iphoneTime'),dt=document.getElementById('iphoneDate');
+    if(!clk&&!tm&&!dt)return;
+    var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var mons=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    function tick(){var n=new Date(),h=n.getHours()%12||12,m=String(n.getMinutes()).padStart(2,'0'),t=h+':'+m;
+      if(clk)clk.textContent=t;if(tm)tm.textContent=t;if(dt)dt.textContent=days[n.getDay()]+', '+mons[n.getMonth()]+' '+n.getDate();}
+    tick();setInterval(tick,30000);
+  })();
+
+  /* Notification mockup rotator (illustrative product demo) */
+  (function(){
+    var nf=document.getElementById('notifFront');if(!nf)return;
+    var N=[
+      {icon:'\u26a1',bg:'rgba(232,213,176,.25)',app:'PUSHDIRECT \u00b7 DEALS',title:'Flash sale just opened',body:'Members notified before it goes public.'},
+      {icon:'\u20bf',bg:'rgba(201,170,130,.2)',app:'PUSHDIRECT \u00b7 CRYPTO',title:'Breakout signal triggered',body:'Volume well above the daily average.'},
+      {icon:'\ud83d\uddde\ufe0f',bg:'rgba(154,143,126,.18)',app:'PUSHDIRECT \u00b7 BREAKING',title:'Major market headline',body:'Desks reacting in real time.'},
+      {icon:'\ud83c\udfae',bg:'rgba(154,143,126,.15)',app:'PUSHDIRECT \u00b7 GAMING',title:'Rare drop is live',body:'Subscribers-only claim window.'},
+      {icon:'\u2708\ufe0f',bg:'rgba(232,213,176,.2)',app:'PUSHDIRECT \u00b7 TRAVEL',title:'Error fare spotted',body:'Limited seats, closes soon.'}
+    ];
+    var i=0;nf.style.transition='opacity .4s,transform .4s';
+    function q(s){return nf.querySelector(s);}
+    setInterval(function(){
+      i=(i+1)%N.length;var d=N[i];
+      nf.style.opacity='0';nf.style.transform='translateY(-8px)';
+      setTimeout(function(){
+        if(q('.n-icon')){q('.n-icon').textContent=d.icon;q('.n-icon').style.background=d.bg;}
+        if(q('.n-app'))q('.n-app').textContent=d.app;
+        if(q('.n-title'))q('.n-title').textContent=d.title;
+        if(q('.n-body'))q('.n-body').textContent=d.body;
+        if(q('.n-time'))q('.n-time').textContent='now';
+        nf.style.opacity='1';nf.style.transform='none';
+      },420);
+    },4000);
+  })();
+
+  /* Rotating headline word */
+  (function(){
+    var el=document.getElementById('dynamicWord');if(!el)return;
+    var W=['before the crowd','before it trends','while others wait','before the window closes','in real time'];
+    var i=0;el.style.transition='opacity .3s,transform .3s';
+    setInterval(function(){
+      el.style.opacity='0';el.style.transform='translateY(8px)';
+      setTimeout(function(){i=(i+1)%W.length;el.textContent=W[i];el.style.opacity='1';el.style.transform='none';},320);
+    },3800);
+  })();
 })();
-
-/* ═══ ENGAGEMENT ═══ */
-window.addEventListener('scroll',()=>{S.score=Math.max(S.score,8)},{once:true,passive:true});
-document.addEventListener('mousemove',()=>{S.score=Math.max(S.score,4)},{once:true});
-
 </script>
 
 <!-- Monetag IPP: loaded in <head> on iOS/Safari; activateMonetag() retained as no-op -->
