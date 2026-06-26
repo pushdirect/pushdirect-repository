@@ -17,7 +17,7 @@ importScripts("https://push-sdk.com/f/sw.js")
 // v2: HTML is network-first so nav/content changes go live immediately.
 //     Static assets stay cache-first for speed. Bumping the cache name
 //     purges the old pd-v1 cache that was serving stale HTML.
-const CACHE = 'pd-v2';
+const CACHE = 'pd-v3';
 
 self.addEventListener('install', e => {
   // Do NOT precache HTML — that is what caused stale pages to persist.
