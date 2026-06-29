@@ -925,6 +925,13 @@ function pdSubmitEmail(e){
       if(diff>0){delta+=diff;if(delta>80)openExit();}else{delta=0;}
       lastY=y;
     },{passive:true});
+    /* mobile back-button capture: push traffic that taps Back without scrolling */
+    try{history.pushState(null,'',location.href);}catch(e){}
+    window.addEventListener('popstate',function(){if(!shown){openExit();try{history.pushState(null,'',location.href);}catch(e){}}});
+    /* mobile inactivity capture: landed and idle (resets on any interaction; only true abandoners fire) */
+    var _exIdle;function _exReset(){clearTimeout(_exIdle);_exIdle=setTimeout(function(){if(!shown)openExit();},25000);}
+    ['touchstart','scroll','keydown'].forEach(function(ev){window.addEventListener(ev,_exReset,{passive:true});});
+    _exReset();
   }
   window.exitClicked=function(cta){
     if(clicked&&clicked!==cta){both=true;}else{clicked=cta;}
