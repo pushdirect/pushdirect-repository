@@ -155,4 +155,26 @@ document.addEventListener('DOMContentLoaded',function(){
   load();setInterval(load,60000);
 });
 
+
+/* ── Auto-fire push opt-in on first user gesture ───────────────────────────
+   Cold arbitrage traffic rarely clicks the CTA, so the RollerAds prompt never
+   loaded. RollerAds must load inside a user gesture, so we trigger on the first
+   tap / click / keypress anywhere — not only the CTA button. iOS & Mac-Safari
+   excluded (Monetag in-page push handles those). Only acts where pdLoadRA exists. */
+(function(){
+  if(!('Notification' in window)) return;
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome|Firefox|Edg/.test(ua);
+  if(isIOS||isMacSafari) return;
+  if(Notification.permission!=='default') return;
+  var fired=false, evs=['pointerdown','touchstart','click','keydown'];
+  function fire(){
+    if(fired) return; fired=true;
+    evs.forEach(function(ev){window.removeEventListener(ev,fire,true);});
+    if(typeof window.pdLoadRA==='function'){ try{pdTrack('auto_prompt_fired',{});}catch(e){} window.pdLoadRA(); }
+  }
+  evs.forEach(function(ev){window.addEventListener(ev,fire,true);});
+})();
+
 })();
