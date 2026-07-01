@@ -186,6 +186,9 @@ document.addEventListener('DOMContentLoaded',function(){
 document.addEventListener('DOMContentLoaded',function(){
   if(document.getElementById('featuredBannerGrid'))return;
   if(document.getElementById('pdAffiliateStrip'))return;
+  var noStripPages=['/contact','/privacy','/terms'];
+  var path=location.pathname.replace(/\/$/,'')||'/';
+  if(noStripPages.indexOf(path)>-1)return;
   var footer=document.querySelector('footer');
 
   var css='#pdAffiliateStrip{padding:44px 0 8px}'+
