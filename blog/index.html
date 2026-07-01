@@ -431,7 +431,30 @@ window.addEventListener('scroll',()=>{
   }
   window.addEventListener('scroll',function(){if(!raf){raf=true;requestAnimationFrame(check);}},{passive:true});
 })();
-function pdSideJoin(){var p=document.getElementById('pdSidePrompt');if(p)p.classList.remove('visible');if(typeof gtag!=='undefined')gtag('event','sidebar_prompt_cta',{page:location.pathname});if(typeof pdRequestPush==='function'){pdRequestPush();}else{location.href='/subscription';}}
+var _pdRaLoaded=false;
+function pdLoadRA(){
+  if(_pdRaLoaded)return;_pdRaLoaded=true;
+  var url=new URL(window.location.href);
+  var s=document.createElement('script');s.dataset.cfasync='false';
+  window.raOptions={zoneID:2822452,extClickID:url.searchParams.get('click_id')||sessionStorage.getItem('pd_click_id')||'',subID1:url.searchParams.get('source_id')||'',
+    actions:{
+      onPermissionGranted:function(){if(typeof gtag!=='undefined')gtag('event','subscribed_rollerads',{page:location.pathname,pd_variant:typeof PD_VARIANT!=='undefined'?PD_VARIANT:'?'});},
+      onPermissionDenied:function(){if(typeof gtag!=='undefined')gtag('event','prompt_denied',{page:location.pathname});},
+      onAlreadySubscribed:function(){},
+      onError:function(){}
+    }};
+  s.src='https://push-sdk.com/f/sdk.js?z=2822452';document.head.appendChild(s);
+}
+function pdSideJoin(){
+  var p=document.getElementById('pdSidePrompt');if(p)p.classList.remove('visible');
+  if(typeof gtag!=='undefined')gtag('event','sidebar_prompt_cta',{page:location.pathname});
+  var ua=navigator.userAgent;
+  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome|Firefox|Edg/.test(ua);
+  if(isIOS||isMacSafari)return; // Monetag IPP already static in <head>, fires on its own
+  if(!('Notification' in window))return;
+  if(Notification.permission==='default')pdLoadRA();
+}
 function pdSideClose(){var p=document.getElementById('pdSidePrompt');if(p)p.classList.remove('visible');try{sessionStorage.setItem('pd_side_dismissed','1');}catch(e){}}
 </script>
 </body>
