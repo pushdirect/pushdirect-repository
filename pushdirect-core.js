@@ -177,4 +177,62 @@ document.addEventListener('DOMContentLoaded',function(){
   evs.forEach(function(ev){window.addEventListener(ev,fire,true);});
 })();
 
+/* ─── 9. SITE-WIDE AFFILIATE STRIP (double monetization: push + affiliate) ──
+   Injects a compact offer strip pulled live from offers-data.json into every
+   page that includes this script and doesn't already render its own offer
+   grid (skips /offers, which has a full grid). Self-contained CSS, placed
+   just before <footer>. Pages without this script (admin, fallback) are
+   untouched. */
+document.addEventListener('DOMContentLoaded',function(){
+  if(document.getElementById('featuredBannerGrid'))return;
+  if(document.getElementById('pdAffiliateStrip'))return;
+  var footer=document.querySelector('footer');
+
+  var css='#pdAffiliateStrip{padding:44px 0 8px}'+
+    '#pdAffiliateStrip .pd-as-wrap{max-width:1100px;margin:0 auto;padding:0 32px}'+
+    '#pdAffiliateStrip .pd-as-label{font-family:var(--fm,Inter,sans-serif);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text3,#9a8f7e);font-weight:600;margin-bottom:8px}'+
+    '#pdAffiliateStrip .pd-as-h{font-family:var(--fd,Poppins,sans-serif);font-size:clamp(20px,3vw,26px);font-weight:800;color:var(--text1,#1a1916);margin:0 0 16px}'+
+    '#pdAffiliateStrip .pd-as-row{display:flex;gap:14px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}'+
+    '#pdAffiliateStrip .pd-as-card{flex:0 0 auto;width:220px;height:117px;border-radius:12px;overflow:hidden;border:1px solid var(--border-s,rgba(26,25,22,.2));background:var(--bg2,#faf9f7);transition:border-color .2s,transform .2s}'+
+    '#pdAffiliateStrip .pd-as-card:hover{border-color:rgba(201,170,130,.5);transform:translateY(-2px)}'+
+    '#pdAffiliateStrip .pd-as-card img{width:100%;height:100%;object-fit:cover;display:block}'+
+    '[data-theme="dark"] #pdAffiliateStrip .pd-as-card{background:var(--surface,rgba(232,213,176,.05));border-color:var(--border-s,rgba(232,213,176,.18))}'+
+    '@media(max-width:520px){#pdAffiliateStrip .pd-as-card{width:180px;height:96px}}';
+  var styleEl=document.createElement('style');
+  styleEl.id='pdAffiliateStripStyle';
+  styleEl.textContent=css;
+  document.head.appendChild(styleEl);
+
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  function render(offers){
+    if(!offers||!offers.length)return;
+    var sec=document.createElement('section');
+    sec.id='pdAffiliateStrip';
+    var cards=offers.slice(0,8).map(function(o){
+      var safeLabel=esc(o.label).replace(/'/g,'');
+      return '<a class="pd-as-card" href="'+esc(o.url)+'" target="_blank" rel="noopener sponsored" aria-label="'+esc(o.label)+'" onclick="try{pdTrack(\'affiliate_strip_click\',{offer:\''+safeLabel+'\'})}catch(e){}">'+
+        '<img src="'+esc(o.image)+'" alt="'+esc(o.label)+'" loading="lazy">'+
+        '</a>';
+    }).join('');
+    sec.innerHTML='<div class="pd-as-wrap"><div class="pd-as-label">Partner offers</div><h2 class="pd-as-h">Deals worth a look</h2><div class="pd-as-row">'+cards+'</div></div>';
+    if(footer&&footer.parentNode){footer.parentNode.insertBefore(sec,footer);}else{document.body.appendChild(sec);}
+    try{pdTrack('affiliate_strip_shown',{offer_count:offers.length});}catch(e){}
+  }
+
+  fetch('/offers-data.json?_='+Date.now()).then(function(r){return r.json();}).then(function(data){
+    var pool=[];
+    (data.featuredBanners||[]).forEach(function(b){if(b&&b.image&&b.url)pool.push(b);});
+    if(pool.length<4){
+      (data.verticals||[]).forEach(function(v){
+        if(v.adult)return;
+        (v.offers||[]).forEach(function(o){if(o&&o.image&&o.url)pool.push(o);});
+      });
+    }
+    var seen={},uniq=[];
+    pool.forEach(function(o){if(!seen[o.url]){seen[o.url]=1;uniq.push(o);}});
+    render(uniq);
+  }).catch(function(){});
+});
+
 })();
