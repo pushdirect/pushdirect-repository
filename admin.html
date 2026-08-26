@@ -146,6 +146,7 @@ body{background:var(--bg2);color:var(--text1);font-family:var(--fb);font-size:15
     <div class="topbar-right">
       <a href="/offers" class="btn-sm" target="_blank">↗ View offers page</a>
       <button class="btn-sm" id="vpnCfgBtn">🌐 Fallback VPN link</button>
+      <button class="btn-sm" id="exitCfgBtn">🚪 Exit-intent links</button>
       <button class="btn-sm danger" id="logoutBtn">Sign out</button>
     </div>
   </div>
@@ -228,6 +229,33 @@ body{background:var(--bg2);color:var(--text1);font-family:var(--fb);font-size:15
     <div class="modal-footer">
       <button class="btn-cancel" id="vpnCancel">Cancel</button>
       <button class="btn-save" id="vpnSave">Save link</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="exitModalBg">
+  <div class="modal">
+    <h2 class="modal-h">Exit-intent links</h2>
+    <p class="modal-sub">The two buttons shown in the exit-intent popup (triggered when a visitor tries to leave) across index, offers, faq, subscription, deal-alerts and crypto-alerts. Keep <code>{clickId}</code> in the URL — it's filled in automatically per visitor for BeMob attribution.</p>
+    <div class="form-row">
+      <label class="form-label" for="exitCasinoLabel">Casino button label</label>
+      <input class="form-input" type="text" id="exitCasinoLabel" placeholder="🎰 Casino Bonuses">
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="exitCasinoUrl">Casino button URL</label>
+      <input class="form-input" type="url" id="exitCasinoUrl" placeholder="https://…?s1={clickId}">
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="exitSweepsLabel">Sweeps button label</label>
+      <input class="form-input" type="text" id="exitSweepsLabel" placeholder="🎁 Win Gift Cards">
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="exitSweepsUrl">Sweeps button URL</label>
+      <input class="form-input" type="url" id="exitSweepsUrl" placeholder="https://…?s1={clickId}">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="exitCancel">Cancel</button>
+      <button class="btn-save" id="exitSave">Save links</button>
     </div>
   </div>
 </div>
@@ -612,6 +640,38 @@ document.getElementById('vpnSave').addEventListener('click', async function(){
     showToast('VPN link saved! Live in ~30 seconds.','success');
   } catch(e){ showToast('Save failed: '+e.message,'error'); }
   finally{ btn.disabled=false; btn.textContent='Save link'; }
+});
+
+document.getElementById('exitCfgBtn').addEventListener('click', function(){
+  var ex = data.exitIntent || {};
+  document.getElementById('exitCasinoLabel').value = (ex.casino && ex.casino.label) || '🎰 Casino Bonuses';
+  document.getElementById('exitCasinoUrl').value   = (ex.casino && ex.casino.url)   || '';
+  document.getElementById('exitSweepsLabel').value = (ex.sweeps && ex.sweeps.label) || '🎁 Win Gift Cards';
+  document.getElementById('exitSweepsUrl').value   = (ex.sweeps && ex.sweeps.url)   || '';
+  document.getElementById('exitModalBg').classList.add('open');
+  setTimeout(function(){document.getElementById('exitCasinoUrl').focus();},100);
+});
+document.getElementById('exitCancel').addEventListener('click', function(){
+  document.getElementById('exitModalBg').classList.remove('open');
+});
+document.getElementById('exitModalBg').addEventListener('click', function(e){
+  if(e.target===this) this.classList.remove('open');
+});
+document.getElementById('exitSave').addEventListener('click', async function(){
+  var btn=this; btn.disabled=true; btn.textContent='Saving…';
+  data.exitIntent = {
+    casino: { label: document.getElementById('exitCasinoLabel').value.trim()||'🎰 Casino Bonuses', url: document.getElementById('exitCasinoUrl').value.trim() },
+    sweeps: { label: document.getElementById('exitSweepsLabel').value.trim()||'🎁 Win Gift Cards', url: document.getElementById('exitSweepsUrl').value.trim() }
+  };
+  try {
+    var latest=await ghGet(DATA_FILE);
+    fileSha=latest.sha;
+    var result=await ghPut(DATA_FILE, JSON.stringify(data,null,2), fileSha, 'feat(offers): update exit-intent links via admin panel');
+    fileSha=result.content.sha;
+    showToast('Published! Live in ~30 seconds.','success');
+    document.getElementById('exitModalBg').classList.remove('open');
+  } catch(e){ showToast('Save failed: '+e.message,'error'); }
+  finally { btn.disabled=false; btn.textContent='Save links'; }
 });
 
 </script>
