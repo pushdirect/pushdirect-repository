@@ -328,7 +328,26 @@ async function init() {
     renderFeaturedAdmin();
     renderSidebar();
     renderMain();
-  } catch(e) { showToast('Failed to load: '+e.message,'error'); }
+  } catch(e) {
+    // A stale/invalid token loads silently from sessionStorage on every visit and
+    // fails the same way every time with no way back to login except this reset.
+    // 401/403 = bad credentials, not a transient network blip -> force re-login.
+    var authFailure = /: (401|403)\b/.test(e.message);
+    if(authFailure) {
+      sessionStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem('pd_admin_token');
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('loginErr').style.display = 'block';
+      document.getElementById('loginErr').textContent = 'Your GitHub token was rejected (expired, revoked, or wrong repo access). Enter a valid token.';
+      document.getElementById('tokenInput').value = '';
+    } else {
+      document.getElementById('main').innerHTML =
+        '<div style="padding:60px 20px;text-align:center;color:var(--err,#c0392b)">Failed to load offers: '+
+        e.message.replace(/</g,'&lt;')+'<br><button class="btn-add" style="margin-top:16px" onclick="init()">Retry</button></div>';
+      showToast('Failed to load: '+e.message,'error');
+    }
+  }
 }
 
 if(authed && GH_TOKEN) init();
