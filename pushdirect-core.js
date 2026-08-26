@@ -238,4 +238,40 @@ document.addEventListener('DOMContentLoaded',function(){
   }).catch(function(){});
 });
 
+
+/* ─── 10. DENIAL-PATH OFFER (near-zero-effort additive yield) ────────────
+   When push permission is denied, the modal already has an email fallback.
+   This adds one affiliate offer in the same modal so a decline isn't a dead
+   end. Pulls from offers-data.json (same pool as the sitewide strip) — no
+   hardcoded offer, always reflects whatever is live in the admin panel. */
+document.addEventListener('DOMContentLoaded', function(){
+  var slot = document.getElementById('pdDeniedOfferSlot') || document.getElementById('deniedOfferSlot');
+  if(!slot) return;
+  if(!document.getElementById('pdDenialOfferStyle')){
+    var css2 = '.pd-denial-offer{margin-top:14px;padding-top:14px;border-top:1px solid var(--border,rgba(26,25,22,.1))}'+
+      '.pd-denial-offer .pd-do-label{font-family:var(--fm,Inter,sans-serif);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3,#9a8f7e);font-weight:600;margin-bottom:8px}'+
+      '.pd-do-link{display:flex;align-items:center;gap:10px;text-decoration:none;border:1px solid var(--border-s,rgba(26,25,22,.2));border-radius:14px;padding:8px;transition:border-color .2s}'+
+      '.pd-do-link:hover{border-color:rgba(249,115,22,.4)}'+
+      '.pd-do-link img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0}'+
+      '.pd-do-link span{font-family:var(--fd,Poppins,sans-serif);font-weight:700;font-size:13px;color:var(--text1,#1a1916)}';
+    var st2=document.createElement('style');st2.id='pdDenialOfferStyle';st2.textContent=css2;
+    document.head.appendChild(st2);
+  }
+  fetch('/offers-data.json?_='+Date.now()).then(function(r){return r.json();}).then(function(data){
+    var pool2=[];
+    (data.featuredBanners||[]).forEach(function(b){if(b&&b.image&&b.url)pool2.push(b);});
+    if(!pool2.length){
+      (data.verticals||[]).forEach(function(v){if(v.adult)return;(v.offers||[]).forEach(function(o){if(o&&o.image&&o.url)pool2.push(o);});});
+    }
+    if(!pool2.length) return;
+    var o2=pool2[Math.floor(Math.random()*pool2.length)];
+    var safeLabel2=String(o2.label||'').replace(/</g,'').replace(/>/g,'').replace(/"/g,'');
+    slot.innerHTML='<div class="pd-denial-offer"><div class="pd-do-label">While you\'re here</div>'+
+      '<a class="pd-do-link" href="'+o2.url+'" target="_blank" rel="noopener sponsored" onclick="try{pdTrack(\'denial_offer_click\',{offer:\''+safeLabel2.replace(/\'/g,'')+'\'})}catch(e){}">'+
+      '<img src="'+o2.image+'" alt="'+safeLabel2+'" loading="lazy">'+
+      '<span>Grab today\'s top offer \u2192</span></a></div>';
+    try{pdTrack('denial_offer_shown',{offer:safeLabel2});}catch(e){}
+  }).catch(function(){});
+});
+
 })();
