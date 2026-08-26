@@ -300,6 +300,34 @@ document.addEventListener('DOMContentLoaded',function(){
   evs.forEach(function(ev){window.addEventListener(ev,fire,true);});
 })();
 
+/* ─── 11b. EXIT-INTENT LINKS FROM offers-data.json ────────────────────────
+   #exitBtnCasino / #exitBtnSweeps ship in every page's HTML with a hardcoded
+   href+label as a fail-safe. If offers-data.json has an exitIntent block
+   (admin-editable), it overrides both at runtime — so admin edits take effect
+   without touching 6 HTML files. {clickId} substitution (§8) already re-runs
+   on any href containing the token, so it applies to whichever URL wins. */
+document.addEventListener('DOMContentLoaded',function(){
+  var casinoEl=document.getElementById('exitBtnCasino');
+  var sweepsEl=document.getElementById('exitBtnSweeps');
+  if(!casinoEl&&!sweepsEl)return;
+  loadOffers().then(function(data){
+    var ex=data&&data.exitIntent;
+    if(!ex)return;
+    [['casino',casinoEl],['sweeps',sweepsEl]].forEach(function(pair){
+      var cfg=ex[pair[0]],el=pair[1];
+      if(!cfg||!el)return;
+      if(cfg.url)el.setAttribute('href',cfg.url);
+      if(cfg.label)el.textContent=cfg.label;
+    });
+    var c=encodeURIComponent(getClickId()||'');
+    [casinoEl,sweepsEl].forEach(function(el){
+      if(!el)return;
+      var h=el.getAttribute('href');
+      if(h&&/\{clickId\}|%7BclickId%7D/.test(h))el.setAttribute('href',h.replace(/\{clickId\}|%7BclickId%7D/g,c));
+    });
+  });
+});
+
 /* ─── 12. SHARED OFFER POOL (one fetch per page, reused by strip + slots) ─ */
 var _offersP=null;
 function loadOffers(){
