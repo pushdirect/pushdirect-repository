@@ -188,5 +188,15 @@
       "url": "https://go.extiance.com/ts4359-displayclicks-us-nutra3",
       "image": "/images/offers/trimrx featured.jpg"
     }
-  ]
+  ],
+  "exitIntent": {
+    "casino": {
+      "label": "\ud83c\udfb0 Casino Bonuses",
+      "url": "https://tefzk.ytrack10.com?kw=exit&s1={clickId}"
+    },
+    "sweeps": {
+      "label": "\ud83c\udf81 Win Gift Cards",
+      "url": "https://apr.ytrack10.com?kw=exit&s1={clickId}"
+    }
+  }
 }
