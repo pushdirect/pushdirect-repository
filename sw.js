@@ -14,10 +14,13 @@ importScripts("https://push-sdk.com/f/sw.js")
 // if its remote import 404s, aborts SW installation — so it is intentionally omitted.
 
 // ── PWA: Cache (same-origin only, does not interfere with push/ads) ──
-// v2: HTML is network-first so nav/content changes go live immediately.
-//     Static assets stay cache-first for speed. Bumping the cache name
-//     purges the old pd-v1 cache that was serving stale HTML.
-const CACHE = 'pd-v3';
+// v4: only /icons, /images, /screeshots are cache-first (stale-while-revalidate).
+//     HTML, JS and JSON are network-first so core.js / offers-data.json changes
+//     reach returning visitors immediately (v3 served pushdirect-core.js cache-first
+//     forever and stored one cache entry per offers-data.json?_=timestamp request).
+//     Requests with a query string are never cached.
+const CACHE = 'pd-v4';
+const STATIC_RE = /^\/(icons|images|screeshots)\//;
 
 self.addEventListener('install', e => {
   // Do NOT precache HTML — that is what caused stale pages to persist.
@@ -32,6 +35,10 @@ self.addEventListener('activate', e => {
   );
 });
 
+function cacheable(req, res) {
+  return res && res.status === 200 && res.type === 'basic' && !(new URL(req.url)).search;
+}
+
 self.addEventListener('fetch', e => {
   const req = e.request;
   const url = new URL(req.url);
@@ -42,30 +49,28 @@ self.addEventListener('fetch', e => {
   const isHTML = req.mode === 'navigate' ||
                  (req.headers.get('accept') || '').includes('text/html');
 
-  if (isHTML) {
-    // Network-first: always try the live page, fall back to cache offline
+  if (!isHTML && STATIC_RE.test(url.pathname) && !url.search) {
+    // Stale-while-revalidate for images/icons: instant paint, refreshed in background
+    // so a creative swapped under the same filename shows on the next visit.
     e.respondWith(
-      fetch(req).then(res => {
-        if (res && res.status === 200 && res.type === 'basic') {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put(req, copy));
-        }
-        return res;
-      }).catch(() =>
-        caches.match(req).then(c => c || caches.match('/'))
-      )
+      caches.match(req).then(cached => {
+        const net = fetch(req).then(res => {
+          if (cacheable(req, res)) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
+          return res;
+        }).catch(() => cached);
+        return cached || net;
+      })
     );
     return;
   }
 
-  // Cache-first for static assets (logo, icons, scripts, css)
+  // Network-first for everything else (HTML, JS, JSON): live first, cache only offline
   e.respondWith(
-    caches.match(req).then(cached => cached || fetch(req).then(res => {
-      if (res && res.status === 200 && res.type === 'basic') {
-        const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(req, copy));
-      }
+    fetch(req).then(res => {
+      if (cacheable(req, res)) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
       return res;
-    }))
+    }).catch(() =>
+      caches.match(req).then(c => c || (isHTML ? caches.match('/') : Response.error()))
+    )
   );
 });
