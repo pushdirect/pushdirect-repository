@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded',function(){
         '<img src="'+esc(o.image)+'" alt="'+esc(o.label)+'" loading="lazy">'+
         '</a>';
     }).join('');
-    sec.innerHTML='<div class="pd-as-wrap"><div class="pd-as-label">Partner offers</div><h2 class="pd-as-h">Deals worth a look</h2><div class="pd-as-row">'+cards+'</div></div>';
+    sec.innerHTML='<div class="pd-as-wrap"><div class="pd-as-label">🔥 Hot Right Now</div><h2 class="pd-as-h">Grab These Before You Go</h2><div class="pd-as-row">'+cards+'</div></div>';
     if(footer&&footer.parentNode){footer.parentNode.insertBefore(sec,footer);}else{document.body.appendChild(sec);}
     try{pdTrack('affiliate_strip_shown',{offer_count:offers.length});}catch(e){}
   }
