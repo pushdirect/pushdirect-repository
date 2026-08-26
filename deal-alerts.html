@@ -672,20 +672,6 @@ footer{position:relative;z-index:1;padding-bottom:120px;padding:48px 24px 120px;
   </div>
 </div>
 
-<!-- EXIT INTENT -->
-<div class="exit-bg" id="exitBg" onclick="handleExitBg(event)">
-  <div class="exit-card">
-    <button class="exit-close" onclick="closeExit()">✕</button>
-    <span class="exit-em">⚡</span>
-    <h2 class="exit-h">Wait — the next sale won't wait.</h2>
-    <p class="exit-sub">Takes one tap. Alerts arrive before the window closes. Always first, never late.</p>
-    <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="pdRequestPush();closeExit()" style="width:100%;justify-content:center;font-size:16px;padding:16px;animation:none">
-      <img class="ico btn-plane" src="/icons/logo.png" width="16" height="11" alt="" aria-hidden="true" style="display:inline-block;object-fit:contain;vertical-align:middle;filter:brightness(0) invert(1)">
-      Unlock Free Deal Alerts
-    </button>
-  </div>
-</div>
-
 <!-- STICKY BAR -->
 <div class="sticky-bar" id="stickyBar">
   <button class="btn-cta" aria-label="Enable deal alerts from PushDirect" onclick="pdRequestPush()">
@@ -740,17 +726,7 @@ setTimeout(()=>document.querySelectorAll('.rev').forEach(el=>{
   if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add('in');
 }),100);
 
-/* EXIT INTENT */
-document.addEventListener('mouseleave',e=>{
-  const granted='Notification' in window&&Notification.permission==='granted';
-  if(e.clientY<=0&&!S.exitShown&&!S.subscribed&&!granted&&S.score>6){
-    S.exitShown=true;
-    document.getElementById('exitBg').classList.add('open');
-    track('exit_intent_deals');
-  }
-});
-function closeExit(){document.getElementById('exitBg').classList.remove('open')}
-function handleExitBg(e){if(e.target===document.getElementById('exitBg'))closeExit()}
+/* exit-intent modal + handlers: single sitewide affiliate block near </body> */
 
 /* ROLLERADS */
 let _raLoaded=false;
@@ -824,7 +800,7 @@ function activateMonetag(){
   if(window._monetagLoaded)return;window._monetagLoaded=true;
   var s=document.createElement('script');s.src='https://nap5k.com/tag.min.js';s.dataset.zone='11024677';s.dataset.cfasync='false';s.async=true;document.body.appendChild(s);
 }
-function fireBeMob(){try{const c=sessionStorage.getItem('pd_click_id')||new URL(window.location.href).searchParams.get('click_id')||'';if(!c)return;const px=new Image();px.src='https://udlch.bemobtrcks.com/postback?cid='+encodeURIComponent(c);}catch(e){}}
+function fireBeMob(){try{if(window.pdFireBeMob){window.pdFireBeMob();return;}const c=sessionStorage.getItem('pd_click_id')||new URL(window.location.href).searchParams.get('click_id')||'';if(!c)return;const px=new Image();px.src='https://udlch.bemobtrcks.com/postback?cid='+encodeURIComponent(c);}catch(e){}}
 function showIOS(){S.subscribed=true;document.getElementById('iosBg').classList.add('open');document.getElementById('stickyBar').classList.remove('visible')}
 function showIOSBrowser(){
   S.subscribed=true;
@@ -1100,7 +1076,6 @@ function pdSubmitEmail(e){
     <button class="btn-ov-primary" onclick="closeIOSOld()">Got it</button>
   </div>
 </div>
-<script defer src="/pushdirect-core.js"></script>
 
 
 <!-- ═══ EXIT INTENT ═══ -->
