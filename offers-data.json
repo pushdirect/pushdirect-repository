@@ -3,7 +3,7 @@
     {
       "id": "sweepstakes",
       "label": "Sweepstakes",
-      "icon": "🎁",
+      "icon": "\ud83c\udf81",
       "offers": [
         {
           "id": "sw1",
@@ -34,38 +34,13 @@
     {
       "id": "gaming",
       "label": "Gaming",
-      "icon": "🎮",
-      "offers": [
-        {
-          "id": "gaming1",
-          "label": "BetMGM",
-          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming1",
-          "image": "/images/offers/betmgm.jpg"
-        },
-        {
-          "id": "gaming2",
-          "label": "Baba Casino",
-          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming2",
-          "image": "/images/offers/baba-casino.jpg"
-        },
-        {
-          "id": "gaming3",
-          "label": "SweepsUSA",
-          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming3",
-          "image": "/images/offers/sweepsusa.jpg"
-        },
-        {
-          "id": "gaming4",
-          "label": "ClutchPacks",
-          "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming4",
-          "image": "/images/offers/clutchpacks.jpg"
-        }
-      ]
+      "icon": "\ud83c\udfae",
+      "offers": []
     },
     {
       "id": "nutra",
       "label": "Nutra",
-      "icon": "💊",
+      "icon": "\ud83d\udc8a",
       "offers": [
         {
           "id": "nutra1",
@@ -96,38 +71,13 @@
     {
       "id": "utilities",
       "label": "Utilities",
-      "icon": "🔧",
-      "offers": [
-        {
-          "id": "utilities1",
-          "label": "Norton 360",
-          "url": "https://go.extiance.com/ts4359-displayclicks-us-utility1",
-          "image": "/images/offers/norton-360.jpg"
-        },
-        {
-          "id": "utilities2",
-          "label": "McAfee",
-          "url": "https://go.extiance.com/ts4359-displayclicks-us-utility2",
-          "image": "/images/offers/mcafee.jpg"
-        },
-        {
-          "id": "utilities3",
-          "label": "TotalAV",
-          "url": "https://jblackard.com/or/pndv/ejprvw",
-          "image": "/images/offers/totalav.jpg"
-        },
-        {
-          "id": "utilities4",
-          "label": "PrimeDefender",
-          "url": "https://go.extiance.com/ts4359-displayclicks-us-utility4",
-          "image": "/images/offers/primedefender.jpg"
-        }
-      ]
+      "icon": "\ud83d\udd27",
+      "offers": []
     },
     {
       "id": "finance",
       "label": "Finance",
-      "icon": "💰",
+      "icon": "\ud83d\udcb0",
       "offers": [
         {
           "id": "finance1",
@@ -158,7 +108,7 @@
     {
       "id": "travel",
       "label": "Travel",
-      "icon": "✈️",
+      "icon": "\u2708\ufe0f",
       "offers": [
         {
           "id": "travel1",
@@ -189,7 +139,7 @@
     {
       "id": "adult",
       "label": "Adult",
-      "icon": "🔞",
+      "icon": "\ud83d\udd1e",
       "adult": true,
       "offers": [
         {
@@ -220,24 +170,6 @@
     }
   ],
   "featuredBanners": [
-    {
-      "id": "fb1",
-      "label": "MGM sportsbook",
-      "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming1",
-      "image": "/images/offers/mgm featured.jpg"
-    },
-    {
-      "id": "fb2",
-      "label": "SweepsUSA casino",
-      "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming3",
-      "image": "/images/offers/sweepsusa featured.jpg"
-    },
-    {
-      "id": "fb3",
-      "label": "Baba casino",
-      "url": "https://go.extiance.com/ts4359-displayclicks-us-gaming2",
-      "image": "/images/offers/baba featured.jpg"
-    },
     {
       "id": "fb4",
       "label": "Wellorithm NAD+",
