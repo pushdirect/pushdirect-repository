@@ -638,6 +638,7 @@ function activateMonetag() {
 /* ═══ BEMOB CONVERSION PIXEL ═══ */
 function fireBeMob() {
   try {
+    if (window.pdFireBeMob) { window.pdFireBeMob(); return; }  // core dedupes per click id
     const clickID = sessionStorage.getItem('pd_click_id') || new URL(window.location.href).searchParams.get('click_id') || '';
     if (!clickID) return;
     const px = new Image();
