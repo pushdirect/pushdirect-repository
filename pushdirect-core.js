@@ -1,26 +1,61 @@
-/* PushDirect core — attribution, funnel analytics, A/B harness, iOS install flow.
-   Loaded with defer on every page. Safe to run alongside existing inline scripts. */
+/* PushDirect core v2 — attribution, funnel analytics, A/B harness, iOS install flow,
+   BeMob postback, sitewide affiliate strip, denial/success offers.
+   Loaded with defer on every page. Safe to run alongside existing inline scripts.
+   Debug logging: add ?pd_debug=1 to any URL (persists in localStorage) — production is silent. */
 (function(){
 'use strict';
 
-/* ─── 1. FIRST-TOUCH UTM / SOURCE ATTRIBUTION ─────────────────────────── */
-var ATTR_KEY='pd_attr';
+/* ─── 0. LOAD GUARD + DEBUG FLAG ──────────────────────────────────────── */
+if(window.__pdCore)return;               // duplicate <script> include is a no-op
+window.__pdCore='2';
+var DEBUG=false;
+try{
+  if(/[?&]pd_debug=1(&|$)/.test(location.search))localStorage.setItem('pd_debug','1');
+  if(/[?&]pd_debug=0(&|$)/.test(location.search))localStorage.removeItem('pd_debug');
+  DEBUG=localStorage.getItem('pd_debug')==='1';
+}catch(e){}
+function log(){if(DEBUG&&window.console&&console.log)console.log.apply(console,['[PD-core]'].concat([].slice.call(arguments)));}
+
+/* ─── 1. ATTRIBUTION: first-touch UTM + click/source IDs on every page ─── */
+var ATTR_KEY='pd_attr', IDS_KEY='pd_ids';
+var Q=new URLSearchParams(location.search);
 function getAttr(){
   try{return JSON.parse(localStorage.getItem(ATTR_KEY)||'null');}catch(e){return null;}
 }
 function captureAttr(){
   if(getAttr())return; // first-touch only
-  var q=new URLSearchParams(location.search);
   var a={
-    src:q.get('utm_source')||(document.referrer?(new URL(document.referrer)).hostname:'direct'),
-    med:q.get('utm_medium')||'',
-    cmp:q.get('utm_campaign')||'',
+    src:Q.get('utm_source')||(document.referrer?(new URL(document.referrer)).hostname:'direct'),
+    med:Q.get('utm_medium')||'',
+    cmp:Q.get('utm_campaign')||'',
     lp:location.pathname,
     ts:Date.now()
   };
   try{localStorage.setItem(ATTR_KEY,JSON.stringify(a));}catch(e){}
 }
 captureAttr();
+/* Tracker IDs. BeMob lander URL passes click_id={clickId} & source_id={trafficSourceId}.
+   Previously only 3 pages persisted click_id, so index/offers/blog landings lost it on
+   the next page. Now: session-scoped (this visit) + first-touch (cohorting), every page. */
+function captureIds(){
+  var cid=Q.get('click_id')||Q.get('clickid')||Q.get('cid')||'';
+  var sid=Q.get('source_id')||Q.get('sourceid')||Q.get('sub_id')||Q.get('subid')||'';
+  var cmp=Q.get('campaign_id')||Q.get('campaignid')||'';
+  try{
+    if(cid)sessionStorage.setItem('pd_click_id',cid);
+    if(sid)sessionStorage.setItem('pd_source_id',sid);
+    if(cmp)sessionStorage.setItem('pd_campaign_id',cmp);
+    if((cid||sid||cmp)&&!localStorage.getItem(IDS_KEY)){
+      localStorage.setItem(IDS_KEY,JSON.stringify({cid:cid,sid:sid,cmp:cmp,ts:Date.now()}));
+    }
+  }catch(e){}
+}
+captureIds();
+function firstIds(){try{return JSON.parse(localStorage.getItem(IDS_KEY)||'null')||{};}catch(e){return {};}}
+function getClickId(){try{return sessionStorage.getItem('pd_click_id')||firstIds().cid||'';}catch(e){return '';}}
+function getSourceId(){try{return sessionStorage.getItem('pd_source_id')||firstIds().sid||'';}catch(e){return '';}}
+window.pdGetClickId=getClickId;
+window.pdGetSourceId=getSourceId;
 
 /* ─── 2. A/B VARIANT (compat + multi-test harness) ────────────────────── */
 if(typeof window.PD_VARIANT==='undefined'){
@@ -51,17 +86,59 @@ function pdTrack(ev,p){
     utm_source:a.src||'direct',
     utm_medium:a.med||'',
     utm_campaign:a.cmp||'',
-    landing_page:a.lp||''
+    landing_page:a.lp||'',
+    source_id:getSourceId()||'',
+    click_id:getClickId()||''
   };
   for(var k in p)payload[k]=p[k];
   if(typeof gtag!=='undefined')gtag('event',ev,payload);
-  if(window.console&&console.log)console.log('[PD-core]',ev,payload);
+  log(ev,payload);
 }
 window.pdTrack=pdTrack;
 // Provide track() on pages that don't define their own
 if(typeof window.track==='undefined')window.track=pdTrack;
 
-/* ─── 4. PERMISSION STATE OBSERVER (granted / denied, any trigger) ────── */
+/* ─── 4. BEMOB POSTBACK (client-side, deduped per click id) ──────────────
+   Fires once per click id on any permission grant, on every page. Pages with
+   their own fireBeMob() delegate here so a grant is never double-counted.
+   NOTE: true S2S = RollerAds zone postback → BeMob (dashboard setting); once
+   that is live and verified, set window.PD_BEMOB_PIXEL=false in the page or
+   remove this block to avoid double counting. */
+var BEMOB_POSTBACK='https://udlch.bemobtrcks.com/postback?cid=';
+window.pdFireBeMob=function(){
+  if(window.PD_BEMOB_PIXEL===false)return false;
+  try{
+    var c=getClickId();
+    if(!c)return false;
+    var k='pd_bemob_'+c;
+    if(localStorage.getItem(k))return false;
+    localStorage.setItem(k,String(Date.now()));
+    var px=new Image();
+    px.src=BEMOB_POSTBACK+encodeURIComponent(c);
+    pdTrack('bemob_postback_fired',{});
+    return true;
+  }catch(e){return false;}
+};
+
+/* ─── 5. PERMISSION STATE OBSERVER (granted / denied, any trigger) ────── */
+function onGranted(){
+  try{localStorage.setItem('pd_subscribed','1');}catch(e){}
+  // exactly one prompt_granted per grant, whichever path observed it first
+  try{if(!sessionStorage.getItem('pd_granted_ev')){sessionStorage.setItem('pd_granted_ev','1');pdTrack('prompt_granted',{});}}catch(e){pdTrack('prompt_granted',{});}
+  window.pdFireBeMob();
+  try{
+    var sb=document.getElementById('pdStickyBar');if(sb)sb.classList.remove('visible');
+    // Fresh grant re-uses the "already subscribed" overlay on most pages: fix its copy.
+    var t=document.getElementById('pdAlreadyTitle');
+    if(t&&!t.dataset.pdGranted){
+      t.dataset.pdGranted='1';
+      t.textContent='You\u2019re in. \uD83C\uDF89';
+      var p=t.parentNode&&t.parentNode.querySelector('.ov-p');
+      if(p)p.textContent='PushDirect alerts are live on this device. Your first one lands the moment something worth acting on drops.';
+    }
+    fillOfferSlot('pdSuccessOfferSlot','success_offer','Start with today\u2019s top offer \u2192','While your first alert loads');
+  }catch(e){}
+}
 (function(){
   if(!('Notification' in window))return;
   // Daily state snapshot for cohorting
@@ -76,8 +153,7 @@ if(typeof window.track==='undefined')window.track=pdTrack;
     navigator.permissions.query({name:'notifications'}).then(function(st){
       st.onchange=function(){
         if(st.state==='granted'){
-          pdTrack('prompt_granted',{});
-          try{localStorage.setItem('pd_subscribed','1');}catch(e){}
+          onGranted();
         }else if(st.state==='denied'){
           pdTrack('prompt_denied',{});
         }
@@ -86,7 +162,42 @@ if(typeof window.track==='undefined')window.track=pdTrack;
   }
 })();
 
-/* ─── 5. EMAIL SIGNUP + OUTBOUND / AFFILIATE CLICK TRACKING ───────────── */
+/* ─── 6. ROLLERADS LOADER HOOK ────────────────────────────────────────────
+   Wraps pdLoadRA()/loadRollerAds() defined inline on each page so that:
+   (a) extClickID / subID1 fall back to the persisted ids when the current URL
+       has none (visitor navigated after landing) — RollerAds subID1 reports
+       are the per-source push-yield side of the CPA<LTV equation;
+   (b) onPermissionGranted always fires the BeMob postback + success offer. */
+function hookRA(name){
+  var orig=window[name];
+  if(typeof orig!=='function'||orig.__pdWrapped)return;
+  var w=function(){
+    var r=orig.apply(this,arguments);
+    try{
+      var ro=window.raOptions;
+      if(ro){
+        if(!ro.extClickID)ro.extClickID=getClickId();
+        if(!ro.subID1)ro.subID1=getSourceId();
+        var acts=ro.actions;
+        if(acts&&!acts.__pdHooked){
+          acts.__pdHooked=true;
+          var og=acts.onPermissionGranted;
+          acts.onPermissionGranted=function(){
+            try{onGranted();}catch(e){}
+            if(typeof og==='function')return og.apply(this,arguments);
+          };
+        }
+      }
+    }catch(e){}
+    return r;
+  };
+  w.__pdWrapped=true;
+  window[name]=w;
+}
+hookRA('pdLoadRA');
+hookRA('loadRollerAds');
+
+/* ─── 7. EMAIL SIGNUP + OUTBOUND / AFFILIATE CLICK TRACKING ───────────── */
 document.addEventListener('submit',function(e){
   var f=e.target;
   if(f&&f.action&&f.action.indexOf('web3forms')>-1){
@@ -102,7 +213,20 @@ document.addEventListener('click',function(e){
   }
 },true);
 
-/* ─── 6. iOS ADD-TO-HOME-SCREEN SOFT PROMPT ───────────────────────────── */
+/* ─── 8. {clickId} TOKEN FILL ─────────────────────────────────────────────
+   Static HTML can't be macro-expanded by BeMob; links like
+   ...?s1={clickId} were sending the literal token. Fill from persisted id. */
+document.addEventListener('DOMContentLoaded',function(){
+  var c=encodeURIComponent(getClickId()||'');
+  var links=document.querySelectorAll('a[href*="{clickId}"],a[href*="%7BclickId%7D"]');
+  for(var i=0;i<links.length;i++){
+    var h=links[i].getAttribute('href');
+    links[i].setAttribute('href',h.replace(/\{clickId\}|%7BclickId%7D/g,c));
+  }
+  if(links.length)log('clickId filled',links.length,c);
+});
+
+/* ─── 9. iOS ADD-TO-HOME-SCREEN SOFT PROMPT ───────────────────────────── */
 var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
 var isStandalone=!!navigator.standalone||matchMedia('(display-mode: standalone)').matches;
 function a2hsDismissed(){
@@ -134,7 +258,7 @@ if(isIOS&&!isStandalone&&!a2hsDismissed()&&('Notification' in window?Notificatio
   });
 }
 
-/* ─── 7. LIVE CRYPTO TICKER (renders only if #pdTicker exists) ────────── */
+/* ─── 10. LIVE CRYPTO TICKER (renders only if #pdTicker exists) ───────── */
 document.addEventListener('DOMContentLoaded',function(){
   var t=document.getElementById('pdTicker');
   if(!t)return;
@@ -155,8 +279,7 @@ document.addEventListener('DOMContentLoaded',function(){
   load();setInterval(load,60000);
 });
 
-
-/* ── Auto-fire push opt-in on first user gesture ───────────────────────────
+/* ─── 11. AUTO-FIRE PUSH OPT-IN ON FIRST USER GESTURE ───────────────────
    Cold arbitrage traffic rarely clicks the CTA, so the RollerAds prompt never
    loaded. RollerAds must load inside a user gesture, so we trigger on the first
    tap / click / keypress anywhere — not only the CTA button. iOS & Mac-Safari
@@ -164,9 +287,9 @@ document.addEventListener('DOMContentLoaded',function(){
 (function(){
   if(!('Notification' in window)) return;
   var ua=navigator.userAgent;
-  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+  var iOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
   var isMacSafari=/Macintosh/.test(ua)&&/Safari/.test(ua)&&!/Chrome|Firefox|Edg/.test(ua);
-  if(isIOS||isMacSafari) return;
+  if(iOS||isMacSafari) return;
   if(Notification.permission!=='default') return;
   var fired=false, evs=['pointerdown','touchstart','click','keydown'];
   function fire(){
@@ -177,7 +300,34 @@ document.addEventListener('DOMContentLoaded',function(){
   evs.forEach(function(ev){window.addEventListener(ev,fire,true);});
 })();
 
-/* ─── 9. SITE-WIDE AFFILIATE STRIP (double monetization: push + affiliate) ──
+/* ─── 12. SHARED OFFER POOL (one fetch per page, reused by strip + slots) ─ */
+var _offersP=null;
+function loadOffers(){
+  if(!_offersP){
+    // minute-bucket buster: fresh after admin edits, without one cache entry per pageview
+    _offersP=fetch('/offers-data.json?_='+Math.floor(Date.now()/60000))
+      .then(function(r){return r.json();}).catch(function(){return null;});
+  }
+  return _offersP;
+}
+function offerPool(data,minFeatured){
+  var pool=[];
+  if(!data)return pool;
+  (data.featuredBanners||[]).forEach(function(b){if(b&&b.image&&b.url)pool.push(b);});
+  if(pool.length<minFeatured){
+    (data.verticals||[]).forEach(function(v){
+      if(v.adult)return;
+      (v.offers||[]).forEach(function(o){if(o&&o.image&&o.url)pool.push(o);});
+    });
+  }
+  var seen={},uniq=[];
+  pool.forEach(function(o){if(!seen[o.url]){seen[o.url]=1;uniq.push(o);}});
+  return uniq;
+}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function safeLabel(s){return String(s||'').replace(/[<>"']/g,'');}
+
+/* ─── 13. SITE-WIDE AFFILIATE STRIP (double monetization: push + affiliate) ─
    Injects a compact offer strip pulled live from offers-data.json into every
    page that includes this script and doesn't already render its own offer
    grid (skips /offers, which has a full grid). Self-contained CSS, placed
@@ -201,20 +351,21 @@ document.addEventListener('DOMContentLoaded',function(){
     '#pdAffiliateStrip .pd-as-card img{width:100%;height:100%;object-fit:cover;display:block}'+
     '[data-theme="dark"] #pdAffiliateStrip .pd-as-card{background:var(--surface,rgba(232,213,176,.05));border-color:var(--border-s,rgba(232,213,176,.18))}'+
     '@media(max-width:640px){#pdAffiliateStrip .pd-as-card{width:calc(50% - 7px);height:auto;aspect-ratio:220/117}}';
-  var styleEl=document.createElement('style');
-  styleEl.id='pdAffiliateStripStyle';
-  styleEl.textContent=css;
-  document.head.appendChild(styleEl);
-
-  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  if(!document.getElementById('pdAffiliateStripStyle')){
+    var styleEl=document.createElement('style');
+    styleEl.id='pdAffiliateStripStyle';
+    styleEl.textContent=css;
+    document.head.appendChild(styleEl);
+  }
 
   function render(offers){
     if(!offers||!offers.length)return;
+    if(document.getElementById('pdAffiliateStrip'))return; // async guard: never render twice
     var sec=document.createElement('section');
     sec.id='pdAffiliateStrip';
     var cards=offers.slice(0,8).map(function(o){
-      var safeLabel=esc(o.label).replace(/'/g,'');
-      return '<a class="pd-as-card" href="'+esc(o.url)+'" target="_blank" rel="noopener sponsored" aria-label="'+esc(o.label)+'" onclick="try{pdTrack(\'affiliate_strip_click\',{offer:\''+safeLabel+'\'})}catch(e){}">'+
+      var lbl=safeLabel(o.label);
+      return '<a class="pd-as-card" href="'+esc(o.url)+'" target="_blank" rel="noopener sponsored" aria-label="'+esc(o.label)+'" onclick="try{pdTrack(\'affiliate_strip_click\',{offer:\''+lbl+'\'})}catch(e){}">'+
         '<img src="'+esc(o.image)+'" alt="'+esc(o.label)+'" loading="lazy">'+
         '</a>';
     }).join('');
@@ -223,55 +374,50 @@ document.addEventListener('DOMContentLoaded',function(){
     try{pdTrack('affiliate_strip_shown',{offer_count:offers.length});}catch(e){}
   }
 
-  fetch('/offers-data.json?_='+Date.now()).then(function(r){return r.json();}).then(function(data){
-    var pool=[];
-    (data.featuredBanners||[]).forEach(function(b){if(b&&b.image&&b.url)pool.push(b);});
-    if(pool.length<4){
-      (data.verticals||[]).forEach(function(v){
-        if(v.adult)return;
-        (v.offers||[]).forEach(function(o){if(o&&o.image&&o.url)pool.push(o);});
-      });
-    }
-    var seen={},uniq=[];
-    pool.forEach(function(o){if(!seen[o.url]){seen[o.url]=1;uniq.push(o);}});
-    render(uniq);
-  }).catch(function(){});
+  loadOffers().then(function(data){render(offerPool(data,4));});
 });
 
-
-/* ─── 10. DENIAL-PATH OFFER (near-zero-effort additive yield) ────────────
-   When push permission is denied, the modal already has an email fallback.
-   This adds one affiliate offer in the same modal so a decline isn't a dead
-   end. Pulls from offers-data.json (same pool as the sitewide strip) — no
-   hardcoded offer, always reflects whatever is live in the admin panel. */
-document.addEventListener('DOMContentLoaded', function(){
-  var slot = document.getElementById('pdDeniedOfferSlot') || document.getElementById('deniedOfferSlot');
-  if(!slot) return;
-  if(!document.getElementById('pdDenialOfferStyle')){
-    var css2 = '.pd-denial-offer{margin-top:14px;padding-top:14px;border-top:1px solid var(--border,rgba(26,25,22,.1))}'+
-      '.pd-denial-offer .pd-do-label{font-family:var(--fm,Inter,sans-serif);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3,#9a8f7e);font-weight:600;margin-bottom:8px}'+
-      '.pd-do-link{display:flex;align-items:center;gap:10px;text-decoration:none;border:1px solid var(--border-s,rgba(26,25,22,.2));border-radius:14px;padding:8px;transition:border-color .2s}'+
-      '.pd-do-link:hover{border-color:rgba(249,115,22,.4)}'+
-      '.pd-do-link img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0}'+
-      '.pd-do-link span{font-family:var(--fd,Poppins,sans-serif);font-weight:700;font-size:13px;color:var(--text1,#1a1916)}';
-    var st2=document.createElement('style');st2.id='pdDenialOfferStyle';st2.textContent=css2;
-    document.head.appendChild(st2);
-  }
-  fetch('/offers-data.json?_='+Date.now()).then(function(r){return r.json();}).then(function(data){
-    var pool2=[];
-    (data.featuredBanners||[]).forEach(function(b){if(b&&b.image&&b.url)pool2.push(b);});
-    if(!pool2.length){
-      (data.verticals||[]).forEach(function(v){if(v.adult)return;(v.offers||[]).forEach(function(o){if(o&&o.image&&o.url)pool2.push(o);});});
-    }
-    if(!pool2.length) return;
+/* ─── 14. DENIAL-PATH + SUCCESS-PATH OFFERS (near-zero-effort additive yield)
+   Denial: the modal already has an email fallback; one affiliate offer makes a
+   decline not a dead end (slot: #pdDeniedOfferSlot / #deniedOfferSlot).
+   Success: a fresh grant on index-style pages opens #pdAlreadyBg, which used
+   to end at "Got it" — now it carries one offer (slot: #pdSuccessOfferSlot).
+   Both pull from offers-data.json, never hardcoded. */
+function ensureOfferCss(){
+  if(document.getElementById('pdDenialOfferStyle'))return;
+  var css2 = '.pd-denial-offer{margin-top:14px;padding-top:14px;border-top:1px solid var(--border,rgba(26,25,22,.1))}'+
+    '.pd-denial-offer .pd-do-label{font-family:var(--fm,Inter,sans-serif);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3,#9a8f7e);font-weight:600;margin-bottom:8px}'+
+    '.pd-do-link{display:flex;align-items:center;gap:10px;text-decoration:none;border:1px solid var(--border-s,rgba(26,25,22,.2));border-radius:14px;padding:8px;transition:border-color .2s}'+
+    '.pd-do-link:hover{border-color:rgba(249,115,22,.4)}'+
+    '.pd-do-link img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0}'+
+    '.pd-do-link span{font-family:var(--fd,Poppins,sans-serif);font-weight:700;font-size:13px;color:var(--text1,#1a1916)}';
+  var st2=document.createElement('style');st2.id='pdDenialOfferStyle';st2.textContent=css2;
+  document.head.appendChild(st2);
+}
+function fillOfferSlot(slotId,evPrefix,cta,label){
+  var slot=document.getElementById(slotId);
+  if(!slot||slot.dataset.pdFilled)return;
+  slot.dataset.pdFilled='1';
+  ensureOfferCss();
+  loadOffers().then(function(data){
+    var pool2=offerPool(data,1);
+    if(!pool2.length)return;
     var o2=pool2[Math.floor(Math.random()*pool2.length)];
-    var safeLabel2=String(o2.label||'').replace(/</g,'').replace(/>/g,'').replace(/"/g,'');
-    slot.innerHTML='<div class="pd-denial-offer"><div class="pd-do-label">While you\'re here</div>'+
-      '<a class="pd-do-link" href="'+o2.url+'" target="_blank" rel="noopener sponsored" onclick="try{pdTrack(\'denial_offer_click\',{offer:\''+safeLabel2.replace(/\'/g,'')+'\'})}catch(e){}">'+
-      '<img src="'+o2.image+'" alt="'+safeLabel2+'" loading="lazy">'+
-      '<span>Grab today\'s top offer \u2192</span></a></div>';
-    try{pdTrack('denial_offer_shown',{offer:safeLabel2});}catch(e){}
-  }).catch(function(){});
+    var lbl=safeLabel(o2.label);
+    slot.innerHTML='<div class="pd-denial-offer"><div class="pd-do-label">'+esc(label)+'</div>'+
+      '<a class="pd-do-link" href="'+esc(o2.url)+'" target="_blank" rel="noopener sponsored" onclick="try{pdTrack(\''+evPrefix+'_click\',{offer:\''+lbl+'\'})}catch(e){}">'+
+      '<img src="'+esc(o2.image)+'" alt="'+esc(lbl)+'" loading="lazy">'+
+      '<span>'+esc(cta)+'</span></a></div>';
+    // count as shown only if the slot is actually visible (overlay open)
+    try{if(slot.getClientRects().length)pdTrack(evPrefix+'_shown',{offer:lbl});}catch(e){}
+  });
+}
+window.pdFillOfferSlot=fillOfferSlot;
+document.addEventListener('DOMContentLoaded', function(){
+  var id=document.getElementById('pdDeniedOfferSlot')?'pdDeniedOfferSlot':(document.getElementById('deniedOfferSlot')?'deniedOfferSlot':null);
+  if(id)fillOfferSlot(id,'denial_offer','Grab today\u2019s top offer \u2192','While you\u2019re here');
+  // Already-subscribed visitors opening the overlay also get the success offer
+  if('Notification' in window&&Notification.permission==='granted')fillOfferSlot('pdSuccessOfferSlot','success_offer','Start with today\u2019s top offer \u2192','Picked for you');
 });
 
 })();
