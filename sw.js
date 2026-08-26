@@ -19,7 +19,7 @@ importScripts("https://push-sdk.com/f/sw.js")
 //     reach returning visitors immediately (v3 served pushdirect-core.js cache-first
 //     forever and stored one cache entry per offers-data.json?_=timestamp request).
 //     Requests with a query string are never cached.
-const CACHE = 'pd-v4';
+const CACHE = 'pd-v5';
 const STATIC_RE = /^\/(icons|images|screeshots)\//;
 
 self.addEventListener('install', e => {
