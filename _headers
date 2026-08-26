@@ -21,7 +21,13 @@
   Cache-Control: no-cache, no-store, must-revalidate
 
 /pushdirect-core.js
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=300, must-revalidate
+
+/offers-data.json
+  Cache-Control: no-cache, must-revalidate
+
+/fallback-config.json
+  Cache-Control: no-cache, must-revalidate
 
 /icons/*
   Cache-Control: public, max-age=604800
