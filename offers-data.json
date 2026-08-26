@@ -3,7 +3,7 @@
     {
       "id": "sweepstakes",
       "label": "Sweepstakes",
-      "icon": "\ud83c\udf81",
+      "icon": "🎁",
       "offers": [
         {
           "id": "sw1",
@@ -34,13 +34,13 @@
     {
       "id": "gaming",
       "label": "Gaming",
-      "icon": "\ud83c\udfae",
+      "icon": "🎮",
       "offers": []
     },
     {
       "id": "nutra",
       "label": "Nutra",
-      "icon": "\ud83d\udc8a",
+      "icon": "💊",
       "offers": [
         {
           "id": "nutra1",
@@ -71,13 +71,13 @@
     {
       "id": "utilities",
       "label": "Utilities",
-      "icon": "\ud83d\udd27",
+      "icon": "🔧",
       "offers": []
     },
     {
       "id": "finance",
       "label": "Finance",
-      "icon": "\ud83d\udcb0",
+      "icon": "💰",
       "offers": [
         {
           "id": "finance1",
@@ -108,7 +108,7 @@
     {
       "id": "travel",
       "label": "Travel",
-      "icon": "\u2708\ufe0f",
+      "icon": "✈️",
       "offers": [
         {
           "id": "travel1",
@@ -139,7 +139,7 @@
     {
       "id": "adult",
       "label": "Adult",
-      "icon": "\ud83d\udd1e",
+      "icon": "🔞",
       "adult": true,
       "offers": [
         {
@@ -191,12 +191,12 @@
   ],
   "exitIntent": {
     "casino": {
-      "label": "\ud83c\udfb0 Casino Bonuses",
-      "url": "https://tefzk.ytrack10.com?kw=exit&s1={clickId}"
+      "label": "🎰 Casino Bonuses",
+      "url": "https://zmv.secureshieldoffer.com/?kw=exit&s1={clickId}"
     },
     "sweeps": {
-      "label": "\ud83c\udf81 Win Gift Cards",
-      "url": "https://apr.ytrack10.com?kw=exit&s1={clickId}"
+      "label": "🎁 Win Gift Cards",
+      "url": "https://lgai.secureshieldoffer.com/?kw=exit&s1={clickId}"
     }
   }
 }
